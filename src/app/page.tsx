@@ -359,8 +359,8 @@ export default function HomePage() {
         <SectionHead
           center
           eyebrow="Pricing"
-          title="Public pricing, structured as coverage."
-          lede="Not per opportunity. Not per portal. Not hourly. You choose the geographic coverage you need and I cover everything inside it."
+          title="Transparent pricing, structured as coverage."
+          lede="Not per opportunity. Not per portal. Not hourly. Entry coverage is public from $599 a month; national and cross-border coverage is scoped to your footprint."
         />
         <div className="mt-12">
           <PricingTables />

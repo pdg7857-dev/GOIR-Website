@@ -193,7 +193,7 @@ export function PlatformAuthority({ slug }: { slug: string }) {
       <Section>
         <div className="mx-auto max-w-2xl text-center">
           <p className="eyebrow justify-center">Coverage</p>
-          <h2 className="mt-3 text-3xl font-semibold text-fg">Simple, public pricing</h2>
+          <h2 className="mt-3 text-3xl font-semibold text-fg">Simple, transparent pricing</h2>
           <p className="mt-4 text-lg text-fg-muted">
             {platform.shortName} monitoring is included in every coverage plan for the jurisdictions
             you choose. No per-platform fees.

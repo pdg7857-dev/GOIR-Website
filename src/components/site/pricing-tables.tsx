@@ -70,7 +70,7 @@ function PlanCard({ plan }: { plan: Plan }) {
         href={SITE.bookingUrl}
         className={`mt-6 w-full ${plan.featured ? "btn-primary" : "btn-ghost"} py-2.5`}
       >
-        {plan.custom ? "Talk to me" : "Start with this plan"}
+        {plan.custom ? "Get a quote" : "Start with this plan"}
       </Link>
     </div>
   );

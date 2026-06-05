@@ -1,7 +1,8 @@
 /**
  * Public coverage pricing. Positioned as Opportunity Intelligence Coverage,
- * never per-province, per-state, per-opportunity, or hourly. One unified ladder
- * (Essential → Growth → Partner → Enterprise) covering Canada and the U.S.
+ * never per-province, per-state, per-opportunity, or hourly. The two entry
+ * tiers (Essential, Growth) are public; national and cross-border coverage is
+ * scoped to the client's footprint and priced by quote (anchored "from $1,499").
  */
 
 export type Plan = {
@@ -66,60 +67,20 @@ export const PLANS: Plan[] = [
     ],
   },
   {
-    name: "Canada",
+    name: "National & cross-border",
     price: "$1,499",
     priceNote: "/month",
-    scope: "All of Canada",
-    blurb: "Coast-to-coast Canadian coverage, including federal.",
-    features: [
-      "Everything in Growth",
-      "All 13 provinces & territories",
-      "Federal procurement (CanadaBuys & MERX)",
-      "Unlimited opportunities",
-      "Custom performance dashboard",
-      "Bid pipeline reviews",
-    ],
-  },
-  {
-    name: "USA",
-    price: "$2,999",
-    priceNote: "/month",
-    scope: "All of the United States",
-    blurb: "Nationwide U.S. coverage, including federal.",
-    features: [
-      "Everything in Growth",
-      "All 50 states",
-      "Federal procurement (SAM.gov, GSA eBuy & more)",
-      "Unlimited opportunities",
-      "Custom performance dashboard",
-      "Bid pipeline reviews",
-    ],
-  },
-  {
-    name: "North America",
-    price: "$3,999",
-    priceNote: "/month",
-    scope: "Canada + United States",
-    blurb: "Full cross-border coverage in one consolidated feed.",
-    features: [
-      "Everything in Canada & USA",
-      "Every province, territory and state",
-      "Federal on both sides of the border",
-      "Cross-border de-duplication",
-      "One point of contact for all of North America",
-    ],
-  },
-  {
-    name: "Enterprise",
-    price: "Custom",
+    startingAt: true,
     custom: true,
-    scope: "Federal, military & municipal programs",
-    blurb: "For organizations with the largest and most specialized public-sector footprints.",
+    scope: "All of Canada, the U.S., or both",
+    blurb: "Coast-to-coast or cross-border coverage, including federal. Priced to your footprint.",
     features: [
-      "Federal",
-      "Military",
-      "Municipal",
-      "Custom dashboards",
+      "Everything in Growth",
+      "Nationwide coverage: all 13 provinces and territories, all 50 states, or both",
+      "Federal on both sides of the border (CanadaBuys, MERX, SAM.gov, GSA eBuy)",
+      "Unlimited opportunities, cross-border de-duplication, one point of contact",
+      "Custom performance dashboard and bid pipeline reviews",
+      "Specialized federal, military and municipal programs scoped to you",
     ],
   },
 ];

@@ -24,7 +24,7 @@ const PRICING_FAQS = [
   },
   {
     q: "Can I cover both Canada and the United States?",
-    a: "Yes. The North America plan at $4,999/month covers every province, territory and state plus federal on both sides of the border, in one consolidated feed. For federal, military or municipal programs with special needs, Enterprise is scoped and priced to you.",
+    a: "Yes. National and cross-border coverage takes in every province, territory and state, plus federal on both sides of the border, in one consolidated feed. It starts at $1,499 a month and is scoped to your footprint, so the final price depends on how much of the map you bid in. Specialized federal, military or municipal programs are scoped the same way. Book a call and I will quote it.",
   },
   {
     q: "What is not included?",
@@ -39,7 +39,7 @@ const PRICING_FAQS = [
 export const metadata: Metadata = pageMeta({
   title: "Pricing: Government Opportunity Intelligence Coverage Plans",
   description:
-    "Public pricing from $599/month on a 12-month commitment: Essential, Growth, Canada, USA, North America and custom Enterprise plans. Backed by the Qualified Opportunity Guarantee. No per-opportunity fees.",
+    "Transparent pricing from $599/month on a 12-month commitment. Essential and Growth are public; national and cross-border coverage is scoped to your footprint, from $1,499/month. Backed by the Qualified Opportunity Guarantee. No per-opportunity fees.",
   path: "/pricing",
   keywords: ["government bid monitoring pricing", "opportunity intelligence cost", "bid alert service pricing"],
 });
@@ -60,13 +60,15 @@ export default function PricingPage() {
           <div className="mt-6 max-w-3xl">
             <p className="eyebrow text-accent">Opportunity intelligence coverage</p>
             <h1 className="mt-3 text-4xl font-bold text-fg sm:text-5xl">
-              Public pricing. Priced as coverage, not per bid.
+              Transparent pricing, priced as coverage, not per bid.
             </h1>
             <p className="mt-5 text-lg leading-8 text-fg-muted">
               One flat plan covers the geography you choose: every relevant platform, every
               opportunity I find inside it, read and qualified. No per-portal fees. No
-              per-opportunity charges. No clock to watch. Coverage runs on a 12-month commitment,
-              the time it takes to catch your full opportunity cycle.
+              per-opportunity charges. No clock to watch. Entry coverage is public and starts at
+              $599 a month. National and cross-border coverage is scoped to your footprint, from
+              $1,499. Coverage runs on a 12-month commitment, the time it takes to catch your full
+              opportunity cycle.
             </p>
             <div className="mt-6">
               <CredentialBadge />
