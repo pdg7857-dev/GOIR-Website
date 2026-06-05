@@ -1,0 +1,17 @@
+node_modules
+.next
+out
+dist
+build
+.DS_Store
+.env
+.env.local
+.env.*.local
+*.log
+/coverage
+.prisma
+next-env.d.ts
+tsconfig.tsbuildinfo
+.vercel
+.vscode
+.idea

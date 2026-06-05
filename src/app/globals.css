@@ -1,0 +1,151 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --font-sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-serif: Georgia, ui-serif, serif;
+}
+
+@layer base {
+  :root {
+    color-scheme: dark;
+  }
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+  }
+  body {
+    @apply bg-bg text-fg antialiased;
+    text-rendering: optimizeLegibility;
+    background-image:
+      radial-gradient(900px circle at 8% -8%, hsl(187 90% 45% / 0.07), transparent 45%),
+      radial-gradient(900px circle at 100% -5%, hsl(265 89% 66% / 0.06), transparent 50%),
+      linear-gradient(to bottom, hsl(222 44% 3.5%), hsl(222 46% 2.5%));
+    background-attachment: fixed;
+    min-height: 100dvh;
+  }
+  ::selection {
+    background: hsl(184 100% 52% / 0.30);
+    color: white;
+  }
+  h1, h2, h3, h4 {
+    @apply font-semibold tracking-tight text-fg;
+    text-wrap: balance;
+  }
+}
+
+@layer components {
+  .container-tight {
+    @apply container max-w-5xl;
+  }
+  .eyebrow {
+    @apply inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.18em] text-accent;
+  }
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 rounded-lg px-5 py-3 text-sm font-semibold transition focus:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-bg;
+  }
+  .btn-primary {
+    @apply btn bg-accent text-bg shadow-[0_0_24px_-8px_hsl(186_100%_55%_/_0.6)] hover:bg-accent-glow;
+  }
+  .btn-gold {
+    @apply btn bg-warn text-bg hover:brightness-110;
+  }
+  .btn-ghost {
+    @apply btn border border-border bg-bg-raised text-fg hover:border-accent/50 hover:text-accent;
+  }
+  .btn-dark {
+    @apply btn bg-bg-raised text-fg ring-1 ring-border hover:bg-bg-hover;
+  }
+  .card {
+    @apply rounded-2xl border border-border bg-bg-panel/60 shadow-panel backdrop-blur-xl;
+  }
+  .prose-site {
+    @apply text-[1.0625rem] leading-8 text-fg-muted;
+  }
+  .prose-site h2 {
+    @apply mt-12 mb-4 text-2xl font-semibold text-fg sm:text-3xl;
+  }
+  .prose-site h3 {
+    @apply mt-9 mb-3 text-xl font-semibold text-fg;
+  }
+  .prose-site p {
+    @apply mb-5;
+  }
+  .prose-site ul {
+    @apply mb-6 space-y-2 pl-1;
+  }
+  .prose-site ul > li {
+    @apply relative pl-6;
+  }
+  .prose-site ul > li::before {
+    content: "";
+    @apply absolute left-0 top-3 h-1.5 w-1.5 rounded-full bg-accent;
+  }
+  .prose-site a {
+    @apply font-medium text-accent underline decoration-accent/40 underline-offset-2 hover:decoration-accent;
+  }
+  .prose-site strong {
+    @apply font-semibold text-fg;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+  .bg-grid {
+    background-image: linear-gradient(hsl(184 100% 52% / 0.05) 1px, transparent 1px),
+      linear-gradient(90deg, hsl(184 100% 52% / 0.05) 1px, transparent 1px);
+    background-size: 36px 36px;
+  }
+}
+
+/* ──────────────────────────────────────────────────────────────
+   GOIR report surface — the dark "tool" section inside the light
+   marketing shell. Scoped under `.goir-dark` so it never affects
+   the marketing pages.
+   ────────────────────────────────────────────────────────────── */
+.goir-dark {
+  color-scheme: dark;
+  @apply bg-bg text-fg;
+  background-image: radial-gradient(900px circle at 8% -8%, hsl(187 90% 45% / 0.07), transparent 45%),
+    radial-gradient(900px circle at 100% -5%, hsl(265 89% 66% / 0.06), transparent 50%),
+    linear-gradient(to bottom, hsl(222 44% 3.5%), hsl(222 46% 2.5%));
+}
+/* Neutralize the light base heading color inside the dark surface. */
+.goir-dark :where(h1, h2, h3, h4) {
+  color: inherit;
+}
+
+@layer components {
+  .goir-dark .panel {
+    @apply relative rounded-2xl border border-border bg-bg-panel/60 shadow-panel transition-colors;
+  }
+  .goir-dark .panel::before {
+    content: "";
+    @apply pointer-events-none absolute inset-x-5 top-0 h-px opacity-60;
+    background: linear-gradient(90deg, transparent, hsl(184 100% 52% / 0.45), transparent);
+  }
+  .goir-dark .panel-header {
+    @apply flex items-center justify-between gap-3 px-5 py-3.5 border-b border-border-subtle;
+  }
+  .goir-dark .panel-title {
+    @apply text-[11px] font-semibold uppercase tracking-[0.16em] text-fg-muted;
+  }
+  .goir-dark .stat-value {
+    @apply font-mono text-[1.7rem] font-semibold tracking-tight text-fg tabular-nums;
+  }
+  .goir-dark .lift {
+    @apply transition-transform duration-200 hover:-translate-y-0.5;
+  }
+  .goir-dark .pill {
+    @apply inline-flex items-center gap-1.5 rounded-full px-2 py-0.5 text-[11px] font-medium;
+  }
+  .goir-dark .text-gradient-accent {
+    background: linear-gradient(90deg, hsl(186 100% 70%), hsl(265 89% 76%));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+}

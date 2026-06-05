@@ -1,0 +1,190 @@
+import Link from "next/link";
+import { ChevronRight, Star } from "lucide-react";
+import { SOCIAL_PROOF, SITE } from "@/lib/site/config";
+import { RATING } from "@/lib/site/testimonials";
+
+/** Five stars with a partial fill representing `rating` out of 5. */
+export function Stars({ rating = RATING.score, className = "h-4 w-4" }: { rating?: number; className?: string }) {
+  const pct = Math.max(0, Math.min(100, (rating / 5) * 100));
+  return (
+    <span className="relative inline-flex" role="img" aria-label={`${rating} out of 5 stars`}>
+      <span className="flex text-fg-subtle/30">
+        {Array.from({ length: 5 }).map((_, i) => (
+          <Star key={i} className={className} fill="currentColor" strokeWidth={0} />
+        ))}
+      </span>
+      <span className="absolute inset-0 flex overflow-hidden text-warn" style={{ width: `${pct}%` }}>
+        {Array.from({ length: 5 }).map((_, i) => (
+          <Star key={i} className={`${className} shrink-0`} fill="currentColor" strokeWidth={0} />
+        ))}
+      </span>
+    </span>
+  );
+}
+
+/** Compact inline rating badge: stars + 4.8/5 from 44 clients. */
+export function RatingBadge({ className = "", lg = false }: { className?: string; lg?: boolean }) {
+  return (
+    <span className={`inline-flex items-center gap-2 ${className}`}>
+      <Stars className={lg ? "h-5 w-5" : "h-4 w-4"} />
+      <span className={`font-bold text-fg ${lg ? "text-lg" : "text-sm font-semibold"}`}>
+        {RATING.score.toFixed(1)}/5
+      </span>
+      <span className="text-sm text-fg-muted">from {RATING.count} client reviews</span>
+    </span>
+  );
+}
+
+export function Section({
+  children,
+  className = "",
+  muted = false,
+  dark = false,
+}: {
+  children: React.ReactNode;
+  className?: string;
+  muted?: boolean;
+  dark?: boolean;
+}) {
+  const bg = dark ? "bg-bg text-fg" : muted ? "bg-bg-subtle" : "bg-bg";
+  return (
+    <section className={`${bg} ${className}`}>
+      <div className="container py-16 sm:py-20">{children}</div>
+    </section>
+  );
+}
+
+export function SectionHead({
+  eyebrow,
+  title,
+  lede,
+  center = false,
+  dark = false,
+}: {
+  eyebrow?: string;
+  title: string;
+  lede?: string;
+  center?: boolean;
+  dark?: boolean;
+}) {
+  return (
+    <div className={`${center ? "mx-auto max-w-2xl text-center" : "max-w-2xl"}`}>
+      {eyebrow && <p className={`eyebrow ${dark ? "text-accent" : ""}`}>{eyebrow}</p>}
+      <h2 className={`mt-3 text-3xl font-semibold sm:text-4xl ${dark ? "text-fg" : "text-fg"}`}>
+        {title}
+      </h2>
+      {lede && (
+        <p className={`mt-4 text-lg leading-8 ${dark ? "text-fg-muted" : "text-fg-muted"}`}>
+          {lede}
+        </p>
+      )}
+    </div>
+  );
+}
+
+export function Breadcrumbs({ items }: { items: { name: string; href?: string }[] }) {
+  return (
+    <nav aria-label="Breadcrumb" className="text-sm text-fg-muted">
+      <ol className="flex flex-wrap items-center gap-1.5">
+        {items.map((it, i) => (
+          <li key={i} className="flex items-center gap-1.5">
+            {it.href ? (
+              <Link href={it.href} className="hover:text-accent">
+                {it.name}
+              </Link>
+            ) : (
+              <span className="text-fg">{it.name}</span>
+            )}
+            {i < items.length - 1 && <ChevronRight className="h-3.5 w-3.5 text-fg-subtle" />}
+          </li>
+        ))}
+      </ol>
+    </nav>
+  );
+}
+
+/** Coverage-facts strip (verifiable numbers only; never fabricated). */
+export function StatStrip({ dark = false }: { dark?: boolean }) {
+  const items = SOCIAL_PROOF.slice(0, 4);
+  return (
+    <div className={`grid grid-cols-2 gap-px overflow-hidden rounded-2xl border md:grid-cols-4 ${dark ? "border-white/10 bg-white/10" : "border-border bg-border"}`}>
+      {items.map((s) => (
+        <div key={s.label} className={`${dark ? "bg-bg" : "bg-bg-panel"} p-5 text-center`}>
+          <div className={`text-2xl font-bold tabular-nums ${dark ? "text-fg" : "text-fg"}`}>
+            {s.value ?? s.placeholder}
+          </div>
+          <div className={`mt-1 text-xs leading-snug ${dark ? "text-fg-subtle" : "text-fg-muted"}`}>
+            {s.label}
+          </div>
+        </div>
+      ))}
+    </div>
+  );
+}
+
+/** Final call-to-action band used at the bottom of most pages. */
+export function CtaBand({
+  title = "Stop wasting estimator time on the wrong bids.",
+  sub = "Book a 20-minute discovery call and I'll bring real, qualified opportunities in your trade and jurisdictions, so you can see the quality before you pay a cent.",
+}: {
+  title?: string;
+  sub?: string;
+}) {
+  return (
+    <section className="bg-bg">
+      <div className="container py-16 sm:py-20">
+        <div className="relative overflow-hidden rounded-3xl border border-white/10 bg-gradient-to-br from-bg-panel to-bg px-6 py-12 text-center sm:px-12">
+          <div className="bg-grid pointer-events-none absolute inset-0 opacity-30" />
+          <div className="relative mx-auto max-w-2xl">
+            <h2 className="text-balance text-3xl font-semibold text-fg sm:text-4xl">{title}</h2>
+            <p className="mt-4 text-lg leading-8 text-fg-muted">{sub}</p>
+            <div className="mt-8 flex flex-col justify-center gap-3 sm:flex-row">
+              <Link href={SITE.bookingUrl} className="btn-gold px-6 py-3 text-base">
+                Book a discovery call
+              </Link>
+              <Link href="/opportunity-waste-calculator" className="btn-ghost border-white/20 bg-white/5 px-6 py-3 text-base text-fg hover:border-white/40 hover:text-fg">
+                Calculate your opportunity waste
+              </Link>
+            </div>
+            <p className="mt-4 text-sm text-fg-subtle">
+              Twenty minutes, no cost. I&apos;ll bring real opportunities in your jurisdictions.
+            </p>
+            <div className="mt-5 flex justify-center">
+              <RatingBadge />
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+export function FeatureCard({
+  icon: Icon,
+  title,
+  children,
+}: {
+  icon?: React.ComponentType<{ className?: string }>;
+  title: string;
+  children: React.ReactNode;
+}) {
+  return (
+    <div className="card p-6">
+      {Icon && (
+        <div className="mb-4 grid h-11 w-11 place-items-center rounded-xl bg-accent-soft text-accent">
+          <Icon className="h-5 w-5" />
+        </div>
+      )}
+      <h3 className="text-lg font-semibold text-fg">{title}</h3>
+      <p className="mt-2 text-sm leading-6 text-fg-muted">{children}</p>
+    </div>
+  );
+}
+
+export function Pill({ children }: { children: React.ReactNode }) {
+  return (
+    <span className="inline-flex items-center rounded-full border border-border bg-bg-subtle px-3 py-1 text-xs font-medium text-fg-muted">
+      {children}
+    </span>
+  );
+}
