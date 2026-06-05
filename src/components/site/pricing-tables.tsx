@@ -14,6 +14,7 @@ export function PricingTables() {
         <div>
           <p className="text-sm font-semibold uppercase tracking-wide text-accent">{GUARANTEE.title}</p>
           <p className="mt-1.5 text-sm leading-6 text-fg-muted">{GUARANTEE.body}</p>
+          <p className="mt-3 border-t border-border pt-3 text-xs leading-6 text-fg-subtle">{GUARANTEE.definition}</p>
         </div>
       </div>
 

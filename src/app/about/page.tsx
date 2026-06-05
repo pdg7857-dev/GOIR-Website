@@ -176,7 +176,7 @@ export default function AboutPage() {
                 already mastered.
               </strong>{" "}
               Not work you should keep paying a person to repeat. The hours your team spends
-              refreshing search pages are hours they are not spending on the bids that win.
+              refreshing search pages are hours they are not spending on the bids worth pursuing.
             </p>
           </div>
         </div>

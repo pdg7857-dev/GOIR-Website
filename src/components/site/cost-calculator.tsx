@@ -101,7 +101,7 @@ export function CostCalculator({ compact = false }: { compact?: boolean }) {
             See what you are missing
           </Link>
           <p className="text-xs text-fg-muted">
-            Your inputs only. This is an estimate to start a conversation, not a quote.
+            This is an estimate based on the numbers you enter. Your actual time and cost will vary.
           </p>
         </div>
       </div>

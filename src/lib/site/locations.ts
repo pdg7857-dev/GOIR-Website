@@ -10,7 +10,11 @@ export type Province = {
   abbr: string;
   type: "province" | "territory";
   capital: string;
-  platforms: string[]; // platform slugs
+  /** The primary government procurement system for this jurisdiction, by name.
+   *  Some jurisdictions (Manitoba, NWT, Nunavut) carry their postings through
+   *  MERX rather than a standalone portal. */
+  primaryPortal: string;
+  platforms: string[]; // platform slugs (real, cross-linkable platforms only)
   blurb: string;
 };
 
@@ -29,68 +33,81 @@ const CA_FEDERAL = ["canadabuys", "merx"];
 export const PROVINCES: Province[] = [
   {
     slug: "ontario", name: "Ontario", abbr: "ON", type: "province", capital: "Toronto",
+    primaryPortal: "Ontario Tenders Portal",
     platforms: ["merx", "bids-and-tenders", "biddingo", "bonfire", ...CA_FEDERAL],
-    blurb: "Canada's largest procurement market: broader public sector (MASH), provincial ministries and hundreds of municipalities.",
+    blurb: "Canada's largest procurement market: broader public sector (MASH), provincial ministries and hundreds of municipalities. The Ontario Tenders Portal anchors provincial buying.",
   },
   {
     slug: "alberta", name: "Alberta", abbr: "AB", type: "province", capital: "Edmonton",
-    platforms: ["apc-purchasing-connection", "bids-and-tenders", "bonfire", ...CA_FEDERAL],
-    blurb: "Energy, infrastructure and a large municipal base across Calgary and Edmonton.",
+    primaryPortal: "Alberta Purchasing Connection (APC)",
+    platforms: ["bids-and-tenders", "bonfire", ...CA_FEDERAL],
+    blurb: "Energy, infrastructure and a large municipal base across Calgary and Edmonton. Alberta Purchasing Connection (APC) is the provincial system.",
   },
   {
     slug: "british-columbia", name: "British Columbia", abbr: "BC", type: "province", capital: "Victoria",
-    platforms: ["bc-bid", "bids-and-tenders", "bonfire", ...CA_FEDERAL],
+    primaryPortal: "BC Bid",
+    platforms: ["bids-and-tenders", "bonfire", ...CA_FEDERAL],
     blurb: "BC Bid plus a deep municipal and health-authority procurement landscape.",
   },
   {
     slug: "quebec", name: "Quebec", abbr: "QC", type: "province", capital: "Quebec City",
-    platforms: ["seao", "merx", ...CA_FEDERAL],
+    primaryPortal: "SEAO",
+    platforms: ["merx", ...CA_FEDERAL],
     blurb: "SEAO is the mandatory provincial system, with French-language documents and distinct rules.",
   },
   {
     slug: "manitoba", name: "Manitoba", abbr: "MB", type: "province", capital: "Winnipeg",
+    primaryPortal: "MERX (Manitoba government postings)",
     platforms: ["merx", "bids-and-tenders", ...CA_FEDERAL],
-    blurb: "Provincial and municipal buyers across a compact but active market.",
+    blurb: "Provincial and municipal buyers across a compact but active market. Manitoba government postings are carried through MERX.",
   },
   {
     slug: "saskatchewan", name: "Saskatchewan", abbr: "SK", type: "province", capital: "Regina",
-    platforms: ["sasktenders", "bids-and-tenders", ...CA_FEDERAL],
+    primaryPortal: "SaskTenders",
+    platforms: ["bids-and-tenders", ...CA_FEDERAL],
     blurb: "SaskTenders centralizes provincial opportunities; municipalities run their own portals.",
   },
   {
     slug: "nova-scotia", name: "Nova Scotia", abbr: "NS", type: "province", capital: "Halifax",
-    platforms: ["ns-procurement", "bids-and-tenders", ...CA_FEDERAL],
-    blurb: "Atlantic Canada's largest market, anchored by Halifax and provincial buyers.",
+    primaryPortal: "Nova Scotia Tenders",
+    platforms: ["bids-and-tenders", ...CA_FEDERAL],
+    blurb: "Atlantic Canada's largest market, anchored by Halifax and provincial buyers, with the province posting through Nova Scotia Tenders.",
   },
   {
     slug: "new-brunswick", name: "New Brunswick", abbr: "NB", type: "province", capital: "Fredericton",
-    platforms: ["nbon", "bids-and-tenders", ...CA_FEDERAL],
+    primaryPortal: "New Brunswick Opportunities Network (NBON)",
+    platforms: ["bids-and-tenders", ...CA_FEDERAL],
     blurb: "NBON (New Brunswick Opportunities Network) plus municipal portals.",
   },
   {
     slug: "prince-edward-island", name: "Prince Edward Island", abbr: "PE", type: "province", capital: "Charlottetown",
-    platforms: ["pei-tenders", "bids-and-tenders", ...CA_FEDERAL],
-    blurb: "A small but consistent provincial and municipal opportunity stream.",
+    primaryPortal: "PEI Tenders",
+    platforms: ["bids-and-tenders", ...CA_FEDERAL],
+    blurb: "A small but consistent provincial and municipal opportunity stream, posted through PEI Tenders.",
   },
   {
     slug: "newfoundland-and-labrador", name: "Newfoundland and Labrador", abbr: "NL", type: "province", capital: "St. John's",
-    platforms: ["nl-procurement", "bids-and-tenders", ...CA_FEDERAL],
-    blurb: "Provincial public procurement plus municipal and health-authority buyers.",
+    primaryPortal: "NL Public Procurement Agency",
+    platforms: ["bids-and-tenders", ...CA_FEDERAL],
+    blurb: "Provincial public procurement through the NL Public Procurement Agency, plus municipal and health-authority buyers.",
   },
   {
     slug: "yukon", name: "Yukon", abbr: "YT", type: "territory", capital: "Whitehorse",
-    platforms: ["yukon-tenders", ...CA_FEDERAL],
-    blurb: "Territorial government is the dominant buyer; remote logistics matter.",
+    primaryPortal: "bids&tenders (Yukon government)",
+    platforms: ["bids-and-tenders", ...CA_FEDERAL],
+    blurb: "The territorial government is the dominant buyer and posts through bids&tenders; remote logistics matter.",
   },
   {
     slug: "northwest-territories", name: "Northwest Territories", abbr: "NT", type: "territory", capital: "Yellowknife",
-    platforms: ["nwt-tenders", ...CA_FEDERAL],
-    blurb: "Territorial and Indigenous-government procurement across a vast region.",
+    primaryPortal: "MERX (NWT government postings)",
+    platforms: [...CA_FEDERAL],
+    blurb: "Territorial and Indigenous-government procurement across a vast region, with postings carried through MERX.",
   },
   {
     slug: "nunavut", name: "Nunavut", abbr: "NU", type: "territory", capital: "Iqaluit",
-    platforms: ["nunavut-tenders", ...CA_FEDERAL],
-    blurb: "NNI policy and remote delivery shape a specialized opportunity set.",
+    primaryPortal: "MERX (Nunavut government postings)",
+    platforms: [...CA_FEDERAL],
+    blurb: "NNI policy and remote delivery shape a specialized opportunity set, with government postings carried through MERX.",
   },
 ];
 

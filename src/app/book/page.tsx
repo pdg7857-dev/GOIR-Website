@@ -8,7 +8,7 @@ import {
   SectionHead,
 } from "@/components/site/ui";
 import { CalendlyEmbed } from "@/components/site/calendly-embed";
-import { RatingBadge } from "@/components/site/testimonials";
+import { CredentialBadge } from "@/components/site/ui";
 import { FaqAccordion } from "@/components/site/faq";
 import { SITE } from "@/lib/site/config";
 import {
@@ -78,7 +78,7 @@ export default function BookPage() {
               No slides, no pitch you have heard before, just the work, on your screen.
             </p>
             <div className="mt-5">
-              <RatingBadge />
+              <CredentialBadge />
             </div>
             <div className="mt-7 flex flex-wrap items-center gap-x-6 gap-y-3 text-sm text-fg-muted">
               <span className="inline-flex items-center gap-2">

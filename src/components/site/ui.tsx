@@ -1,36 +1,20 @@
 import Link from "next/link";
-import { ChevronRight, Star } from "lucide-react";
-import { SOCIAL_PROOF, SITE } from "@/lib/site/config";
-import { RATING } from "@/lib/site/testimonials";
+import { ChevronRight, BadgeCheck } from "lucide-react";
+import { SOCIAL_PROOF, SITE, BACKGROUND } from "@/lib/site/config";
 
-/** Five stars with a partial fill representing `rating` out of 5. */
-export function Stars({ rating = RATING.score, className = "h-4 w-4" }: { rating?: number; className?: string }) {
-  const pct = Math.max(0, Math.min(100, (rating / 5) * 100));
-  return (
-    <span className="relative inline-flex" role="img" aria-label={`${rating} out of 5 stars`}>
-      <span className="flex text-fg-subtle/30">
-        {Array.from({ length: 5 }).map((_, i) => (
-          <Star key={i} className={className} fill="currentColor" strokeWidth={0} />
-        ))}
-      </span>
-      <span className="absolute inset-0 flex overflow-hidden text-warn" style={{ width: `${pct}%` }}>
-        {Array.from({ length: 5 }).map((_, i) => (
-          <Star key={i} className={`${className} shrink-0`} fill="currentColor" strokeWidth={0} />
-        ))}
-      </span>
-    </span>
-  );
-}
-
-/** Compact inline rating badge: stars + 4.8/5 from 44 clients. */
-export function RatingBadge({ className = "", lg = false }: { className?: string; lg?: boolean }) {
+/**
+ * Inline credential badge. Replaces the old star rating, which borrowed reviews
+ * from a different service at a former employer. This states only what I did:
+ * the anonymized account-handling background from POSITIONING.md.
+ */
+export function CredentialBadge({ className = "", lg = false }: { className?: string; lg?: boolean }) {
   return (
     <span className={`inline-flex items-center gap-2 ${className}`}>
-      <Stars className={lg ? "h-5 w-5" : "h-4 w-4"} />
-      <span className={`font-bold text-fg ${lg ? "text-lg" : "text-sm font-semibold"}`}>
-        {RATING.score.toFixed(1)}/5
+      <BadgeCheck className={`text-accent ${lg ? "h-5 w-5" : "h-4 w-4"}`} />
+      <span className={`text-fg-muted ${lg ? "text-base" : "text-sm"}`}>
+        <span className="font-semibold text-fg">{BACKGROUND.accountsHandled} contractor accounts</span>{" "}
+        handled across Canada and the US
       </span>
-      <span className="text-sm text-fg-muted">from {RATING.count} client reviews</span>
     </span>
   );
 }
@@ -150,7 +134,7 @@ export function CtaBand({
               Twenty minutes, no cost. I&apos;ll bring real opportunities in your jurisdictions.
             </p>
             <div className="mt-5 flex justify-center">
-              <RatingBadge />
+              <CredentialBadge />
             </div>
           </div>
         </div>

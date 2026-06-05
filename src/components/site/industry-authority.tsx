@@ -5,7 +5,7 @@ import { Building2, AlertTriangle, Tag, ListChecks, ArrowRight, RefreshCw } from
 import { getIndustry } from "@/lib/site/industries";
 import { getPlatform } from "@/lib/site/platforms";
 import { platformPath, industryPath } from "@/lib/site/links";
-import { Breadcrumbs, CtaBand, Section, SectionHead, RatingBadge } from "@/components/site/ui";
+import { Breadcrumbs, CtaBand, Section, SectionHead, CredentialBadge } from "@/components/site/ui";
 import { LeadForm } from "@/components/site/lead-form";
 import { FaqAccordion } from "@/components/site/faq";
 import { GoirCta } from "@/components/site/goir-cta";
@@ -82,7 +82,7 @@ export function IndustryAuthority({ slug }: { slug: string }) {
               </Link>
             </div>
             <div className="mt-6">
-              <RatingBadge />
+              <CredentialBadge />
             </div>
           </div>
         </div>

@@ -224,7 +224,7 @@ export const MONEY_PAGES: MoneyPage[] = [
     group: "money",
     title: "Bid/No-Bid Analysis for Government Contracts",
     description:
-      "A disciplined bid/no-bid analysis protects your estimators and your win rate. I assess each government opportunity so you can decide fast and pursue only what fits.",
+      "A disciplined bid/no-bid analysis protects your estimators' time and focus. I assess each government opportunity so you can decide fast and pursue only what fits.",
     keywords: ["bid no bid analysis", "bid no bid decision", "government bid decision", "pursuit decision"],
     eyebrow: "Money page",
     h1: "Bid/No-Bid Analysis",
@@ -566,7 +566,7 @@ export const MONEY_PAGES: MoneyPage[] = [
         heading: "What opportunity waste is",
         blocks: [
           { type: "p", text: "Every opportunity your team reviews and declines has a cost. The notice gets opened, the documents get skimmed, a judgment gets made. Multiply that across a year of alerts and portals and the number is large, and almost entirely invisible on any budget line." },
-          { type: "p", text: "With proposal workloads rising and estimators hard to hire, the time your team loses to poor-fit opportunities is more expensive than ever. Reducing that waste is the fastest way to lift both capacity and win rate without hiring." },
+          { type: "p", text: "With proposal workloads rising and estimators hard to hire, the time your team loses to poor-fit opportunities is more expensive than ever. Reducing that waste is the fastest way to free up both capacity and estimator focus without hiring." },
         ],
       },
       {

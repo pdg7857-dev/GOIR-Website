@@ -2,19 +2,18 @@ import Link from "next/link";
 import { platformPath, industryPath } from "@/lib/site/links";
 import {
   Search, FileSearch, Filter, Send, Bell, Layers, Clock, AlertTriangle,
-  Building2, Sparkles, ArrowRight, CheckCircle2,
+  Building2, Sparkles, ArrowRight, CheckCircle2, BadgeCheck,
 } from "lucide-react";
-import { Section, SectionHead, StatStrip, CtaBand, FeatureCard } from "@/components/site/ui";
+import { Section, SectionHead, StatStrip, CtaBand, FeatureCard, CredentialBadge } from "@/components/site/ui";
 import { CostCalculator } from "@/components/site/cost-calculator";
 import { PricingTables } from "@/components/site/pricing-tables";
-import { TestimonialsSection, RatingBadge } from "@/components/site/testimonials";
 import { VideoEmbed } from "@/components/site/video-embed";
 import { FaqAccordion } from "@/components/site/faq";
 import { LeadForm } from "@/components/site/lead-form";
 import { GENERAL_FAQS } from "@/lib/site/faqs";
 import { CORNERSTONE_PLATFORMS, PLATFORMS } from "@/lib/site/platforms";
 import { PRIMARY_INDUSTRIES } from "@/lib/site/industries";
-import { SITE } from "@/lib/site/config";
+import { SITE, BACKGROUND } from "@/lib/site/config";
 import { JsonLd, faqJsonLd } from "@/lib/site/seo";
 
 export default function HomePage() {
@@ -55,7 +54,7 @@ export default function HomePage() {
               Twenty-minute discovery call, no cost. Public pricing from <span className="font-semibold text-fg">$599/month</span>.
             </p>
             <div className="mt-5 inline-flex items-center gap-2 rounded-full border border-warn/30 bg-warn-soft/30 px-4 py-2">
-              <RatingBadge lg />
+              <CredentialBadge lg />
             </div>
           </div>
 
@@ -326,8 +325,34 @@ export default function HomePage() {
         </div>
       </Section>
 
-      {/* Testimonials */}
-      <TestimonialsSection />
+      {/* Background credential. Replaces borrowed reviews: states only what I did,
+          never a client outcome. No testimonials until real, permissioned ones exist. */}
+      <Section muted>
+        <div className="mx-auto max-w-3xl">
+          <p className="eyebrow text-center">Where this comes from</p>
+          <h2 className="mt-3 text-center text-3xl font-semibold text-fg sm:text-4xl">
+            I came up inside the platforms themselves.
+          </h2>
+          <div className="prose-site mt-6 max-w-none">
+            <p>
+              I did not come to this from the outside. For {BACKGROUND.yearsInSector} I worked inside
+              the eprocurement industry, handling more than {BACKGROUND.accountsHandled.replace("+", "")}{" "}
+              contractor accounts across a portfolio of major procurement platforms in Canada and the
+              US. My job was keeping contractors getting real value from those platforms, which means
+              I saw exactly where they lose bids: not at the proposal, at the search. Now I do that
+              part for you, from your side of the table.
+            </p>
+          </div>
+          <ul className="mx-auto mt-8 grid max-w-2xl gap-3 sm:grid-cols-3">
+            {BACKGROUND.points.map((p) => (
+              <li key={p} className="card flex items-start gap-2 p-4 text-sm text-fg-muted">
+                <BadgeCheck className="mt-0.5 h-4 w-4 shrink-0 text-accent" />
+                <span>{p}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </Section>
 
       {/* Pricing */}
       <Section>

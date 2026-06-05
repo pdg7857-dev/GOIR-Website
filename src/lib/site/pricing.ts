@@ -22,6 +22,10 @@ export const GUARANTEE = {
   title: "Qualified Opportunity Guarantee",
   body:
     "If I don't identify at least 3 opportunities that match your approved targeting criteria within the first 90 days, I'll extend your subscription at no cost until the guarantee is fulfilled.",
+  // Definition that keeps the guarantee tied to my deliverable, not the client's
+  // award. Rendered alongside the guarantee wherever it appears. See POSITIONING.md.
+  definition:
+    "Qualified opportunity: an open solicitation I have matched to the trades, capacity, and coverage area you give me, summarized in plain language with a source link. The guarantee covers delivery of qualified opportunities, not contract awards, which depend on your bid. It assumes an active subscription and an accurate profile from you.",
 };
 
 export const INCLUDED_EVERYWHERE: string[] = [

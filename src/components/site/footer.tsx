@@ -42,7 +42,15 @@ export function SiteFooter() {
           ))}
         </div>
 
-        <div className="mt-12 flex flex-col gap-3 border-t border-white/10 pt-6 text-xs text-fg-muted sm:flex-row sm:items-center sm:justify-between">
+        <div className="mt-12 border-t border-white/10 pt-6">
+          <p className="max-w-3xl text-xs leading-6 text-fg-subtle">
+            {SITE.person} provides opportunity monitoring and qualification. I do not write or submit
+            proposals, and I do not guarantee contract awards. Background figures reflect prior
+            industry experience.
+          </p>
+        </div>
+
+        <div className="mt-6 flex flex-col gap-3 pt-2 text-xs text-fg-muted sm:flex-row sm:items-center sm:justify-between">
           <p>
             &copy; {year} {SITE.brandFull}. Independent opportunity-intelligence practice. Not
             affiliated with any procurement platform or government body.

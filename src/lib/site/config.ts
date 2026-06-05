@@ -182,3 +182,26 @@ export const SOCIAL_PROOF: Stat[] = [
   { value: "50", label: "U.S. states covered", placeholder: "50" },
   { value: "13", label: "Canadian provinces & territories", placeholder: "13" },
 ];
+
+/**
+ * Anonymized background credential from prior industry experience. This replaces
+ * the borrowed "4.8/5 from 44 client reviews" claim, which came from a different
+ * service at a former employer. See POSITIONING.md.
+ *
+ * The numbers are deliberately defensible: 15,000 Canada (2025) plus 2,500 US
+ * (2023-2024) is more than 17,500. "Handled," not "managed." No retention rate,
+ * no win rate, no employer or client names. The current-service platform count
+ * (18+) is kept distinct from the past-experience account count.
+ */
+export const BACKGROUND = {
+  accountsHandled: "17,500+",
+  yearsInSector: "three and a half years",
+  // Short trust line for inline credential badges across the site.
+  credentialLine: "17,500+ contractor accounts handled across Canada and the US",
+  // The three-point background strip from POSITIONING.md.
+  points: [
+    "17,500+ contractor accounts handled across Canada and the US",
+    "A portfolio of major procurement platforms, learned from the inside",
+    "18+ platforms monitored for clients today",
+  ],
+} as const;

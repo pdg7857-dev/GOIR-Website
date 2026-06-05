@@ -27,7 +27,7 @@ export default function ProvincePage({ params }: { params: { province: string } 
   const p = getProvince(params.province);
   if (!p) notFound();
 
-  const platforms = p.platforms.map((slug) => getPlatform(slug)).filter(Boolean);
+  const platforms = Array.from(new Set(p.platforms)).map((slug) => getPlatform(slug)).filter(Boolean);
 
   return (
     <>
@@ -71,7 +71,15 @@ export default function ProvincePage({ params }: { params: { province: string } 
 
       <Section>
         <SectionHead eyebrow="Where the work lives" title={`Platforms that matter in ${p.name}`} />
-        <div className="mt-8 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="mt-8 flex items-start gap-3 rounded-2xl border border-accent/30 bg-bg-panel p-5 ring-1 ring-accent/20">
+          <Building2 className="mt-0.5 h-5 w-5 shrink-0 text-accent" />
+          <p className="text-sm leading-6 text-fg-muted">
+            <span className="font-semibold text-fg">Primary {p.type === "territory" ? "territorial" : "provincial"} system:</span>{" "}
+            {p.primaryPortal}. I watch it alongside the national aggregators and municipal portals below,
+            so a posting on any one of them still reaches you.
+          </p>
+        </div>
+        <div className="mt-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
           {platforms.map((pf) => (
             <Link key={pf!.slug} href={platformPath(pf!.slug)} className="card group p-5 transition hover:border-accent/40">
               <div className="flex items-center justify-between">

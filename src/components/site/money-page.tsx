@@ -3,7 +3,7 @@ import Link from "next/link";
 import type { Metadata } from "next";
 import { ArrowRight } from "lucide-react";
 import { getMoneyPage } from "@/lib/site/money-pages";
-import { Breadcrumbs, CtaBand, Section, RatingBadge } from "@/components/site/ui";
+import { Breadcrumbs, CtaBand, Section, CredentialBadge } from "@/components/site/ui";
 import { LongFormBody, TableOfContents } from "@/components/site/longform";
 import { FaqAccordion } from "@/components/site/faq";
 import { StatCallout, References } from "@/components/site/cite";
@@ -54,7 +54,7 @@ export function MoneyPageView({ slug }: { slug: string }) {
               </Link>
             </div>
             <div className="mt-6">
-              <RatingBadge />
+              <CredentialBadge />
             </div>
           </div>
         </div>
