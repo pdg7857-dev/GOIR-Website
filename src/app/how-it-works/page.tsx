@@ -107,7 +107,7 @@ export default function HowItWorksPage() {
             </p>
             <div className="mt-7 flex flex-wrap gap-3">
               <Link href={SITE.bookingUrl} className="btn-gold px-5 py-3">Book a discovery call</Link>
-              <Link href="/pricing" className="btn-ghost border-white/20 bg-white/5 px-5 py-3 text-fg hover:border-white/40 hover:text-fg">See coverage</Link>
+              <Link href="/free-opportunities" className="btn-ghost border-white/20 bg-white/5 px-5 py-3 text-fg hover:border-white/40 hover:text-fg">Request free opportunities</Link>
             </div>
           </div>
         </div>

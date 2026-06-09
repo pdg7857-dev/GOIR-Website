@@ -44,7 +44,7 @@ export function IndustryAuthority({ slug }: { slug: string }) {
     },
     {
       q: "How much does coverage cost?",
-      a: "Flat monthly coverage, priced by the geography you need rather than per opportunity or per platform. Coverage is scoped to your footprint, from a single province or state up to nationwide and cross-border, and quoted on a discovery call. See the coverage page for details.",
+      a: "Flat monthly coverage, priced by the geography you need rather than per opportunity or per platform. Coverage is scoped to your footprint, from a single province or state up to nationwide and cross-border, and quoted on a discovery call once I understand where you bid.",
     },
   ];
 

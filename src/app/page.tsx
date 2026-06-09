@@ -367,11 +367,11 @@ export default function HomePage() {
           </Link>
         </div>
         <p className="mt-8 text-center text-sm text-fg-muted">
-          How coverage works and what is included on the{" "}
-          <Link href="/pricing" className="font-medium text-accent underline">
-            coverage page
-          </Link>
-          .
+          Not ready for a call? Have me{" "}
+          <Link href="/free-opportunities" className="font-medium text-accent underline">
+            send you free opportunities
+          </Link>{" "}
+          in your trade first.
         </p>
       </Section>
 
