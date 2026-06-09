@@ -101,7 +101,6 @@ export const PRIMARY_NAV: NavItem[] = [
       { label: "Contract Expirations", href: "/government-contract-expirations" },
     ],
   },
-  { label: "Pricing", href: "/pricing" },
   {
     label: "Resources",
     href: "/resources",

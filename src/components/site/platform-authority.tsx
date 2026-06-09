@@ -10,7 +10,6 @@ import { Breadcrumbs, CtaBand, Section, CredentialBadge } from "@/components/sit
 import { LongFormBody, TableOfContents } from "@/components/site/longform";
 import { FaqAccordion } from "@/components/site/faq";
 import { LeadForm } from "@/components/site/lead-form";
-import { PricingTables } from "@/components/site/pricing-tables";
 import { GoirCta } from "@/components/site/goir-cta";
 import { SITE } from "@/lib/site/config";
 import { pageMeta, JsonLd, breadcrumbJsonLd, faqJsonLd, serviceJsonLd } from "@/lib/site/seo";
@@ -189,18 +188,20 @@ export function PlatformAuthority({ slug }: { slug: string }) {
         </div>
       </Section>
 
-      {/* Pricing */}
+      {/* Coverage */}
       <Section>
         <div className="mx-auto max-w-2xl text-center">
           <p className="eyebrow justify-center">Coverage</p>
-          <h2 className="mt-3 text-3xl font-semibold text-fg">Simple, transparent pricing</h2>
+          <h2 className="mt-3 text-3xl font-semibold text-fg">Included in your coverage</h2>
           <p className="mt-4 text-lg text-fg-muted">
-            {platform.shortName} monitoring is included in every coverage plan for the jurisdictions
-            you choose. No per-platform fees.
+            {platform.shortName} monitoring is included for the jurisdictions you choose. No
+            per-platform fees. Coverage is scoped to your footprint and quoted on a short call.
           </p>
-        </div>
-        <div className="mt-12">
-          <PricingTables />
+          <div className="mt-8 flex justify-center">
+            <Link href={SITE.bookingUrl} className="btn-gold px-6 py-3.5 text-base">
+              Book a discovery call
+            </Link>
+          </div>
         </div>
       </Section>
 

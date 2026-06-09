@@ -809,7 +809,7 @@ export function buildGeneratedBody(topic: BlogTopic): BlogBody {
     },
     {
       q: "What does coverage cost?",
-      a: "Pricing is public and starts from $599 a month, structured by the geographic coverage you need. You pay for the jurisdictions you bid in, with monitoring of the relevant platforms included.",
+      a: "Coverage is structured by the geography you need rather than per opportunity, and scoped to your footprint. You cover the jurisdictions you bid in, with monitoring of the relevant platforms included, and I quote it on a discovery call.",
     },
   ];
 

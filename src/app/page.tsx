@@ -6,7 +6,6 @@ import {
 } from "lucide-react";
 import { Section, SectionHead, StatStrip, CtaBand, FeatureCard, CredentialBadge } from "@/components/site/ui";
 import { CostCalculator } from "@/components/site/cost-calculator";
-import { PricingTables } from "@/components/site/pricing-tables";
 import { VideoEmbed } from "@/components/site/video-embed";
 import { FaqAccordion } from "@/components/site/faq";
 import { LeadForm } from "@/components/site/lead-form";
@@ -51,7 +50,7 @@ export default function HomePage() {
               </Link>
             </div>
             <p className="mt-5 text-sm text-fg-subtle">
-              Twenty-minute discovery call, no cost. Public pricing from <span className="font-semibold text-fg">$599/month</span>.
+              Twenty-minute discovery call, no cost. Coverage is scoped to your footprint and quoted on the call.
             </p>
             <div className="mt-5 inline-flex items-center gap-2 rounded-full border border-warn/30 bg-warn-soft/30 px-4 py-2">
               <CredentialBadge lg />
@@ -354,21 +353,23 @@ export default function HomePage() {
         </div>
       </Section>
 
-      {/* Pricing */}
+      {/* Coverage */}
       <Section>
         <SectionHead
           center
-          eyebrow="Pricing"
-          title="Transparent pricing, structured as coverage."
-          lede="Not per opportunity. Not per portal. Not hourly. Entry coverage is public from $599 a month; national and cross-border coverage is scoped to your footprint."
+          eyebrow="Coverage"
+          title="Structured as coverage, not per opportunity."
+          lede="Not per portal. Not hourly. Coverage is scoped to your footprint, a single province or state, several, or nationwide and cross-border including federal, and quoted on a short discovery call."
         />
-        <div className="mt-12">
-          <PricingTables />
+        <div className="mt-10 flex justify-center">
+          <Link href={SITE.bookingUrl} className="btn-gold px-6 py-3.5 text-base">
+            Book a discovery call
+          </Link>
         </div>
         <p className="mt-8 text-center text-sm text-fg-muted">
-          Full details, FAQs and what is included on the{" "}
+          How coverage works and what is included on the{" "}
           <Link href="/pricing" className="font-medium text-accent underline">
-            pricing page
+            coverage page
           </Link>
           .
         </p>

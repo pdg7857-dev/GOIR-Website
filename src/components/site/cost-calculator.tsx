@@ -6,8 +6,8 @@ import { SITE } from "@/lib/site/config";
 
 /**
  * Opportunity Cost Calculator. Estimates what manual portal monitoring and
- * bid review costs per month, then compares it to coverage starting at $599.
- * Numbers are the user's own inputs, so nothing here is fabricated.
+ * bid review costs per month. Numbers are the user's own inputs, so nothing
+ * here is fabricated.
  */
 export function CostCalculator({ compact = false }: { compact?: boolean }) {
   const [rate, setRate] = useState(55); // fully-loaded estimator $/hr
@@ -22,9 +22,6 @@ export function CostCalculator({ compact = false }: { compact?: boolean }) {
     const monthlyHours = weekly * 4.33;
     return Math.round(monthlyHours * rate);
   }, [rate, hours, jurisdictions]);
-
-  const plan = 599;
-  const delta = monthly - plan;
 
   return (
     <div className={`card overflow-hidden ${compact ? "" : "shadow-lift"}`}>
@@ -76,25 +73,11 @@ export function CostCalculator({ compact = false }: { compact?: boolean }) {
           </div>
 
           <div className="rounded-xl border border-white/10 bg-white/5 p-4 text-sm">
-            <div className="flex items-center justify-between">
-              <span className="text-fg-muted">Single-jurisdiction coverage</span>
-              <span className="font-semibold text-fg">${plan}/mo</span>
-            </div>
-            {delta > 0 ? (
-              <p className="mt-2 text-left text-fg-muted">
-                That is roughly{" "}
-                <span className="font-semibold text-warn">
-                  ${delta.toLocaleString()}/month
-                </span>{" "}
-                of estimator time you could put back on winnable bids, and you stop reading the
-                ones that were never a fit.
-              </p>
-            ) : (
-              <p className="mt-2 text-left text-fg-muted">
-                Even here, coverage buys back the hours and the bids your team never sees, not just
-                the dollars.
-              </p>
-            )}
+            <p className="text-left text-fg-muted">
+              That is time your estimator spends searching and reading poor-fit bids, before a
+              single proposal is written. I take that work off your plate so those hours go back
+              on the bids worth winning, and you stop reading the ones that were never a fit.
+            </p>
           </div>
 
           <Link href={SITE.bookingUrl} className="btn-gold w-full py-3">
