@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
+import { prisma } from "@/lib/prisma";
 import { sendEmail } from "@/lib/integrations/email";
 import { SITE } from "@/lib/site/config";
 
@@ -7,11 +8,11 @@ export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 
 /**
- * "Request your free opportunities" intake. A lighter, give-value-first lead
- * tool: the prospect tells me who they are and where they bid, and I come back
- * with real, qualified opportunities they had not found. No DB write, the lead
- * is emailed straight to me so nothing is lost. Persisting to a CRM is a
- * follow-up (see POSITIONING.md / open items).
+ * "Request your free opportunities" intake. A give-value-first lead tool: the
+ * prospect tells me who they are and where they bid, and I come back with real,
+ * qualified opportunities they had not found. The lead is (1) written into the
+ * CRM as a Lead + Contact on the eprocurement business, and (2) emailed to my
+ * leads inbox as a backstop so nothing is lost if the DB is unreachable.
  */
 const schema = z.object({
   contactName: z.string().min(1, "Your name is required").max(120),
@@ -59,14 +60,68 @@ export async function POST(req: NextRequest) {
     ["Name", d.contactName],
     ["Company", d.companyName],
     ["Email", d.email],
-    ["Phone", d.phone?.trim() || "—"],
-    ["Website", d.website?.trim() || "—"],
+    ["Phone", d.phone?.trim() || "n/a"],
+    ["Website", d.website?.trim() || "n/a"],
     ["Trade / work", d.trade],
     ["Where they bid", d.region],
     ["Bidding experience", experienceLabel],
-    ["Platforms used", platforms.length ? platforms.join(", ") : "—"],
-    ["Notes", d.notes?.trim() || "—"],
+    ["Platforms used", platforms.length ? platforms.join(", ") : "n/a"],
+    ["Notes", d.notes?.trim() || "n/a"],
   ];
+
+  // Connect the lead to the CRM (eprocurement business) we built together.
+  // Best-effort: never block the response or the email backstop on a DB issue.
+  const crmNotes = [
+    `Website: ${d.website?.trim() || "n/a"}`,
+    `Trade: ${d.trade}`,
+    `Where they bid: ${d.region}`,
+    `Bidding experience: ${experienceLabel}`,
+    `Platforms used: ${platforms.length ? platforms.join(", ") : "n/a"}`,
+    d.notes?.trim() ? `Notes: ${d.notes.trim()}` : null,
+    "Source: Request your free opportunities form",
+  ]
+    .filter(Boolean)
+    .join("\n");
+
+  try {
+    const business = await prisma.business.findFirst({
+      where: { slug: "eprocurement" },
+      select: { id: true, userId: true },
+    });
+    if (business) {
+      const parts = d.contactName.trim().split(/\s+/);
+      const firstName = parts[0] || d.companyName;
+      const lastName = parts.slice(1).join(" ") || null;
+      const contact = await prisma.contact.create({
+        data: {
+          userId: business.userId,
+          firstName,
+          lastName,
+          email: d.email,
+          phone: d.phone?.trim() || null,
+          company: d.companyName,
+          notes: crmNotes,
+          tags: ["website-lead", "free-opportunities", `bidding:${d.experience}`],
+        },
+        select: { id: true },
+      });
+      await prisma.lead.create({
+        data: {
+          userId: business.userId,
+          businessId: business.id,
+          contactId: contact.id,
+          name: `${d.contactName} (${d.companyName})`,
+          email: d.email,
+          phone: d.phone?.trim() || null,
+          source: "WEBSITE",
+          status: "new",
+          notes: crmNotes,
+        },
+      });
+    }
+  } catch {
+    // Swallow: the email backstop below still captures the lead.
+  }
 
   // Notify me with the full lead so I can pull opportunities and follow up.
   const leadHtml = `<h2>New free-opportunities request</h2><table cellpadding="6" style="border-collapse:collapse">${rows
@@ -75,7 +130,7 @@ export async function POST(req: NextRequest) {
   const leadText = rows.map(([k, v]) => `${k}: ${v}`).join("\n");
 
   await sendEmail({
-    to: SITE.email,
+    to: SITE.leadsEmail,
     replyTo: d.email,
     subject: `Free-opportunities request: ${d.companyName} (${experienceLabel})`,
     html: leadHtml,
