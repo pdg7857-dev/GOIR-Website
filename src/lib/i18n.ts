@@ -12,7 +12,20 @@ export type Locale = "en" | "fr";
 export const TRANSLATED_PATHS = new Set<string>([
   "/",
   "/free-opportunities",
+  "/how-it-works",
+  "/contact",
+  "/faq",
+  "/opportunity-waste-calculator",
 ]);
+
+/** Simplified French primary nav (links to the translated core pages). */
+export const FR_NAV: { label: string; href: string }[] = [
+  { label: "Comment ça fonctionne", href: "/fr/how-it-works" },
+  { label: "Opportunités gratuites", href: "/fr/free-opportunities" },
+  { label: "Calculateur", href: "/fr/opportunity-waste-calculator" },
+  { label: "FAQ", href: "/fr/faq" },
+  { label: "Contact", href: "/fr/contact" },
+];
 
 export function localeFromPath(pathname: string): Locale {
   return pathname === "/fr" || pathname.startsWith("/fr/") ? "fr" : "en";

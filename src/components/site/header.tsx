@@ -5,7 +5,7 @@ import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { ChevronDown, Menu, X, Globe } from "lucide-react";
 import { PRIMARY_NAV, SITE } from "@/lib/site/config";
-import { localeFromPath, toFrPath, toEnPath, dict } from "@/lib/i18n";
+import { localeFromPath, toFrPath, toEnPath, dict, FR_NAV } from "@/lib/i18n";
 
 export function SiteHeader() {
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -34,7 +34,17 @@ export function SiteHeader() {
         </Link>
 
         <nav className="hidden items-center gap-1 lg:flex" aria-label="Primary">
-          {PRIMARY_NAV.map((item) =>
+          {locale === "fr"
+            ? FR_NAV.map((item) => (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  className="rounded-md px-3 py-2 text-sm font-medium text-fg-muted transition hover:text-accent"
+                >
+                  {item.label}
+                </Link>
+              ))
+            : PRIMARY_NAV.map((item) =>
             item.children ? (
               <div key={item.label} className="group relative">
                 <Link
@@ -100,31 +110,34 @@ export function SiteHeader() {
       {mobileOpen && (
         <div className="absolute inset-x-0 top-full max-h-[calc(100dvh-4rem)] overflow-y-auto overscroll-contain border-t border-border bg-bg-panel shadow-lift lg:hidden">
           <div className="container space-y-1 py-4">
-            {PRIMARY_NAV.map((item) => (
-              <div key={item.label}>
-                <Link
-                  href={item.href}
-                  className="block rounded-lg px-3 py-2 text-sm font-semibold text-fg"
-                  onClick={() => setMobileOpen(false)}
-                >
-                  {item.label}
-                </Link>
-                {item.children && (
-                  <div className="ml-3 border-l border-border pl-3">
-                    {item.children.map((c) => (
-                      <Link
-                        key={c.href}
-                        href={c.href}
-                        className="block rounded-lg px-3 py-1.5 text-sm text-fg-muted"
-                        onClick={() => setMobileOpen(false)}
-                      >
-                        {c.label}
-                      </Link>
-                    ))}
-                  </div>
-                )}
-              </div>
-            ))}
+            {(locale === "fr" ? FR_NAV : PRIMARY_NAV).map((item) => {
+              const children = (item as { children?: { label: string; href: string }[] }).children;
+              return (
+                <div key={item.href}>
+                  <Link
+                    href={item.href}
+                    className="block rounded-lg px-3 py-2 text-sm font-semibold text-fg"
+                    onClick={() => setMobileOpen(false)}
+                  >
+                    {item.label}
+                  </Link>
+                  {children && (
+                    <div className="ml-3 border-l border-border pl-3">
+                      {children.map((c) => (
+                        <Link
+                          key={c.href}
+                          href={c.href}
+                          className="block rounded-lg px-3 py-1.5 text-sm text-fg-muted"
+                          onClick={() => setMobileOpen(false)}
+                        >
+                          {c.label}
+                        </Link>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              );
+            })}
             <div className="flex gap-2 pt-3">
               <Link href={SITE.bookingUrl} className="btn-ghost flex-1 py-2.5 text-sm" onClick={() => setMobileOpen(false)}>
                 {t.ctaBook}
