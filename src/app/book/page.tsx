@@ -46,7 +46,7 @@ const faqs = [
   },
   {
     q: "What does coverage cost after the call?",
-    a: "Flat monthly coverage, priced by the geography you need rather than per opportunity or per platform. Coverage is scoped to your footprint and I quote it on the call. We only get into pricing if the opportunities I show you make it worth your while.",
+    a: "One payment for a full year of coverage, not a monthly plan, priced by the geography you need rather than per opportunity or per platform. Coverage is scoped to your footprint and I quote it on the call. We only get into pricing if the opportunities I show you make it worth your while.",
   },
 ];
 

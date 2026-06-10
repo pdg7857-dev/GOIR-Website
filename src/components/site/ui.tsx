@@ -88,7 +88,14 @@ export function Breadcrumbs({ items }: { items: { name: string; href?: string }[
 }
 
 /** Coverage-facts strip (verifiable numbers only; never fabricated). */
-export function StatStrip({ dark = false }: { dark?: boolean }) {
+const STAT_LABELS_FR: Record<string, string> = {
+  "Procurement platforms monitored": "Plateformes d'approvisionnement surveillées",
+  "Industries served": "Secteurs desservis",
+  "U.S. states covered": "États américains couverts",
+  "Canadian provinces & territories": "Provinces et territoires canadiens",
+};
+
+export function StatStrip({ dark = false, lang = "en" }: { dark?: boolean; lang?: "en" | "fr" }) {
   const items = SOCIAL_PROOF.slice(0, 4);
   return (
     <div className={`grid grid-cols-2 gap-px overflow-hidden rounded-2xl border md:grid-cols-4 ${dark ? "border-white/10 bg-white/10" : "border-border bg-border"}`}>
@@ -98,7 +105,7 @@ export function StatStrip({ dark = false }: { dark?: boolean }) {
             {s.value ?? s.placeholder}
           </div>
           <div className={`mt-1 text-xs leading-snug ${dark ? "text-fg-subtle" : "text-fg-muted"}`}>
-            {s.label}
+            {lang === "fr" ? STAT_LABELS_FR[s.label] ?? s.label : s.label}
           </div>
         </div>
       ))}

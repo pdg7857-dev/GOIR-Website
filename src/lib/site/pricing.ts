@@ -30,6 +30,7 @@ export const INCLUDED_EVERYWHERE: string[] = [
  * scoped to the client's footprint and discussed on a discovery call.
  */
 export const COVERAGE_PRINCIPLES = [
+  "One payment for a full year of coverage, not a monthly plan. You are covered for the whole opportunity cycle.",
   "Structured as coverage, not per opportunity. I review as many as it takes.",
   "Scoped to your footprint: a single province or state, several, or nationwide and cross-border, including federal.",
   "Backed by the Qualified Opportunity Guarantee, so the first 90 days are on me to prove out.",
