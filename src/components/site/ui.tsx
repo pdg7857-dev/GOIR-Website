@@ -108,30 +108,42 @@ export function StatStrip({ dark = false }: { dark?: boolean }) {
 
 /** Final call-to-action band used at the bottom of most pages. */
 export function CtaBand({
-  title = "See what you are missing, free.",
-  sub = "Tell me your trade and where you bid, and I'll send you a short list of real, qualified opportunities you have not found. No cost, no obligation.",
+  title,
+  sub,
+  lang = "en",
 }: {
   title?: string;
   sub?: string;
+  lang?: "en" | "fr";
 }) {
+  const fr = lang === "fr";
+  const heading = title ?? (fr ? "Voyez ce qui vous échappe, gratuitement." : "See what you are missing, free.");
+  const subtext =
+    sub ??
+    (fr
+      ? "Dites-moi votre métier et où vous soumissionnez, et je vous enverrai une courte liste d'opportunités réelles et qualifiées que vous n'avez pas trouvées. Sans frais, sans engagement."
+      : "Tell me your trade and where you bid, and I'll send you a short list of real, qualified opportunities you have not found. No cost, no obligation.");
+  const freeHref = fr ? "/fr/free-opportunities" : "/free-opportunities";
   return (
     <section className="bg-bg">
       <div className="container py-16 sm:py-20">
         <div className="relative overflow-hidden rounded-3xl border border-white/10 bg-gradient-to-br from-bg-panel to-bg px-6 py-12 text-center sm:px-12">
           <div className="bg-grid pointer-events-none absolute inset-0 opacity-30" />
           <div className="relative mx-auto max-w-2xl">
-            <h2 className="text-balance text-3xl font-semibold text-fg sm:text-4xl">{title}</h2>
-            <p className="mt-4 text-lg leading-8 text-fg-muted">{sub}</p>
+            <h2 className="text-balance text-3xl font-semibold text-fg sm:text-4xl">{heading}</h2>
+            <p className="mt-4 text-lg leading-8 text-fg-muted">{subtext}</p>
             <div className="mt-8 flex flex-col justify-center gap-3 sm:flex-row">
-              <Link href="/free-opportunities" className="btn-gold px-6 py-3 text-base">
-                Get free opportunities
+              <Link href={freeHref} className="btn-gold px-6 py-3 text-base">
+                {fr ? "Obtenez des opportunités gratuites" : "Get free opportunities"}
               </Link>
               <Link href={SITE.bookingUrl} className="btn-ghost border-white/20 bg-white/5 px-6 py-3 text-base text-fg hover:border-white/40 hover:text-fg">
-                Book a discovery call
+                {fr ? "Réserver un appel" : "Book a discovery call"}
               </Link>
             </div>
             <p className="mt-4 text-sm text-fg-subtle">
-              Free, no obligation. I&apos;ll bring real opportunities in your trade and jurisdictions.
+              {fr
+                ? "Gratuit, sans engagement. J'apporte de vraies opportunités dans votre métier et vos territoires."
+                : "Free, no obligation. I'll bring real opportunities in your trade and jurisdictions."}
             </p>
             <div className="mt-5 flex justify-center">
               <CredentialBadge />

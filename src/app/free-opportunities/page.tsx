@@ -4,8 +4,9 @@ import { Breadcrumbs, CtaBand, Section, SectionHead, CredentialBadge } from "@/c
 import { RequestOpportunitiesForm } from "@/components/site/request-opportunities-form";
 import { FaqAccordion } from "@/components/site/faq";
 import { pageMeta, JsonLd, breadcrumbJsonLd, faqJsonLd } from "@/lib/site/seo";
+import { SITE } from "@/lib/site/config";
 
-export const metadata: Metadata = pageMeta({
+const meta = pageMeta({
   title: "Get Free Government Bid Opportunities for Your Trade",
   description:
     "Tell me your trade and where you bid, and I'll send you a short list of real, current government opportunities you have not found, already qualified with source links. Free, no obligation, no spam.",
@@ -18,6 +19,17 @@ export const metadata: Metadata = pageMeta({
     "government RFP leads",
   ],
 });
+
+export const metadata: Metadata = {
+  ...meta,
+  alternates: {
+    canonical: SITE.domain + "/free-opportunities",
+    languages: {
+      en: SITE.domain + "/free-opportunities",
+      "fr-CA": SITE.domain + "/fr/free-opportunities",
+    },
+  },
+};
 
 const FAQS = [
   {
