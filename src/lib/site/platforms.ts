@@ -312,6 +312,21 @@ export function platformHomepageLabel(slug: string): string | undefined {
 /** Platforms that have hand-authored long-form bodies (cornerstones first). */
 export const CORNERSTONE_PLATFORMS = PLATFORMS.filter((p) => p.priority === 1);
 
+/**
+ * The platforms featured in the homepage and authority showcases. Canada-forward
+ * by design: we lead with the Canadian portals contractors here actually use
+ * (MERX, CanadaBuys, Biddingo) and keep a U.S. portal present to show that side
+ * is covered too. Provincial portals are advertised in copy alongside these.
+ */
+export const FEATURED_PLATFORMS: Platform[] = [
+  "merx",
+  "canadabuys",
+  "biddingo",
+  "bidnet-direct",
+]
+  .map((slug) => getPlatform(slug))
+  .filter((p): p is Platform => Boolean(p));
+
 export function platformsByCategory() {
   const map = new Map<PlatformCategory, Platform[]>();
   for (const p of PLATFORMS) {

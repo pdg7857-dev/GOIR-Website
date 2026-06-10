@@ -7,7 +7,7 @@ import { LongFormBody, TableOfContents } from "@/components/site/longform";
 import { FaqAccordion } from "@/components/site/faq";
 import { LeadForm } from "@/components/site/lead-form";
 import type { Section as Sec } from "@/lib/site/content/types";
-import { CORNERSTONE_PLATFORMS } from "@/lib/site/platforms";
+import { FEATURED_PLATFORMS } from "@/lib/site/platforms";
 import { SITE } from "@/lib/site/config";
 import { pageMeta, JsonLd, breadcrumbJsonLd, faqJsonLd, serviceJsonLd } from "@/lib/site/seo";
 
@@ -133,7 +133,7 @@ export default function GoiPage() {
             <div className="mt-12 rounded-2xl border border-border bg-bg-subtle p-6">
               <h3 className="text-sm font-semibold uppercase tracking-wide text-fg-muted">Go deeper on the platforms</h3>
               <div className="mt-3 flex flex-wrap gap-2">
-                {CORNERSTONE_PLATFORMS.map((p) => (
+                {FEATURED_PLATFORMS.map((p) => (
                   <Link key={p.slug} href={platformPath(p.slug)} className="inline-flex items-center gap-1.5 rounded-full border border-border bg-bg-panel px-3 py-1.5 text-sm font-medium text-fg-muted hover:border-accent hover:text-accent">
                     {p.shortName} <ArrowRight className="h-3.5 w-3.5 opacity-50" />
                   </Link>

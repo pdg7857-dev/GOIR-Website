@@ -10,7 +10,7 @@ import { VideoEmbed } from "@/components/site/video-embed";
 import { FaqAccordion } from "@/components/site/faq";
 import { LeadForm } from "@/components/site/lead-form";
 import { GENERAL_FAQS } from "@/lib/site/faqs";
-import { CORNERSTONE_PLATFORMS, PLATFORMS } from "@/lib/site/platforms";
+import { FEATURED_PLATFORMS, PLATFORMS } from "@/lib/site/platforms";
 import { PRIMARY_INDUSTRIES } from "@/lib/site/industries";
 import { SITE, BACKGROUND } from "@/lib/site/config";
 import { JsonLd, faqJsonLd } from "@/lib/site/seo";
@@ -65,8 +65,8 @@ export default function HomePage() {
               <div className="mt-4 space-y-3">
                 {[
                   { t: "Custodial services, 3 schools", s: "MERX, closes in 18 days", fit: "Strong fit" },
-                  { t: "Roof replacement, county facility", s: "Bonfire, mandatory site visit Tue", fit: "Worth a look" },
-                  { t: "HVAC controls upgrade", s: "SAM.gov, filed under \"energy retrofit\"", fit: "Strong fit" },
+                  { t: "Roof replacement, municipal facility", s: "Biddingo, mandatory site visit Tue", fit: "Worth a look" },
+                  { t: "HVAC controls upgrade", s: "BC Bid, filed under \"energy retrofit\"", fit: "Strong fit" },
                 ].map((c) => (
                   <div key={c.t} className="rounded-xl border border-white/10 bg-ink-800/60 p-4">
                     <div className="flex items-start justify-between gap-3">
@@ -108,15 +108,18 @@ export default function HomePage() {
       <section className="border-b border-border bg-bg-subtle">
         <div className="container py-10">
           <p className="text-center text-xs font-semibold uppercase tracking-[0.16em] text-fg-muted">
-            Fluent in the platforms your buyers actually use
+            Every Canadian portal, plus the U.S. platforms when you bid south of the border
           </p>
           <div className="mt-6 flex flex-wrap items-center justify-center gap-x-8 gap-y-3 text-sm font-semibold text-fg-muted">
-            {["MERX", "BidNet Direct", "CanadaBuys", "SAM.gov", "Bonfire", "Biddingo", "bids&tenders", "PlanetBids", "GSA eBuy"].map(
+            {["MERX", "CanadaBuys", "Biddingo", "bids&tenders", "BC Bid", "SEAO", "Bonfire", "BidNet Direct", "SAM.gov"].map(
               (n) => (
                 <span key={n} className="opacity-80">{n}</span>
               ),
             )}
           </div>
+          <p className="mt-4 text-center text-xs text-fg-subtle">
+            Plus every provincial and territorial portal: Alberta Purchasing Connection, SaskTenders, the Ontario Tenders Portal, NBON and the rest.
+          </p>
         </div>
       </section>
 
@@ -251,7 +254,7 @@ export default function HomePage() {
           lede="Each platform categorizes, titles and notifies differently. Knowing those quirks is the difference between seeing a fit and missing it."
         />
         <div className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-          {CORNERSTONE_PLATFORMS.map((p) => (
+          {FEATURED_PLATFORMS.map((p) => (
             <Link
               key={p.slug}
               href={platformPath(p.slug)}

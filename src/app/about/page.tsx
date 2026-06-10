@@ -10,7 +10,7 @@ import {
   Building2,
   ArrowRight,
 } from "lucide-react";
-import { CORNERSTONE_PLATFORMS, PLATFORMS } from "@/lib/site/platforms";
+import { FEATURED_PLATFORMS, PLATFORMS } from "@/lib/site/platforms";
 import { PRIMARY_INDUSTRIES } from "@/lib/site/industries";
 import {
   Breadcrumbs,
@@ -225,7 +225,7 @@ export default function AboutPage() {
           lede="The big four are where most of the work runs. The rest are the agency-specific portals and intelligence systems that a keyword alert quietly misses."
         />
         <div className="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-          {CORNERSTONE_PLATFORMS.map((p) => (
+          {FEATURED_PLATFORMS.map((p) => (
             <Link
               key={p.slug}
               href={platformPath(p.slug)}
