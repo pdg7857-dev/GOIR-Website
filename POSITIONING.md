@@ -123,6 +123,43 @@ results later, with a name or company and permission on file.
 
 ---
 
+## 8. Remove all pricing from the site
+
+Per the client, remove all public pricing. This fits the sales model: pricing is
+revealed at the end of an in-person meeting, not on the website. The conversion
+flow becomes GOIR (primary), then the Opportunity Waste Calculator (secondary),
+then book a discovery call, which is now also where pricing is discussed.
+
+Scope, touch all of these:
+
+- Remove the pricing tables from the home page (drop the Pricing section from the
+  home order) and anywhere else they render.
+- Repurpose the `/pricing` route (recommended) to a short "how pricing works"
+  page with no dollar figures that routes to book a call for a custom quote. If
+  instead the route is deleted, add a redirect so `/pricing` does not 404.
+- Stop rendering anything from `src/lib/site/pricing.ts` (CANADA_PLANS,
+  USA_PLANS, tier dollar amounts, "from $599/mo", commitment terms). Do not
+  display any prices.
+- Remove all dollar figures and tier names site-wide (Essential, Growth, Canada,
+  USA, North America, the $599 to $3,999 range, and the 3-month or 12-month
+  commitment language tied to price).
+- Update the cost and waste calculator copy so it no longer compares to a stated
+  subscription price (drop lines like "that price is a fraction of what searching
+  costs you"). Keep it framed as the cost of doing nothing, then route to a call.
+- Remove or rework pricing-specific FAQ entries and footnotes (Atlantic Canada
+  counts as one province, US federal and military is National plan only), since
+  those describe tiers that are no longer shown.
+- Remove "Pricing" from the header nav and footer nav.
+- Remove any pricing, Offer, or PriceSpecification JSON-LD.
+- Update the sitemap and any internal links or CTAs that point to `/pricing`,
+  replacing pricing CTAs with the booking or discovery-call CTA.
+
+Decision needed from client: fully delete the `/pricing` page (with a redirect),
+or repurpose it to a no-numbers "pricing is custom, book a call" page.
+Recommended: repurpose, to preserve SEO and give the CTA a destination.
+
+---
+
 ## Locked number set (use everywhere, keep consistent)
 
 - 17,500+ contractor accounts handled (15,000 Canada in 2025 plus 2,500 US in

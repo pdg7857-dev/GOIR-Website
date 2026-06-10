@@ -82,7 +82,7 @@ export const MONEY_PAGES: MoneyPage[] = [
     faqs: [
       { q: "How is this different from a bid-alert tool?", a: "An alert tool forwards notices that match keywords. I read the documents, qualify fit against your shop, and send you only what is worth pursuing, with a summary and a source link." },
       { q: "Which platforms do you monitor?", a: "The ones your buyers actually use in your jurisdictions: MERX, BidNet Direct, CanadaBuys, SAM.gov and the many SaaS and government systems behind them. Coverage follows your footprint." },
-      { q: "What does it cost?", a: "Flat monthly coverage from $599, priced by geography rather than per opportunity. See the pricing page for details." },
+      { q: "What does it cost?", a: "One payment for a full year of coverage, not a monthly plan. Priced by geography rather than per opportunity, and scoped to your footprint. I quote it on a discovery call once I understand where you bid." },
     ],
     related: [
       { label: "Government bid alerts", href: "/government-bid-alerts" },

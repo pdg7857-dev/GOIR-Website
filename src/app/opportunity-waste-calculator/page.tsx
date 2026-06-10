@@ -10,14 +10,14 @@ import { pageMeta, JsonLd, breadcrumbJsonLd, faqJsonLd } from "@/lib/site/seo";
 const FAQS = [
   { q: "What is opportunity waste?", a: "The estimator and proposal-team time your organization spends finding, reading and triaging government opportunities that were never a fit. It is real money, and it rarely shows up on any budget line." },
   { q: "How is the estimate calculated?", a: "From your own inputs: your fully-loaded estimator rate, the hours per week spent monitoring and reviewing bids, and the number of jurisdictions you watch. It is a starting estimate, not a quote." },
-  { q: "How do I reduce it?", a: "By moving the monitoring, reading and qualifying off your team so their hours go only to bids worth pursuing. That is exactly what coverage does, from $599 a month." },
+  { q: "How do I reduce it?", a: "By moving the monitoring, reading and qualifying off your team so their hours go only to bids worth pursuing. That is exactly what coverage does, scoped to your footprint and quoted on a call." },
   { q: "Can I get a tailored number?", a: "Yes. Request a free Government Opportunity Intelligence Report for a figure specific to your trades, team and jurisdictions." },
 ];
 
 export const metadata: Metadata = pageMeta({
   title: "Opportunity Waste Calculator: What Is Searching Costing You?",
   description:
-    "Estimate the estimator time your team wastes monitoring portals and reviewing poor-fit government bids, then compare it to coverage from $599/month.",
+    "Estimate the estimator time your team wastes monitoring portals and reviewing poor-fit government bids, then see what handing that work to a dedicated opportunity intelligence service could buy back.",
   path: "/opportunity-waste-calculator",
   keywords: ["opportunity waste calculator", "bid cost calculator", "estimator time cost", "cost of government bidding"],
 });

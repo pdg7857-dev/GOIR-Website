@@ -1,12 +1,19 @@
 "use client";
 
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
-import { ChevronDown, Menu, X } from "lucide-react";
+import { ChevronDown, Menu, X, Globe } from "lucide-react";
 import { PRIMARY_NAV, SITE } from "@/lib/site/config";
+import { localeFromPath, toFrPath, toEnPath, dict, FR_NAV } from "@/lib/i18n";
 
 export function SiteHeader() {
   const [mobileOpen, setMobileOpen] = useState(false);
+  const pathname = usePathname() || "/";
+  const locale = localeFromPath(pathname);
+  const t = dict[locale];
+  const freeHref = locale === "fr" ? "/fr/free-opportunities" : "/free-opportunities";
+  const toggleHref = locale === "fr" ? toEnPath(pathname) : toFrPath(pathname);
 
   // Lock background scroll while the mobile menu is open.
   useEffect(() => {
@@ -27,7 +34,17 @@ export function SiteHeader() {
         </Link>
 
         <nav className="hidden items-center gap-1 lg:flex" aria-label="Primary">
-          {PRIMARY_NAV.map((item) =>
+          {locale === "fr"
+            ? FR_NAV.map((item) => (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  className="rounded-md px-3 py-2 text-sm font-medium text-fg-muted transition hover:text-accent"
+                >
+                  {item.label}
+                </Link>
+              ))
+            : PRIMARY_NAV.map((item) =>
             item.children ? (
               <div key={item.label} className="group relative">
                 <Link
@@ -62,11 +79,20 @@ export function SiteHeader() {
         </nav>
 
         <div className="hidden items-center gap-2 lg:flex">
-          <Link href="/opportunity-waste-calculator" className="btn-ghost px-4 py-2 text-sm">
-            Waste calculator
+          <Link
+            href={toggleHref}
+            className="inline-flex items-center gap-1 rounded-md px-2.5 py-2 text-sm font-semibold text-fg-muted transition hover:text-accent"
+            aria-label={t.switchToLabel}
+            title={t.switchToLabel}
+          >
+            <Globe className="h-4 w-4" />
+            {t.switchTo}
           </Link>
-          <Link href={SITE.bookingUrl} className="btn-primary px-4 py-2 text-sm">
-            Book a call
+          <Link href={SITE.bookingUrl} className="btn-ghost px-4 py-2 text-sm">
+            {t.ctaBook}
+          </Link>
+          <Link href={freeHref} className="btn-primary px-4 py-2 text-sm">
+            {t.ctaFree}
           </Link>
         </div>
 
@@ -84,39 +110,51 @@ export function SiteHeader() {
       {mobileOpen && (
         <div className="absolute inset-x-0 top-full max-h-[calc(100dvh-4rem)] overflow-y-auto overscroll-contain border-t border-border bg-bg-panel shadow-lift lg:hidden">
           <div className="container space-y-1 py-4">
-            {PRIMARY_NAV.map((item) => (
-              <div key={item.label}>
-                <Link
-                  href={item.href}
-                  className="block rounded-lg px-3 py-2 text-sm font-semibold text-fg"
-                  onClick={() => setMobileOpen(false)}
-                >
-                  {item.label}
-                </Link>
-                {item.children && (
-                  <div className="ml-3 border-l border-border pl-3">
-                    {item.children.map((c) => (
-                      <Link
-                        key={c.href}
-                        href={c.href}
-                        className="block rounded-lg px-3 py-1.5 text-sm text-fg-muted"
-                        onClick={() => setMobileOpen(false)}
-                      >
-                        {c.label}
-                      </Link>
-                    ))}
-                  </div>
-                )}
-              </div>
-            ))}
+            {(locale === "fr" ? FR_NAV : PRIMARY_NAV).map((item) => {
+              const children = (item as { children?: { label: string; href: string }[] }).children;
+              return (
+                <div key={item.href}>
+                  <Link
+                    href={item.href}
+                    className="block rounded-lg px-3 py-2 text-sm font-semibold text-fg"
+                    onClick={() => setMobileOpen(false)}
+                  >
+                    {item.label}
+                  </Link>
+                  {children && (
+                    <div className="ml-3 border-l border-border pl-3">
+                      {children.map((c) => (
+                        <Link
+                          key={c.href}
+                          href={c.href}
+                          className="block rounded-lg px-3 py-1.5 text-sm text-fg-muted"
+                          onClick={() => setMobileOpen(false)}
+                        >
+                          {c.label}
+                        </Link>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              );
+            })}
             <div className="flex gap-2 pt-3">
-              <Link href="/opportunity-waste-calculator" className="btn-ghost flex-1 py-2.5 text-sm" onClick={() => setMobileOpen(false)}>
-                Waste calc
+              <Link href={SITE.bookingUrl} className="btn-ghost flex-1 py-2.5 text-sm" onClick={() => setMobileOpen(false)}>
+                {t.ctaBook}
               </Link>
-              <Link href={SITE.bookingUrl} className="btn-primary flex-1 py-2.5 text-sm" onClick={() => setMobileOpen(false)}>
-                Book a call
+              <Link href={freeHref} className="btn-primary flex-1 py-2.5 text-sm" onClick={() => setMobileOpen(false)}>
+                {t.ctaFreeShort}
               </Link>
             </div>
+            <Link
+              href={toggleHref}
+              className="mt-1 flex items-center justify-center gap-1.5 rounded-lg border border-border py-2.5 text-sm font-semibold text-fg-muted"
+              onClick={() => setMobileOpen(false)}
+              aria-label={t.switchToLabel}
+            >
+              <Globe className="h-4 w-4" />
+              {t.switchToLabel}
+            </Link>
           </div>
         </div>
       )}

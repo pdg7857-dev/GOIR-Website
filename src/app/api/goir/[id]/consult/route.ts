@@ -36,26 +36,36 @@ export async function POST(req: NextRequest, { params }: { params: { id: string 
     const biz = await prisma.business.findUnique({
       where: { userId_slug: { userId: operator.id, slug: "eprocurement" } },
     });
-    const client = await prisma.procurementClient.create({
-      data: {
-        userId: operator.id,
-        businessId: biz?.id,
-        name: (data as any).name?.trim() || report.companyName,
-        company: report.companyName,
-        email: report.email,
-        phone: (data as any).phone?.trim() || null,
-        industry: report.industry,
-        status: "LEAD",
-        businessInfo: `GOIR Index: ${report.index}/100 (${report.tier}). Region: ${report.region}.`,
-        notes: [
-          `Inbound from Government Opportunity Intelligence Report™ (GOIR).`,
-          `Report: /goir/${report.id}`,
-          (data as any).message ? `Message: ${(data as any).message}` : null,
-        ].filter(Boolean).join("\n"),
-      },
+    // The report-submit step may already have created a lead for this email.
+    // Reuse it so a consult request does not produce a duplicate client.
+    const existing = await prisma.procurementClient.findFirst({
+      where: { userId: operator.id, email: report.email },
       select: { id: true },
     });
-    convertedClientId = client.id;
+    if (existing) {
+      convertedClientId = existing.id;
+    } else {
+      const client = await prisma.procurementClient.create({
+        data: {
+          userId: operator.id,
+          businessId: biz?.id,
+          name: (data as any).name?.trim() || report.companyName,
+          company: report.companyName,
+          email: report.email,
+          phone: (data as any).phone?.trim() || null,
+          industry: report.industry,
+          status: "LEAD",
+          businessInfo: `GOIR Index: ${report.index}/100 (${report.tier}). Region: ${report.region}.`,
+          notes: [
+            `Inbound from Government Opportunity Intelligence Report™ (GOIR).`,
+            `Report: /goir/${report.id}`,
+            (data as any).message ? `Message: ${(data as any).message}` : null,
+          ].filter(Boolean).join("\n"),
+        },
+        select: { id: true },
+      });
+      convertedClientId = client.id;
+    }
   }
 
   await prisma.goirReport.update({

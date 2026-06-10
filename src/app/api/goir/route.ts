@@ -7,6 +7,7 @@ import { generateNarrative } from "@/lib/goir/narrative";
 import { goirReceivedEmail } from "@/lib/goir/email";
 import { sendEmail } from "@/lib/integrations/email";
 import { generateAccessCode } from "@/lib/goir/codes";
+import { captureLead } from "@/lib/crm/capture";
 import type { GoirInput } from "@/lib/goir/types";
 
 export const runtime = "nodejs";
@@ -101,6 +102,25 @@ export async function POST(req: NextRequest) {
       narrative: (narrative as unknown as object) ?? undefined,
       status: "SUBMITTED",
       ipHash,
+    });
+
+    // Connect the report request to the CRM as a lead (eprocurement business).
+    const crmNotes = [
+      `Website: ${input.website || "n/a"}`,
+      `Industry: ${input.industry}`,
+      `Region: ${input.region}`,
+      `Platforms used: ${input.platformsUsed?.length ? input.platformsUsed.join(", ") : "n/a"}`,
+      `GOII Index: ${result.index}/100 (${result.tier})`,
+      "Source: Government Opportunity Intelligence Report request",
+    ].join("\n");
+    await captureLead({
+      contactName: data.contactName,
+      companyName: input.companyName,
+      email: input.email,
+      phone: data.phone,
+      industry: input.industry,
+      businessInfo: `GOIR request. Index ${result.index}/100 (${result.tier}). Region: ${input.region}.`,
+      notes: crmNotes,
     });
 
     // Confirm receipt only, the access code is delivered personally, not here.

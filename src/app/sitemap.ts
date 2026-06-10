@@ -34,7 +34,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     entry("/government-opportunity-intelligence", 0.95, "monthly"),
     entry("/government-opportunity-intelligence-report", 0.95, "weekly"),
     entry("/how-it-works", 0.9, "monthly"),
-    entry("/pricing", 0.9, "monthly"),
+    entry("/free-opportunities", 0.92, "monthly"),
     entry("/opportunity-waste-calculator", 0.85, "monthly"),
     entry("/government-procurement-statistics", 0.8, "monthly"),
     entry("/platforms", 0.8, "weekly"),

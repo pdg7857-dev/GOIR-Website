@@ -30,12 +30,12 @@ export const RESOURCES: Resource[] = [
     title: "Government Bid Cost Calculator",
     kind: "Calculator",
     summary:
-      "Put a real number on what manual portal monitoring and bid review costs your team every month, then weigh it against coverage from $599.",
+      "Put a real number on what manual portal monitoring and bid review costs your team every month, then weigh it against handing that work to me.",
     bullets: [
       "Estimate the monthly cost of DIY monitoring in estimator time alone",
       "Model your own fully-loaded hourly rate, hours per week and jurisdictions",
       "See where the hidden costs hide: review, documents and qualification",
-      "Compare your number against coverage starting at $599 a month",
+      "See what handing the monitoring and triage to me could buy back",
     ],
     cta: "Open the calculator",
   },

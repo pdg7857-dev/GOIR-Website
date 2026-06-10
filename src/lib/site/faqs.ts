@@ -20,7 +20,7 @@ export const GENERAL_FAQS: Faq[] = [
   },
   {
     q: "How is pricing structured?",
-    a: "Flat monthly coverage. Not per opportunity, not per portal, not hourly. You pick the geographic coverage you need (a single province or state, a region, or national) and I cover everything inside it. Pricing is public and starts at $599 a month.",
+    a: "It is a single payment for a full year of coverage, not a monthly plan. Not per opportunity, not per portal, not hourly. You pick the geographic coverage you need (a single province or state, a region, or national) and I cover everything inside it for the year. Coverage is scoped to your footprint and I quote it on a discovery call, after you have seen the kind of opportunities I would bring you.",
   },
   {
     q: "How fast will I see opportunities?",
@@ -31,7 +31,7 @@ export const GENERAL_FAQS: Faq[] = [
     a: "Niche is where this pays off most. The narrower your lane, the more your work hides under generic titles and inside larger packages, and the more a keyword alert misses. I learn how your trade actually gets described by buyers, then watch for it everywhere.",
   },
   {
-    q: "How long is the commitment?",
-    a: "Coverage is a 12-month commitment, billed monthly. It takes a full year to catch your complete opportunity cycle, annual contracts, renewals and the seasonal bids that only come around once. A shorter window would only ever show you part of the picture.",
+    q: "How does payment work?",
+    a: "One payment covers a full year of coverage. A year is what it takes to catch your complete opportunity cycle: annual contracts, renewals and the seasonal bids that only come around once. A shorter window would only ever show you part of the picture. I will walk you through it on the call.",
   },
 ];
