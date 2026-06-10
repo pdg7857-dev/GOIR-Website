@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Search, FileSearch, Filter, Send } from "lucide-react";
+import { Search, Filter, Send } from "lucide-react";
 import { Breadcrumbs, CtaBand, Section, SectionHead, CredentialBadge } from "@/components/site/ui";
 import { RequestOpportunitiesForm } from "@/components/site/request-opportunities-form";
 import { FaqAccordion } from "@/components/site/faq";
@@ -38,7 +38,7 @@ const FAQS = [
   },
   {
     q: "What exactly will I get?",
-    a: "A short list of current government opportunities that fit your trade and where you bid. Each one is found and qualified, with a plain-language summary and a link to the source bid on the issuing platform.",
+    a: "A short list of current government opportunities that fit your trade and where you bid, each with a link to the source bid on the issuing platform so you can review it. The full document review and qualification is what I do for paying clients.",
   },
   {
     q: "I am new to government bidding. Is this for me?",
@@ -56,9 +56,8 @@ const FAQS = [
 
 const STEPS = [
   { icon: Search, title: "I look where you bid", body: "Across the platforms that matter in your province, state or region, not just the one you watch." },
-  { icon: FileSearch, title: "I read the documents", body: "Scope, requirements and evaluation criteria, so the fit is real and not just a keyword match." },
-  { icon: Filter, title: "I qualify the fit", body: "Against your trade and footprint, so you only see opportunities actually worth your time." },
-  { icon: Send, title: "I send you the short list", body: "Real, current opportunities with plain-language summaries and links to the source bid." },
+  { icon: Filter, title: "I match your trade", body: "I pick out the opportunities that actually fit what you do and where you bid, not a keyword dump." },
+  { icon: Send, title: "I send you the short list", body: "Real, current opportunities with a link to the source bid so you can review each one yourself." },
 ];
 
 export default function FreeOpportunitiesPage() {
@@ -85,9 +84,8 @@ export default function FreeOpportunitiesPage() {
               </h1>
               <p className="mt-5 text-lg leading-8 text-white/70">
                 Tell me what you do and where you bid. I will look across the platforms that matter
-                in your area, read the documents, qualify the fit, and send you a short list of real,
-                current opportunities that suit your trade. Found and qualified the way I do it for
-                clients. Free, and no obligation.
+                in your area, pick out the ones that fit your trade, and send you a short list of
+                real, current opportunities you have not found. Free, and no obligation.
               </p>
               <div className="mt-7">
                 <CredentialBadge lg />
@@ -117,9 +115,9 @@ export default function FreeOpportunitiesPage() {
           center
           eyebrow="How it works"
           title="What happens after you send the form"
-          lede="The same process I run for paying clients, on a sample of your real opportunities."
+          lede="A preview of what I do for clients, on real opportunities in your trade."
         />
-        <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="mt-12 grid gap-6 sm:grid-cols-3">
           {STEPS.map((s) => (
             <div key={s.title} className="card p-6">
               <s.icon className="h-6 w-6 text-accent" />

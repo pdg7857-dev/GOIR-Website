@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Search, FileSearch, Filter, Send } from "lucide-react";
+import { Search, Filter, Send } from "lucide-react";
 import { Breadcrumbs, CtaBand, Section, SectionHead, CredentialBadge } from "@/components/site/ui";
 import { RequestOpportunitiesForm } from "@/components/site/request-opportunities-form";
 import { FaqAccordion } from "@/components/site/faq";
@@ -27,9 +27,8 @@ export const metadata: Metadata = {
 
 const STEPS = [
   { icon: Search, title: "Je cherche là où vous soumissionnez", body: "Sur les plateformes qui comptent dans votre province ou région, pas seulement celle que vous surveillez." },
-  { icon: FileSearch, title: "Je lis les documents", body: "Portée, exigences et critères d'évaluation, pour que le bon ajustement soit réel et non un simple mot-clé." },
-  { icon: Filter, title: "Je qualifie l'ajustement", body: "Selon votre métier et votre territoire, pour que vous ne voyiez que des opportunités qui valent votre temps." },
-  { icon: Send, title: "Je vous envoie la liste", body: "Des opportunités réelles et actuelles, avec un résumé en langage clair et un lien vers l'appel d'offres source." },
+  { icon: Filter, title: "Je cible votre métier", body: "Je repère les opportunités qui correspondent vraiment à ce que vous faites et à l'endroit où vous soumissionnez, pas un déversement de mots-clés." },
+  { icon: Send, title: "Je vous envoie la liste", body: "Des opportunités réelles et actuelles, avec un lien vers l'appel d'offres source pour que vous examiniez chacune vous-même." },
 ];
 
 const FAQS = [
@@ -39,7 +38,7 @@ const FAQS = [
   },
   {
     q: "Qu'est-ce que je reçois exactement?",
-    a: "Une courte liste d'opportunités gouvernementales actuelles qui correspondent à votre métier et à l'endroit où vous soumissionnez. Chacune est trouvée et qualifiée, avec un résumé en langage clair et un lien vers l'appel d'offres sur la plateforme d'origine.",
+    a: "Une courte liste d'opportunités gouvernementales actuelles qui correspondent à votre métier et à l'endroit où vous soumissionnez, chacune avec un lien vers l'appel d'offres sur la plateforme d'origine pour que vous l'examiniez. L'examen complet des documents et la qualification, c'est ce que je fais pour mes clients payants.",
   },
   {
     q: "Je suis nouveau dans les appels d'offres publics. Est-ce pour moi?",
@@ -79,10 +78,9 @@ export default function FreeOpportunitiesFrPage() {
               </h1>
               <p className="mt-5 text-lg leading-8 text-white/70">
                 Dites-moi ce que vous faites et où vous soumissionnez. Je vais chercher sur les
-                plateformes qui comptent dans votre région, lire les documents, qualifier
-                l'ajustement, et vous envoyer une courte liste d'opportunités réelles et actuelles qui
-                conviennent à votre métier. Trouvées et qualifiées comme je le fais pour mes clients.
-                Gratuit, et sans engagement.
+                plateformes qui comptent dans votre région, repérer celles qui correspondent à votre
+                métier, et vous envoyer une courte liste d'opportunités réelles et actuelles que vous
+                n'avez pas trouvées. Gratuit, et sans engagement.
               </p>
               <div className="mt-7">
                 <CredentialBadge lg />
@@ -112,9 +110,9 @@ export default function FreeOpportunitiesFrPage() {
           center
           eyebrow="Comment ça fonctionne"
           title="Ce qui se passe après l'envoi du formulaire"
-          lede="Le même processus que je mène pour mes clients payants, sur un échantillon de vos vraies opportunités."
+          lede="Un aperçu de ce que je fais pour mes clients, sur de vraies opportunités dans votre métier."
         />
-        <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="mt-12 grid gap-6 sm:grid-cols-3">
           {STEPS.map((s) => (
             <div key={s.title} className="card p-6">
               <s.icon className="h-6 w-6 text-accent" />
