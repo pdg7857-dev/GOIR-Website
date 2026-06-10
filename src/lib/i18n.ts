@@ -16,6 +16,7 @@ export const TRANSLATED_PATHS = new Set<string>([
   "/contact",
   "/faq",
   "/opportunity-waste-calculator",
+  "/about",
 ]);
 
 /** Simplified French primary nav (links to the translated core pages). */
