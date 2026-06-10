@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
-import { prisma } from "@/lib/prisma";
+import { captureLead } from "@/lib/crm/capture";
 import { sendEmail } from "@/lib/integrations/email";
 import { SITE } from "@/lib/site/config";
 
@@ -70,7 +70,6 @@ export async function POST(req: NextRequest) {
   ];
 
   // Connect the lead to the CRM (eprocurement business) we built together.
-  // Best-effort: never block the response or the email backstop on a DB issue.
   const crmNotes = [
     `Website: ${d.website?.trim() || "n/a"}`,
     `Trade: ${d.trade}`,
@@ -83,45 +82,15 @@ export async function POST(req: NextRequest) {
     .filter(Boolean)
     .join("\n");
 
-  try {
-    const business = await prisma.business.findFirst({
-      where: { slug: "eprocurement" },
-      select: { id: true, userId: true },
-    });
-    if (business) {
-      const parts = d.contactName.trim().split(/\s+/);
-      const firstName = parts[0] || d.companyName;
-      const lastName = parts.slice(1).join(" ") || null;
-      const contact = await prisma.contact.create({
-        data: {
-          userId: business.userId,
-          firstName,
-          lastName,
-          email: d.email,
-          phone: d.phone?.trim() || null,
-          company: d.companyName,
-          notes: crmNotes,
-          tags: ["website-lead", "free-opportunities", `bidding:${d.experience}`],
-        },
-        select: { id: true },
-      });
-      await prisma.lead.create({
-        data: {
-          userId: business.userId,
-          businessId: business.id,
-          contactId: contact.id,
-          name: `${d.contactName} (${d.companyName})`,
-          email: d.email,
-          phone: d.phone?.trim() || null,
-          source: "WEBSITE",
-          status: "new",
-          notes: crmNotes,
-        },
-      });
-    }
-  } catch {
-    // Swallow: the email backstop below still captures the lead.
-  }
+  await captureLead({
+    contactName: d.contactName,
+    companyName: d.companyName,
+    email: d.email,
+    phone: d.phone,
+    industry: d.trade,
+    businessInfo: `Free-opportunities request. ${experienceLabel}. Bids in ${d.region}.`,
+    notes: crmNotes,
+  });
 
   // Notify me with the full lead so I can pull opportunities and follow up.
   const leadHtml = `<h2>New free-opportunities request</h2><table cellpadding="6" style="border-collapse:collapse">${rows
