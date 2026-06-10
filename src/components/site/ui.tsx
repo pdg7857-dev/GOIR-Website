@@ -108,8 +108,8 @@ export function StatStrip({ dark = false }: { dark?: boolean }) {
 
 /** Final call-to-action band used at the bottom of most pages. */
 export function CtaBand({
-  title = "Stop wasting estimator time on the wrong bids.",
-  sub = "Book a 20-minute discovery call and I'll bring real, qualified opportunities in your trade and jurisdictions, so you can see the quality before you pay a cent.",
+  title = "See what you are missing, free.",
+  sub = "Tell me your trade and where you bid, and I'll send you a short list of real, qualified opportunities you have not found. No cost, no obligation.",
 }: {
   title?: string;
   sub?: string;
@@ -123,15 +123,15 @@ export function CtaBand({
             <h2 className="text-balance text-3xl font-semibold text-fg sm:text-4xl">{title}</h2>
             <p className="mt-4 text-lg leading-8 text-fg-muted">{sub}</p>
             <div className="mt-8 flex flex-col justify-center gap-3 sm:flex-row">
-              <Link href={SITE.bookingUrl} className="btn-gold px-6 py-3 text-base">
-                Book a discovery call
+              <Link href="/free-opportunities" className="btn-gold px-6 py-3 text-base">
+                Get free opportunities
               </Link>
-              <Link href="/opportunity-waste-calculator" className="btn-ghost border-white/20 bg-white/5 px-6 py-3 text-base text-fg hover:border-white/40 hover:text-fg">
-                Calculate your opportunity waste
+              <Link href={SITE.bookingUrl} className="btn-ghost border-white/20 bg-white/5 px-6 py-3 text-base text-fg hover:border-white/40 hover:text-fg">
+                Book a discovery call
               </Link>
             </div>
             <p className="mt-4 text-sm text-fg-subtle">
-              Twenty minutes, no cost. I&apos;ll bring real opportunities in your jurisdictions.
+              Free, no obligation. I&apos;ll bring real opportunities in your trade and jurisdictions.
             </p>
             <div className="mt-5 flex justify-center">
               <CredentialBadge />

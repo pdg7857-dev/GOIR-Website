@@ -39,18 +39,18 @@ export default function HomePage() {
               and start working only the opportunities worth pursuing.
             </p>
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-              <Link href={SITE.bookingUrl} className="btn-gold px-6 py-3.5 text-base">
-                Book a meeting <ArrowRight className="h-4 w-4" />
+              <Link href="/free-opportunities" className="btn-gold px-6 py-3.5 text-base">
+                Get free opportunities <ArrowRight className="h-4 w-4" />
               </Link>
               <Link
-                href="/opportunity-waste-calculator"
+                href={SITE.bookingUrl}
                 className="btn-ghost border-white/20 bg-white/5 px-6 py-3.5 text-base text-fg hover:border-white/40 hover:text-fg"
               >
-                Calculate your opportunity waste
+                Book a meeting
               </Link>
             </div>
             <p className="mt-5 text-sm text-fg-subtle">
-              Twenty-minute discovery call, no cost. Coverage is scoped to your footprint and quoted on the call.
+              Free, no obligation. Tell me your trade and where you bid, and I will send you real opportunities you have not found.
             </p>
             <div className="mt-5 inline-flex items-center gap-2 rounded-full border border-warn/30 bg-warn-soft/30 px-4 py-2">
               <CredentialBadge lg />

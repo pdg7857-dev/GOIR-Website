@@ -2,15 +2,45 @@ import type { Metadata } from "next";
 import { Search, FileSearch, Filter, Send } from "lucide-react";
 import { Breadcrumbs, CtaBand, Section, SectionHead, CredentialBadge } from "@/components/site/ui";
 import { RequestOpportunitiesForm } from "@/components/site/request-opportunities-form";
-import { pageMeta, JsonLd, breadcrumbJsonLd } from "@/lib/site/seo";
+import { FaqAccordion } from "@/components/site/faq";
+import { pageMeta, JsonLd, breadcrumbJsonLd, faqJsonLd } from "@/lib/site/seo";
 
 export const metadata: Metadata = pageMeta({
-  title: "Request Your Free Opportunities",
+  title: "Get Free Government Bid Opportunities for Your Trade",
   description:
-    "Tell me where you bid and what you do, and I'll send you a short list of real, current government opportunities that fit your trade, already found and qualified. Free, no obligation.",
+    "Tell me your trade and where you bid, and I'll send you a short list of real, current government opportunities you have not found, already qualified with source links. Free, no obligation, no spam.",
   path: "/free-opportunities",
-  keywords: ["free government bid opportunities", "government contract leads", "bid opportunities for contractors"],
+  keywords: [
+    "free government bid opportunities",
+    "government contract leads",
+    "bid opportunities for contractors",
+    "find government tenders",
+    "government RFP leads",
+  ],
 });
+
+const FAQS = [
+  {
+    q: "Is it really free?",
+    a: "Yes. No cost and no obligation. I send you real opportunities so you can see the quality of what I do before you ever consider paying for ongoing coverage.",
+  },
+  {
+    q: "What exactly will I get?",
+    a: "A short list of current government opportunities that fit your trade and where you bid. Each one is found and qualified, with a plain-language summary and a link to the source bid on the issuing platform.",
+  },
+  {
+    q: "I am new to government bidding. Is this for me?",
+    a: "Yes. Whether you have never submitted a bid or you bid every week, I meet you where you are and show you what is open and genuinely worth pursuing in your trade.",
+  },
+  {
+    q: "How soon will I hear back?",
+    a: "Within 1 to 2 business days. I prepare each list personally, so it is real research on your trade and jurisdictions, not an automated email.",
+  },
+  {
+    q: "What do you do with my details?",
+    a: "They come straight to me so I can prepare your opportunities and follow up. No spam, no list-selling.",
+  },
+];
 
 const STEPS = [
   { icon: Search, title: "I look where you bid", body: "Across the platforms that matter in your province, state or region, not just the one you watch." },
@@ -28,6 +58,7 @@ export default function FreeOpportunitiesPage() {
             { name: "Home", path: "/" },
             { name: "Request your free opportunities", path: "/free-opportunities" },
           ]),
+          faqJsonLd(FAQS),
         ]}
       />
 
@@ -84,6 +115,15 @@ export default function FreeOpportunitiesPage() {
               <p className="mt-2 text-sm text-fg-muted">{s.body}</p>
             </div>
           ))}
+        </div>
+      </Section>
+
+      <Section muted>
+        <div className="mx-auto max-w-3xl">
+          <SectionHead center title="Common questions" />
+          <div className="mt-8">
+            <FaqAccordion faqs={FAQS} />
+          </div>
         </div>
       </Section>
 
