@@ -11,7 +11,7 @@ export type Bi = { en: string; fr: string };
 
 export type Field = {
   id: string;
-  type: "text" | "email" | "tel" | "textarea" | "select" | "multi" | "services" | "areas";
+  type: "text" | "email" | "tel" | "textarea" | "select" | "multi" | "services" | "areas" | "industries" | "provinces";
   label: Bi;
   options?: Bi[];
   required?: boolean;
@@ -35,6 +35,7 @@ const TRADE = [
   b("Glazing and windows", "Vitrerie et fenêtres"),
   b("Fencing", "Clôtures"),
   b("Fire protection and life safety", "Protection incendie"),
+  b("Restoration", "Restauration après sinistre"),
   b("Landscaping", "Aménagement paysager"),
   b("Janitorial", "Conciergerie"),
   b("Facilities maintenance", "Entretien des installations"),
@@ -266,6 +267,17 @@ export const INDUSTRY_SERVICES: Record<string, Bi[]> = {
     b("Bird control", "Contrôle des oiseaux"),
     b("Inspection and prevention", "Inspection et prévention"),
   ],
+  Restoration: [
+    b("Water damage restoration", "Restauration après dégât d'eau"),
+    b("Fire and smoke restoration", "Restauration après incendie et fumée"),
+    b("Mould remediation", "Décontamination de moisissures"),
+    b("Asbestos abatement", "Désamiantage"),
+    b("Flood cleanup", "Nettoyage après inondation"),
+    b("Structural drying", "Séchage structurel"),
+    b("Content restoration", "Restauration des biens"),
+    b("Emergency board-up", "Barricadage d'urgence"),
+    b("Biohazard cleanup", "Nettoyage de matières dangereuses"),
+  ],
 };
 
 // Province / state dropdown. Canada-forward, with national and US options.
@@ -381,9 +393,9 @@ export const QUICK_FORM: Section[] = [
   {
     title: b("What you do", "Ce que vous faites"),
     fields: [
-      { id: "trade", type: "select", label: b("What industry do you work in?", "Dans quel secteur travaillez-vous?"), options: TRADE, required: true },
+      { id: "trade", type: "industries", label: b("What industries do you work in? (up to 3)", "Dans quels secteurs travaillez-vous? (jusqu'à 3)"), options: TRADE, required: true },
       { id: "services", type: "services", label: b("Which services do you offer? (check all that apply)", "Quels services offrez-vous? (cochez tout ce qui s'applique)") },
-      { id: "province", type: "select", label: b("Where do you bid?", "Où soumissionnez-vous?"), options: PROVINCES, required: true },
+      { id: "province", type: "provinces", label: b("Where do you bid? (select all that apply)", "Où soumissionnez-vous? (sélectionnez tout ce qui s'applique)"), options: PROVINCES, required: true },
       { id: "areas", type: "areas", label: b("Which areas? (check all that apply)", "Quelles régions? (cochez tout ce qui s'applique)") },
     ],
   },
@@ -415,8 +427,8 @@ export const FULL_FORM: Section[] = [
   {
     title: b("What you do", "Ce que vous faites"),
     fields: [
-      { id: "trade", type: "select", label: b("What trade or service best describes you?", "Quel métier ou service vous décrit le mieux?"), options: TRADE, required: true },
-      { id: "services", type: "textarea", label: b("List the specific services you offer", "Énumérez les services précis que vous offrez") },
+      { id: "trade", type: "industries", label: b("What industries do you work in? (up to 3)", "Dans quels secteurs travaillez-vous? (jusqu'à 3)"), options: TRADE, required: true },
+      { id: "services", type: "services", label: b("Which services do you offer? (check all that apply)", "Quels services offrez-vous? (cochez tout ce qui s'applique)") },
       { id: "bestWork", type: "textarea", label: b("What work do you do best, the jobs you wish you got more of?", "Quel travail faites-vous le mieux, les contrats que vous aimeriez avoir plus souvent?") },
       { id: "avoidWork", type: "textarea", label: b("What work do you NOT want, even if you could do it?", "Quel travail ne voulez-vous PAS, même si vous pourriez le faire?") },
     ],
@@ -424,7 +436,7 @@ export const FULL_FORM: Section[] = [
   {
     title: b("Where you bid", "Où vous soumissionnez"),
     fields: [
-      { id: "province", type: "select", label: b("Where do you bid?", "Où soumissionnez-vous?"), options: PROVINCES, required: true },
+      { id: "province", type: "provinces", label: b("Where do you bid? (select all that apply)", "Où soumissionnez-vous? (sélectionnez tout ce qui s'applique)"), options: PROVINCES, required: true },
       { id: "areas", type: "areas", label: b("Which areas? (check all that apply)", "Quelles régions? (cochez tout ce qui s'applique)") },
       { id: "travel", type: "select", label: b("Will you travel for the right job, or stay local?", "Voyagerez-vous pour le bon contrat, ou restez-vous local?"), options: TRAVEL },
       { id: "countries", type: "select", label: b("Canadian opportunities, US, or both?", "Opportunités canadiennes, américaines, ou les deux?"), options: COUNTRIES },
