@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
 import { Loader2, ArrowRight, ShieldCheck, ChevronDown, CheckCircle2 } from "lucide-react";
-import type { Section } from "@/lib/site/questionnaires";
+import { INDUSTRY_SERVICES, type Section } from "@/lib/site/questionnaires";
 
 type Lang = "en" | "fr";
 const CONTACT_IDS = ["companyName", "contactName", "email", "phone", "website"];
@@ -15,14 +15,14 @@ const UI = {
     netError: "Network error. Please try again.", genError: "Something went wrong. Please try again.",
     okTitle: "Thank you", okBody: "I have your answers. I will use them to find opportunities that actually fit your size and your trade, and I will be in touch.",
     okNote: "Check your inbox for a confirmation.", trust: "Your details come straight to me. No spam, no list-selling.",
-    select: "Select",
+    select: "Select", pickIndustry: "Pick your industry above first.", servicesOther: "List the services you offer",
   },
   fr: {
     submit: "Envoyer", sending: "Envoi en cours", required: "Veuillez remplir les champs obligatoires.",
     netError: "Erreur réseau. Veuillez réessayer.", genError: "Une erreur est survenue. Veuillez réessayer.",
     okTitle: "Merci", okBody: "J'ai vos réponses. Je vais les utiliser pour trouver des opportunités qui correspondent vraiment à votre taille et à votre métier, et je vous reviendrai.",
     okNote: "Vérifiez votre boîte de réception pour la confirmation.", trust: "Vos coordonnées me parviennent directement. Pas de pourriel, pas de revente.",
-    select: "Choisir",
+    select: "Choisir", pickIndustry: "Choisissez d'abord votre secteur ci-dessus.", servicesOther: "Énumérez les services que vous offrez",
   },
 } as const;
 
@@ -44,7 +44,12 @@ export function QuestionnaireForm({
   const allFields = sections.flatMap((s) => s.fields);
 
   function setVal(id: string, v: string | string[]) {
-    setValues((prev) => ({ ...prev, [id]: v }));
+    setValues((prev) => {
+      const next = { ...prev, [id]: v };
+      // Services depend on the chosen industry, so reset them when it changes.
+      if (id === "trade") next["services"] = [];
+      return next;
+    });
   }
   function toggleMulti(id: string, opt: string) {
     setValues((prev) => {
@@ -131,7 +136,7 @@ export function QuestionnaireForm({
           <h2 className="text-sm font-semibold uppercase tracking-[0.14em] text-accent">{section.title[lang]}</h2>
           <div className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2">
             {section.fields.map((f) => {
-              const span = f.type === "textarea" || f.type === "multi" ? "sm:col-span-2" : "";
+              const span = f.type === "textarea" || f.type === "multi" || f.type === "services" ? "sm:col-span-2" : "";
               return (
                 <div key={f.id} className={span}>
                   <label className={labelCls} htmlFor={f.id}>
@@ -171,7 +176,7 @@ export function QuestionnaireForm({
                       >
                         <option value="">{U.select}</option>
                         {f.options.map((o) => (
-                          <option key={o[lang]} value={o[lang]}>{o[lang]}</option>
+                          <option key={o.en} value={o.en}>{o[lang]}</option>
                         ))}
                       </select>
                       <ChevronDown className="pointer-events-none absolute right-2.5 top-1/2 h-4 w-4 -translate-y-1/2 text-fg-subtle" />
@@ -181,12 +186,12 @@ export function QuestionnaireForm({
                   {f.type === "multi" && f.options && (
                     <div className="grid grid-cols-2 gap-1.5 sm:grid-cols-3">
                       {f.options.map((o) => {
-                        const on = ((values[f.id] as string[]) ?? []).includes(o[lang]);
+                        const on = ((values[f.id] as string[]) ?? []).includes(o.en);
                         return (
                           <button
                             type="button"
-                            key={o[lang]}
-                            onClick={() => toggleMulti(f.id, o[lang])}
+                            key={o.en}
+                            onClick={() => toggleMulti(f.id, o.en)}
                             className={cn(
                               "rounded-lg px-2.5 py-1.5 text-xs text-left ring-1 transition-colors",
                               on ? "bg-accent-soft text-accent ring-accent/40" : "bg-bg-panel/60 text-fg-muted ring-border hover:bg-bg-hover"
@@ -198,6 +203,46 @@ export function QuestionnaireForm({
                       })}
                     </div>
                   )}
+
+                  {f.type === "services" && (() => {
+                    const industry = asString("trade");
+                    if (!industry) {
+                      return <p className="text-sm text-fg-subtle">{U.pickIndustry}</p>;
+                    }
+                    const svc = INDUSTRY_SERVICES[industry];
+                    if (!svc) {
+                      return (
+                        <Input
+                          id={f.id}
+                          name={f.id}
+                          value={asString(f.id)}
+                          onChange={(e) => setVal(f.id, e.target.value)}
+                          placeholder={U.servicesOther}
+                        />
+                      );
+                    }
+                    const selected = (values[f.id] as string[]) ?? [];
+                    return (
+                      <div className="grid grid-cols-2 gap-1.5 sm:grid-cols-3">
+                        {svc.map((o) => {
+                          const on = selected.includes(o.en);
+                          return (
+                            <button
+                              type="button"
+                              key={o.en}
+                              onClick={() => toggleMulti(f.id, o.en)}
+                              className={cn(
+                                "rounded-lg px-2.5 py-1.5 text-xs text-left ring-1 transition-colors",
+                                on ? "bg-accent-soft text-accent ring-accent/40" : "bg-bg-panel/60 text-fg-muted ring-border hover:bg-bg-hover"
+                              )}
+                            >
+                              {o[lang]}
+                            </button>
+                          );
+                        })}
+                      </div>
+                    );
+                  })()}
                 </div>
               );
             })}

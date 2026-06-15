@@ -11,7 +11,7 @@ export type Bi = { en: string; fr: string };
 
 export type Field = {
   id: string;
-  type: "text" | "email" | "tel" | "textarea" | "select" | "multi";
+  type: "text" | "email" | "tel" | "textarea" | "select" | "multi" | "services";
   label: Bi;
   options?: Bi[];
   required?: boolean;
@@ -50,6 +50,101 @@ const COUNTRIES = [b("Canada", "Canada"), b("United States", "États-Unis"), b("
 const HOURS = [b("0-2", "0 à 2"), b("3-5", "3 à 5"), b("6-10", "6 à 10"), b("10+", "Plus de 10")];
 const LANGUAGE = [b("English", "Anglais"), b("French", "Français")];
 
+/**
+ * Services offered within each industry, keyed by the industry option's English
+ * value (the canonical value stored by the form). Lets a contractor pick their
+ * industry, then check every service that applies, so bids cross-match cleanly.
+ * "Other" has no preset list and falls back to a free-text field.
+ */
+export const INDUSTRY_SERVICES: Record<string, Bi[]> = {
+  Construction: [
+    b("General contracting", "Entrepreneur général"),
+    b("Concrete and foundations", "Béton et fondations"),
+    b("Excavation and site work", "Excavation et travaux de site"),
+    b("Framing and structural", "Charpente et structure"),
+    b("Roofing", "Toiture"),
+    b("Renovations and fit-outs", "Rénovations et aménagements"),
+    b("Demolition", "Démolition"),
+    b("Masonry", "Maçonnerie"),
+    b("Drywall and finishing", "Cloisons sèches et finition"),
+    b("Painting", "Peinture"),
+    b("Flooring", "Revêtements de sol"),
+    b("Windows and doors", "Portes et fenêtres"),
+    b("Carpentry and millwork", "Menuiserie"),
+    b("Paving and asphalt", "Pavage et asphalte"),
+  ],
+  Janitorial: [
+    b("Office and commercial cleaning", "Nettoyage de bureaux et commercial"),
+    b("School and daycare cleaning", "Nettoyage d'écoles et de garderies"),
+    b("Healthcare cleaning", "Nettoyage en milieu de santé"),
+    b("Floor care", "Entretien des planchers"),
+    b("Carpet cleaning", "Nettoyage de tapis"),
+    b("Window cleaning", "Lavage de vitres"),
+    b("Post-construction cleanup", "Nettoyage après construction"),
+    b("Disinfection and sanitization", "Désinfection et assainissement"),
+    b("Waste and recycling", "Déchets et recyclage"),
+    b("Day porter services", "Service de préposé de jour"),
+  ],
+  "Facilities maintenance": [
+    b("HVAC maintenance", "Entretien CVC"),
+    b("Electrical maintenance", "Entretien électrique"),
+    b("Plumbing maintenance", "Entretien de plomberie"),
+    b("Building automation and controls", "Automatisation du bâtiment"),
+    b("Preventive maintenance", "Entretien préventif"),
+    b("General repairs and handyman", "Réparations générales"),
+    b("Grounds upkeep", "Entretien des terrains"),
+    b("Snow removal", "Déneigement"),
+    b("Pest control", "Lutte antiparasitaire"),
+    b("Fire and life safety", "Sécurité incendie"),
+    b("Elevator maintenance", "Entretien d'ascenseurs"),
+  ],
+  "Industrial supplies": [
+    b("Tools and hardware", "Outils et quincaillerie"),
+    b("Safety equipment and PPE", "Équipement de sécurité et EPI"),
+    b("Fasteners", "Attaches"),
+    b("Electrical supplies", "Fournitures électriques"),
+    b("Plumbing supplies", "Fournitures de plomberie"),
+    b("HVAC parts", "Pièces CVC"),
+    b("Packaging materials", "Matériel d'emballage"),
+    b("Material handling equipment", "Équipement de manutention"),
+    b("Lubricants and chemicals", "Lubrifiants et produits chimiques"),
+    b("Welding supplies", "Fournitures de soudage"),
+  ],
+  "MRO supplies": [
+    b("Maintenance parts", "Pièces d'entretien"),
+    b("Repair components", "Composants de réparation"),
+    b("Operating supplies", "Fournitures d'exploitation"),
+    b("Bearings and power transmission", "Roulements et transmission"),
+    b("Pneumatics and hydraulics", "Pneumatique et hydraulique"),
+    b("Motors and drives", "Moteurs et entraînements"),
+    b("Filters", "Filtres"),
+    b("Facility supplies", "Fournitures d'installation"),
+    b("Lab and testing supplies", "Fournitures de laboratoire"),
+  ],
+  Security: [
+    b("Manned guarding", "Gardiennage"),
+    b("Mobile patrol", "Patrouille mobile"),
+    b("Access control systems", "Systèmes de contrôle d'accès"),
+    b("Video surveillance (CCTV)", "Vidéosurveillance"),
+    b("Alarm monitoring", "Surveillance d'alarmes"),
+    b("Event security", "Sécurité d'événements"),
+    b("Loss prevention", "Prévention des pertes"),
+    b("Security consulting", "Conseil en sécurité"),
+    b("Locksmith services", "Services de serrurerie"),
+  ],
+  Landscaping: [
+    b("Grounds maintenance", "Entretien des terrains"),
+    b("Lawn care and mowing", "Entretien de pelouse"),
+    b("Snow and ice management", "Gestion de la neige et de la glace"),
+    b("Tree and shrub care", "Entretien d'arbres et d'arbustes"),
+    b("Irrigation", "Irrigation"),
+    b("Hardscaping", "Aménagement minéral"),
+    b("Planting and horticulture", "Plantation et horticulture"),
+    b("Sports field maintenance", "Entretien de terrains sportifs"),
+    b("Trail and park maintenance", "Entretien de sentiers et de parcs"),
+  ],
+};
+
 // Contact fields shared by both forms.
 const CONTACT: Field[] = [
   { id: "companyName", type: "text", label: b("Company name", "Nom de l'entreprise"), required: true },
@@ -62,9 +157,13 @@ const CONTACT: Field[] = [
 export const QUICK_FORM: Section[] = [
   {
     title: b("About you", "À votre sujet"),
+    fields: [...CONTACT],
+  },
+  {
+    title: b("What you do", "Ce que vous faites"),
     fields: [
-      ...CONTACT,
-      { id: "trade", type: "select", label: b("What trade or service best describes you?", "Quel métier ou service vous décrit le mieux?"), options: TRADE, required: true },
+      { id: "trade", type: "select", label: b("What industry do you work in?", "Dans quel secteur travaillez-vous?"), options: TRADE, required: true },
+      { id: "services", type: "services", label: b("Which services do you offer? (check all that apply)", "Quels services offrez-vous? (cochez tout ce qui s'applique)") },
       { id: "region", type: "text", label: b("Where do you bid? (provinces, states or regions)", "Où soumissionnez-vous? (provinces, États ou régions)"), required: true },
     ],
   },
@@ -73,14 +172,12 @@ export const QUICK_FORM: Section[] = [
     fields: [
       { id: "minJob", type: "select", label: b("Smallest contract worth your time", "Plus petit contrat qui vaut votre temps"), options: MIN_JOB },
       { id: "maxJob", type: "select", label: b("Largest contract you can comfortably deliver", "Plus gros contrat que vous pouvez livrer aisément"), options: MAX_JOB },
-      { id: "bonding", type: "select", label: b("Can you get bonded, and up to how much?", "Pouvez-vous être cautionné, et jusqu'à combien?"), options: BONDING },
       { id: "experience", type: "select", label: b("How much government bidding have you done?", "Combien d'appels d'offres publics avez-vous faits?"), options: EXPERIENCE },
     ],
   },
   {
     title: b("What you want", "Ce que vous voulez"),
     fields: [
-      { id: "services", type: "textarea", label: b("List the services you offer", "Énumérez les services que vous offrez") },
       { id: "goals", type: "textarea", label: b("What do you want government contracts to do for your business?", "Que voulez-vous que les contrats publics fassent pour votre entreprise?") },
     ],
   },
