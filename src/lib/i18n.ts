@@ -17,12 +17,15 @@ export const TRANSLATED_PATHS = new Set<string>([
   "/faq",
   "/opportunity-waste-calculator",
   "/about",
+  "/qualify",
+  "/intake",
 ]);
 
 /** Simplified French primary nav (links to the translated core pages). */
 export const FR_NAV: { label: string; href: string }[] = [
   { label: "Comment ça fonctionne", href: "/fr/how-it-works" },
   { label: "Opportunités gratuites", href: "/fr/free-opportunities" },
+  { label: "Trouvez vos opportunités", href: "/fr/qualify" },
   { label: "Calculateur", href: "/fr/opportunity-waste-calculator" },
   { label: "FAQ", href: "/fr/faq" },
   { label: "Contact", href: "/fr/contact" },
