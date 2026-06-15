@@ -70,6 +70,13 @@ export function QuestionnaireForm({
       .filter((f) => !CONTACT_IDS.includes(f.id) && asString(f.id).trim())
       .map((f) => ({ label: f.label[lang], value: asString(f.id).trim() }));
 
+    // Id-keyed answers so the API can map them to structured columns.
+    const answers: Record<string, string> = {};
+    for (const f of allFields) {
+      const v = asString(f.id).trim();
+      if (v) answers[f.id] = v;
+    }
+
     const payload = {
       kind,
       companyName: asString("companyName"),
@@ -79,6 +86,7 @@ export function QuestionnaireForm({
       website: asString("website"),
       trade: asString("trade"),
       region: asString("region"),
+      answers,
       responses,
     };
     setPending(true);

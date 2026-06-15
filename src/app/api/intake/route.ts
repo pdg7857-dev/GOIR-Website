@@ -1,8 +1,18 @@
 import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
+import { prisma } from "@/lib/prisma";
 import { captureLead } from "@/lib/crm/capture";
 import { sendEmail } from "@/lib/integrations/email";
 import { SITE } from "@/lib/site/config";
+
+// Question ids that map to structured IntakeSubmission columns.
+const COLUMN_IDS = [
+  "contactName", "website", "based", "years", "trade", "services", "bestWork", "avoidWork",
+  "region", "travel", "countries", "team", "concurrent", "minJob", "maxJob", "sweetSpot",
+  "headroom", "bonding", "insurance", "certs", "setAside", "prequal", "experience", "bidsYear",
+  "wins", "blockers", "goals", "revenueGoal", "winLooksLike", "findWork", "platforms", "hours",
+  "anythingElse", "language",
+] as const;
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -27,6 +37,7 @@ const schema = z.object({
     .array(z.object({ label: z.string().max(300), value: z.string().max(2000) }))
     .max(80)
     .optional(),
+  answers: z.record(z.string().max(2000)).optional(),
 });
 
 function esc(s: string) {
@@ -58,7 +69,7 @@ export async function POST(req: NextRequest) {
     ...answered.map((r) => `${r.label}: ${r.value.trim()}`),
   ].join("\n");
 
-  await captureLead({
+  const lead = await captureLead({
     contactName: d.contactName,
     companyName: d.companyName,
     email: d.email,
@@ -67,6 +78,30 @@ export async function POST(req: NextRequest) {
     businessInfo: `${kindLabel}.${d.trade ? ` Trade: ${d.trade}.` : ""}${d.region ? ` Bids in ${d.region}.` : ""}`,
     notes: crmNotes,
   });
+
+  // Structured row: one column per answer, for sorting and filtering by size,
+  // bonding and footprint. Best-effort; the email and CRM notes are the backstop
+  // if the IntakeSubmission table is not present yet.
+  try {
+    const a = d.answers ?? {};
+    const col: Record<string, string> = {};
+    for (const id of COLUMN_IDS) {
+      const v = a[id];
+      if (typeof v === "string" && v.trim()) col[id] = v.trim();
+    }
+    await prisma.intakeSubmission.create({
+      data: {
+        kind: d.kind,
+        clientId: lead.clientId ?? null,
+        companyName: d.companyName,
+        email: d.email.trim().toLowerCase(),
+        phone: d.phone?.trim() || null,
+        ...col,
+      } as Parameters<typeof prisma.intakeSubmission.create>[0]["data"],
+    });
+  } catch {
+    // Swallow: email + CRM notes still captured the lead.
+  }
 
   // Email the full questionnaire to the leads inbox.
   const rows: [string, string][] = [

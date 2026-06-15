@@ -1279,3 +1279,74 @@ model GoirReport {
   @@index([status, createdAt])
   @@index([email])
 }
+
+// Structured storage for the website intake questionnaires (/qualify, /intake).
+// One row per submission, one column per question, so leads can be sorted and
+// filtered by size, bonding and footprint. Owned by the GOIR website; the CRM
+// lead is still created separately and linked here via clientId.
+model IntakeSubmission {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now())
+  kind      String   @default("quick") // quick | full
+  clientId  String? // linked ProcurementClient id, if created
+
+  // Contact
+  companyName String
+  contactName String?
+  email       String
+  phone       String?
+  website     String?
+
+  // Company
+  based String?
+  years String?
+
+  // What they do
+  trade     String?
+  services  String? @db.Text
+  bestWork  String? @db.Text
+  avoidWork String? @db.Text
+
+  // Where they bid
+  region    String?
+  travel    String?
+  countries String?
+
+  // Capacity
+  team       String?
+  concurrent String?
+  minJob     String?
+  maxJob     String?
+  sweetSpot  String?
+  headroom   String?
+
+  // Bonding and credentials
+  bonding   String?
+  insurance String?
+  certs     String? @db.Text
+  setAside  String?
+  prequal   String? @db.Text
+
+  // History
+  experience String?
+  bidsYear   String?
+  wins       String? @db.Text
+  blockers   String? @db.Text
+
+  // Goals
+  goals        String? @db.Text
+  revenueGoal  String?
+  winLooksLike String? @db.Text
+
+  // How they find work
+  findWork  String?
+  platforms String?
+  hours     String?
+
+  // Other
+  anythingElse String? @db.Text
+  language     String?
+
+  @@index([email])
+  @@index([createdAt])
+}
