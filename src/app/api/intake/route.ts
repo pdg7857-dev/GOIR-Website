@@ -8,7 +8,7 @@ import { SITE } from "@/lib/site/config";
 // Question ids that map to structured IntakeSubmission columns.
 const COLUMN_IDS = [
   "contactName", "website", "based", "years", "trade", "services", "bestWork", "avoidWork",
-  "region", "travel", "countries", "team", "concurrent", "minJob", "maxJob", "sweetSpot",
+  "province", "areas", "travel", "countries", "team", "concurrent", "minJob", "maxJob", "sweetSpot",
   "headroom", "bonding", "insurance", "certs", "setAside", "prequal", "experience", "bidsYear",
   "wins", "blockers", "goals", "revenueGoal", "winLooksLike", "findWork", "platforms", "hours",
   "anythingElse", "language",
@@ -32,7 +32,8 @@ const schema = z.object({
   phone: z.string().max(40).optional().nullable(),
   website: z.string().max(200).optional().nullable(),
   trade: z.string().max(160).optional().nullable(),
-  region: z.string().max(200).optional().nullable(),
+  province: z.string().max(120).optional().nullable(),
+  areas: z.string().max(400).optional().nullable(),
   responses: z
     .array(z.object({ label: z.string().max(300), value: z.string().max(2000) }))
     .max(80)
@@ -75,7 +76,9 @@ export async function POST(req: NextRequest) {
     email: d.email,
     phone: d.phone,
     industry: d.trade ?? null,
-    businessInfo: `${kindLabel}.${d.trade ? ` Trade: ${d.trade}.` : ""}${d.region ? ` Bids in ${d.region}.` : ""}`,
+    businessInfo: `${kindLabel}.${d.trade ? ` Trade: ${d.trade}.` : ""}${
+      [d.province, d.areas].filter(Boolean).length ? ` Bids in ${[d.province, d.areas].filter(Boolean).join(", ")}.` : ""
+    }`,
     notes: crmNotes,
   });
 

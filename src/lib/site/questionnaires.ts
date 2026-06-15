@@ -11,7 +11,7 @@ export type Bi = { en: string; fr: string };
 
 export type Field = {
   id: string;
-  type: "text" | "email" | "tel" | "textarea" | "select" | "multi" | "services";
+  type: "text" | "email" | "tel" | "textarea" | "select" | "multi" | "services" | "areas";
   label: Bi;
   options?: Bi[];
   required?: boolean;
@@ -24,12 +24,24 @@ const b = (en: string, fr: string): Bi => ({ en, fr });
 // Reusable option sets.
 const TRADE = [
   b("Construction", "Construction"),
+  b("HVAC and mechanical", "CVC et mécanique"),
+  b("Plumbing", "Plomberie"),
+  b("Electrical", "Électricité"),
+  b("Roofing", "Toiture"),
+  b("Painting", "Peinture"),
+  b("Flooring", "Revêtements de sol"),
+  b("Concrete and paving", "Béton et pavage"),
+  b("Carpentry and millwork", "Menuiserie"),
+  b("Glazing and windows", "Vitrerie et fenêtres"),
+  b("Fencing", "Clôtures"),
+  b("Fire protection and life safety", "Protection incendie"),
+  b("Landscaping", "Aménagement paysager"),
   b("Janitorial", "Conciergerie"),
   b("Facilities maintenance", "Entretien des installations"),
+  b("Pest control", "Lutte antiparasitaire"),
+  b("Security", "Sécurité"),
   b("Industrial supplies", "Fournitures industrielles"),
   b("MRO supplies", "Fournitures MRO"),
-  b("Security", "Sécurité"),
-  b("Landscaping", "Aménagement paysager"),
   b("Other", "Autre"),
 ];
 const YEARS = [b("Under 2 years", "Moins de 2 ans"), b("2-5 years", "2 à 5 ans"), b("6-15 years", "6 à 15 ans"), b("15+ years", "Plus de 15 ans")];
@@ -143,6 +155,213 @@ export const INDUSTRY_SERVICES: Record<string, Bi[]> = {
     b("Sports field maintenance", "Entretien de terrains sportifs"),
     b("Trail and park maintenance", "Entretien de sentiers et de parcs"),
   ],
+  "HVAC and mechanical": [
+    b("Heating systems", "Systèmes de chauffage"),
+    b("Air conditioning", "Climatisation"),
+    b("Ventilation", "Ventilation"),
+    b("Rooftop units", "Unités sur toit"),
+    b("Boilers", "Chaudières"),
+    b("Chillers", "Refroidisseurs"),
+    b("Ductwork", "Conduits"),
+    b("Controls and building automation", "Contrôles et automatisation"),
+    b("Refrigeration", "Réfrigération"),
+    b("Preventive maintenance", "Entretien préventif"),
+  ],
+  Plumbing: [
+    b("Commercial plumbing", "Plomberie commerciale"),
+    b("Drainage and sewer", "Drainage et égouts"),
+    b("Water heaters", "Chauffe-eau"),
+    b("Backflow prevention", "Prévention des refoulements"),
+    b("Fixture installation", "Installation d'appareils"),
+    b("Pipe repair and replacement", "Réparation de tuyauterie"),
+    b("Hydronic systems", "Systèmes hydroniques"),
+    b("Gas fitting", "Raccordement au gaz"),
+    b("Drain cleaning", "Débouchage de drains"),
+  ],
+  Electrical: [
+    b("Commercial wiring", "Câblage commercial"),
+    b("Lighting and retrofits", "Éclairage et rénovations"),
+    b("Panel upgrades", "Mise à niveau de panneaux"),
+    b("Generators and backup power", "Génératrices et alimentation de secours"),
+    b("Fire alarm systems", "Systèmes d'alarme incendie"),
+    b("Data and low voltage", "Données et basse tension"),
+    b("Controls and automation", "Contrôles et automatisation"),
+    b("EV charging", "Bornes de recharge"),
+    b("Electrical maintenance", "Entretien électrique"),
+  ],
+  Roofing: [
+    b("Flat and low-slope roofing", "Toiture plate et à faible pente"),
+    b("Metal roofing", "Toiture métallique"),
+    b("Shingle roofing", "Toiture en bardeaux"),
+    b("Roof repair", "Réparation de toiture"),
+    b("Roof replacement", "Remplacement de toiture"),
+    b("Waterproofing", "Imperméabilisation"),
+    b("Inspection and maintenance", "Inspection et entretien"),
+    b("Eavestrough and drainage", "Gouttières et drainage"),
+  ],
+  Painting: [
+    b("Interior painting", "Peinture intérieure"),
+    b("Exterior painting", "Peinture extérieure"),
+    b("Industrial coatings", "Revêtements industriels"),
+    b("Line painting and markings", "Marquage et lignage"),
+    b("Drywall repair", "Réparation de cloisons sèches"),
+    b("Surface preparation", "Préparation des surfaces"),
+    b("Specialty finishes", "Finitions spécialisées"),
+  ],
+  Flooring: [
+    b("Commercial flooring", "Revêtements commerciaux"),
+    b("Carpet and tile", "Tapis et carrelage"),
+    b("Vinyl and resilient", "Vinyle et souple"),
+    b("Hardwood", "Bois franc"),
+    b("Epoxy and resin", "Époxy et résine"),
+    b("Concrete polishing", "Polissage de béton"),
+    b("Floor repair", "Réparation de planchers"),
+  ],
+  "Concrete and paving": [
+    b("Sidewalks and curbs", "Trottoirs et bordures"),
+    b("Foundations", "Fondations"),
+    b("Asphalt paving", "Pavage d'asphalte"),
+    b("Concrete repair", "Réparation de béton"),
+    b("Parking lots", "Stationnements"),
+    b("Line painting", "Marquage"),
+    b("Sealing and crack repair", "Scellement et fissures"),
+  ],
+  "Carpentry and millwork": [
+    b("Finish carpentry", "Menuiserie de finition"),
+    b("Custom millwork", "Menuiserie sur mesure"),
+    b("Cabinetry", "Armoires"),
+    b("Doors and frames", "Portes et cadres"),
+    b("Framing", "Charpente"),
+    b("Casework", "Mobilier intégré"),
+  ],
+  "Glazing and windows": [
+    b("Window installation", "Installation de fenêtres"),
+    b("Curtain wall", "Mur-rideau"),
+    b("Storefront systems", "Devantures"),
+    b("Glass replacement", "Remplacement de verre"),
+    b("Door hardware", "Quincaillerie de porte"),
+    b("Sealing and weatherproofing", "Scellement et étanchéité"),
+  ],
+  Fencing: [
+    b("Chain link fencing", "Clôture à mailles"),
+    b("Ornamental fencing", "Clôture ornementale"),
+    b("Security fencing", "Clôture de sécurité"),
+    b("Gates and access", "Portails et accès"),
+    b("Guardrails", "Glissières"),
+    b("Fence repair", "Réparation de clôtures"),
+  ],
+  "Fire protection and life safety": [
+    b("Sprinkler systems", "Systèmes de gicleurs"),
+    b("Fire alarm systems", "Systèmes d'alarme incendie"),
+    b("Extinguishers", "Extincteurs"),
+    b("Inspection and testing", "Inspection et essais"),
+    b("Suppression systems", "Systèmes de suppression"),
+    b("Emergency lighting", "Éclairage d'urgence"),
+  ],
+  "Pest control": [
+    b("General pest control", "Lutte antiparasitaire générale"),
+    b("Rodent control", "Contrôle des rongeurs"),
+    b("Insect control", "Contrôle des insectes"),
+    b("Wildlife removal", "Retrait de la faune"),
+    b("Bird control", "Contrôle des oiseaux"),
+    b("Inspection and prevention", "Inspection et prévention"),
+  ],
+};
+
+// Province / state dropdown. Canada-forward, with national and US options.
+export const PROVINCES = [
+  b("Ontario", "Ontario"),
+  b("Quebec", "Québec"),
+  b("British Columbia", "Colombie-Britannique"),
+  b("Alberta", "Alberta"),
+  b("Manitoba", "Manitoba"),
+  b("Saskatchewan", "Saskatchewan"),
+  b("Nova Scotia", "Nouvelle-Écosse"),
+  b("New Brunswick", "Nouveau-Brunswick"),
+  b("Newfoundland and Labrador", "Terre-Neuve-et-Labrador"),
+  b("Prince Edward Island", "Île-du-Prince-Édouard"),
+  b("Northwest Territories", "Territoires du Nord-Ouest"),
+  b("Yukon", "Yukon"),
+  b("Nunavut", "Nunavut"),
+  b("Across Canada", "Partout au Canada"),
+  b("United States", "États-Unis"),
+];
+
+/**
+ * Sub-areas within a province, keyed by the province option's English value.
+ * Lets a contractor narrow to where they actually work (for example the GTA in
+ * Ontario). Provinces without a list fall back to a free-text field.
+ */
+export const PROVINCE_AREAS: Record<string, Bi[]> = {
+  Ontario: [
+    b("Greater Toronto Area (GTA)", "Grand Toronto (RGT)"),
+    b("Ottawa region", "Région d'Ottawa"),
+    b("Hamilton and Niagara", "Hamilton et Niagara"),
+    b("Kitchener-Waterloo", "Kitchener-Waterloo"),
+    b("London and Southwest", "London et Sud-Ouest"),
+    b("Windsor-Essex", "Windsor-Essex"),
+    b("Eastern Ontario", "Est de l'Ontario"),
+    b("Central Ontario", "Centre de l'Ontario"),
+    b("Northern Ontario", "Nord de l'Ontario"),
+    b("All of Ontario", "Tout l'Ontario"),
+  ],
+  Quebec: [
+    b("Greater Montreal", "Grand Montréal"),
+    b("Quebec City region", "Région de Québec"),
+    b("Gatineau and Outaouais", "Gatineau et Outaouais"),
+    b("Laval and Laurentians", "Laval et Laurentides"),
+    b("Monteregie", "Montérégie"),
+    b("Eastern Townships", "Cantons-de-l'Est"),
+    b("Saguenay-Lac-Saint-Jean", "Saguenay-Lac-Saint-Jean"),
+    b("All of Quebec", "Tout le Québec"),
+  ],
+  "British Columbia": [
+    b("Metro Vancouver", "Grand Vancouver"),
+    b("Fraser Valley", "Vallée du Fraser"),
+    b("Greater Victoria", "Grand Victoria"),
+    b("Vancouver Island", "Île de Vancouver"),
+    b("Okanagan", "Okanagan"),
+    b("Kamloops and Interior", "Kamloops et Intérieur"),
+    b("Northern BC", "Nord de la C.-B."),
+    b("All of BC", "Toute la C.-B."),
+  ],
+  Alberta: [
+    b("Calgary region", "Région de Calgary"),
+    b("Edmonton region", "Région d'Edmonton"),
+    b("Red Deer and Central", "Red Deer et Centre"),
+    b("Southern Alberta", "Sud de l'Alberta"),
+    b("Northern Alberta", "Nord de l'Alberta"),
+    b("All of Alberta", "Toute l'Alberta"),
+  ],
+  Manitoba: [
+    b("Winnipeg region", "Région de Winnipeg"),
+    b("Brandon and Western", "Brandon et Ouest"),
+    b("Northern Manitoba", "Nord du Manitoba"),
+    b("All of Manitoba", "Tout le Manitoba"),
+  ],
+  Saskatchewan: [
+    b("Regina region", "Région de Regina"),
+    b("Saskatoon region", "Région de Saskatoon"),
+    b("Northern Saskatchewan", "Nord de la Saskatchewan"),
+    b("All of Saskatchewan", "Toute la Saskatchewan"),
+  ],
+  "Nova Scotia": [
+    b("Halifax region", "Région d'Halifax"),
+    b("Cape Breton", "Cap-Breton"),
+    b("Rest of Nova Scotia", "Reste de la Nouvelle-Écosse"),
+    b("All of Nova Scotia", "Toute la Nouvelle-Écosse"),
+  ],
+  "New Brunswick": [
+    b("Moncton", "Moncton"),
+    b("Saint John", "Saint John"),
+    b("Fredericton", "Fredericton"),
+    b("All of New Brunswick", "Tout le Nouveau-Brunswick"),
+  ],
+  "Newfoundland and Labrador": [
+    b("St. John's region", "Région de St. John's"),
+    b("Labrador", "Labrador"),
+    b("All of Newfoundland and Labrador", "Toute Terre-Neuve-et-Labrador"),
+  ],
 };
 
 // Contact fields shared by both forms.
@@ -164,7 +383,8 @@ export const QUICK_FORM: Section[] = [
     fields: [
       { id: "trade", type: "select", label: b("What industry do you work in?", "Dans quel secteur travaillez-vous?"), options: TRADE, required: true },
       { id: "services", type: "services", label: b("Which services do you offer? (check all that apply)", "Quels services offrez-vous? (cochez tout ce qui s'applique)") },
-      { id: "region", type: "text", label: b("Where do you bid? (provinces, states or regions)", "Où soumissionnez-vous? (provinces, États ou régions)"), required: true },
+      { id: "province", type: "select", label: b("Where do you bid?", "Où soumissionnez-vous?"), options: PROVINCES, required: true },
+      { id: "areas", type: "areas", label: b("Which areas? (check all that apply)", "Quelles régions? (cochez tout ce qui s'applique)") },
     ],
   },
   {
@@ -204,7 +424,8 @@ export const FULL_FORM: Section[] = [
   {
     title: b("Where you bid", "Où vous soumissionnez"),
     fields: [
-      { id: "region", type: "text", label: b("Which provinces, territories or states do you work in or want to?", "Dans quelles provinces, territoires ou États travaillez-vous ou voulez-vous travailler?"), required: true },
+      { id: "province", type: "select", label: b("Where do you bid?", "Où soumissionnez-vous?"), options: PROVINCES, required: true },
+      { id: "areas", type: "areas", label: b("Which areas? (check all that apply)", "Quelles régions? (cochez tout ce qui s'applique)") },
       { id: "travel", type: "select", label: b("Will you travel for the right job, or stay local?", "Voyagerez-vous pour le bon contrat, ou restez-vous local?"), options: TRAVEL },
       { id: "countries", type: "select", label: b("Canadian opportunities, US, or both?", "Opportunités canadiennes, américaines, ou les deux?"), options: COUNTRIES },
     ],

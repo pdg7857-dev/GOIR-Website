@@ -24,6 +24,8 @@ CREATE TABLE IF NOT EXISTS "IntakeSubmission" (
   "bestWork"     TEXT,
   "avoidWork"    TEXT,
   "region"       TEXT,
+  "province"     TEXT,
+  "areas"        TEXT,
   "travel"       TEXT,
   "countries"    TEXT,
   "team"         TEXT,
@@ -54,3 +56,8 @@ CREATE TABLE IF NOT EXISTS "IntakeSubmission" (
 
 CREATE INDEX IF NOT EXISTS "IntakeSubmission_email_idx" ON "IntakeSubmission"("email");
 CREATE INDEX IF NOT EXISTS "IntakeSubmission_createdAt_idx" ON "IntakeSubmission"("createdAt");
+
+-- If you already created the table from an earlier version, these add the
+-- province/area columns to it (safe to run again; no-op if they already exist).
+ALTER TABLE "IntakeSubmission" ADD COLUMN IF NOT EXISTS "province" TEXT;
+ALTER TABLE "IntakeSubmission" ADD COLUMN IF NOT EXISTS "areas" TEXT;

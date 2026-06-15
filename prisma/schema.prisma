@@ -1309,6 +1309,8 @@ model IntakeSubmission {
 
   // Where they bid
   region    String?
+  province  String?
+  areas     String?
   travel    String?
   countries String?
 
