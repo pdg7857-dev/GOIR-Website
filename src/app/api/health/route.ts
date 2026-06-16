@@ -14,9 +14,19 @@ export async function GET() {
   let dbConnects = false;
   let intakeTable = false;
   let intakeCount: number | null = null;
+  let operatorFound = false;
+  let eprocBusinessFound = false;
   try {
     await prisma.$queryRaw`SELECT 1`;
     dbConnects = true;
+    try {
+      const op = await prisma.user.findFirst({ orderBy: { createdAt: "asc" }, select: { id: true } });
+      operatorFound = !!op;
+      const biz = await prisma.business.findFirst({ where: { slug: "eprocurement" }, select: { id: true } });
+      eprocBusinessFound = !!biz;
+    } catch {
+      /* leave defaults */
+    }
     try {
       intakeCount = await prisma.intakeSubmission.count();
       intakeTable = true;
@@ -33,6 +43,8 @@ export async function GET() {
     emailFromSet: !!process.env.EMAIL_FROM,
     databaseUrlSet: !!process.env.DATABASE_URL,
     dbConnects,
+    operatorFound,
+    eprocBusinessFound,
     intakeTable,
     intakeCount,
   });
