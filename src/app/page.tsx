@@ -6,12 +6,11 @@ import {
 } from "lucide-react";
 import { Section, SectionHead, StatStrip, CtaBand, FeatureCard, CredentialBadge } from "@/components/site/ui";
 import { CostCalculator } from "@/components/site/cost-calculator";
-import { PricingTables } from "@/components/site/pricing-tables";
 import { VideoEmbed } from "@/components/site/video-embed";
 import { FaqAccordion } from "@/components/site/faq";
 import { LeadForm } from "@/components/site/lead-form";
 import { GENERAL_FAQS } from "@/lib/site/faqs";
-import { CORNERSTONE_PLATFORMS, PLATFORMS } from "@/lib/site/platforms";
+import { FEATURED_PLATFORMS, PLATFORMS } from "@/lib/site/platforms";
 import { PRIMARY_INDUSTRIES } from "@/lib/site/industries";
 import { SITE, BACKGROUND } from "@/lib/site/config";
 import { JsonLd, faqJsonLd } from "@/lib/site/seo";
@@ -40,18 +39,18 @@ export default function HomePage() {
               and start working only the opportunities worth pursuing.
             </p>
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-              <Link href={SITE.bookingUrl} className="btn-gold px-6 py-3.5 text-base">
-                Book a meeting <ArrowRight className="h-4 w-4" />
+              <Link href="/free-opportunities" className="btn-gold px-6 py-3.5 text-base">
+                Get free opportunities <ArrowRight className="h-4 w-4" />
               </Link>
               <Link
-                href="/opportunity-waste-calculator"
+                href={SITE.bookingUrl}
                 className="btn-ghost border-white/20 bg-white/5 px-6 py-3.5 text-base text-fg hover:border-white/40 hover:text-fg"
               >
-                Calculate your opportunity waste
+                Book a meeting
               </Link>
             </div>
             <p className="mt-5 text-sm text-fg-subtle">
-              Twenty-minute discovery call, no cost. Public pricing from <span className="font-semibold text-fg">$599/month</span>.
+              Free, no obligation. Tell me your trade and where you bid, and I will send you real opportunities you have not found.
             </p>
             <div className="mt-5 inline-flex items-center gap-2 rounded-full border border-warn/30 bg-warn-soft/30 px-4 py-2">
               <CredentialBadge lg />
@@ -66,8 +65,8 @@ export default function HomePage() {
               <div className="mt-4 space-y-3">
                 {[
                   { t: "Custodial services, 3 schools", s: "MERX, closes in 18 days", fit: "Strong fit" },
-                  { t: "Roof replacement, county facility", s: "Bonfire, mandatory site visit Tue", fit: "Worth a look" },
-                  { t: "HVAC controls upgrade", s: "SAM.gov, filed under \"energy retrofit\"", fit: "Strong fit" },
+                  { t: "Roof replacement, municipal facility", s: "Biddingo, mandatory site visit Tue", fit: "Worth a look" },
+                  { t: "HVAC controls upgrade", s: "BC Bid, filed under \"energy retrofit\"", fit: "Strong fit" },
                 ].map((c) => (
                   <div key={c.t} className="rounded-xl border border-white/10 bg-ink-800/60 p-4">
                     <div className="flex items-start justify-between gap-3">
@@ -109,15 +108,18 @@ export default function HomePage() {
       <section className="border-b border-border bg-bg-subtle">
         <div className="container py-10">
           <p className="text-center text-xs font-semibold uppercase tracking-[0.16em] text-fg-muted">
-            Fluent in the platforms your buyers actually use
+            Every Canadian portal, plus the U.S. platforms when you bid south of the border
           </p>
           <div className="mt-6 flex flex-wrap items-center justify-center gap-x-8 gap-y-3 text-sm font-semibold text-fg-muted">
-            {["MERX", "BidNet Direct", "CanadaBuys", "SAM.gov", "Bonfire", "Biddingo", "bids&tenders", "PlanetBids", "GSA eBuy"].map(
+            {["MERX", "CanadaBuys", "Biddingo", "bids&tenders", "BC Bid", "SEAO", "Bonfire", "BidNet Direct", "SAM.gov"].map(
               (n) => (
                 <span key={n} className="opacity-80">{n}</span>
               ),
             )}
           </div>
+          <p className="mt-4 text-center text-xs text-fg-subtle">
+            Plus every provincial and territorial portal: Alberta Purchasing Connection, SaskTenders, the Ontario Tenders Portal, NBON and the rest.
+          </p>
         </div>
       </section>
 
@@ -252,7 +254,7 @@ export default function HomePage() {
           lede="Each platform categorizes, titles and notifies differently. Knowing those quirks is the difference between seeing a fit and missing it."
         />
         <div className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-          {CORNERSTONE_PLATFORMS.map((p) => (
+          {FEATURED_PLATFORMS.map((p) => (
             <Link
               key={p.slug}
               href={platformPath(p.slug)}
@@ -354,23 +356,25 @@ export default function HomePage() {
         </div>
       </Section>
 
-      {/* Pricing */}
+      {/* Coverage */}
       <Section>
         <SectionHead
           center
-          eyebrow="Pricing"
-          title="Transparent pricing, structured as coverage."
-          lede="Not per opportunity. Not per portal. Not hourly. Entry coverage is public from $599 a month; national and cross-border coverage is scoped to your footprint."
+          eyebrow="Coverage"
+          title="Structured as coverage, not per opportunity."
+          lede="Not per portal. Not hourly. Coverage is scoped to your footprint, a single province or state, several, or nationwide and cross-border including federal, and quoted on a short discovery call."
         />
-        <div className="mt-12">
-          <PricingTables />
+        <div className="mt-10 flex justify-center">
+          <Link href={SITE.bookingUrl} className="btn-gold px-6 py-3.5 text-base">
+            Book a discovery call
+          </Link>
         </div>
         <p className="mt-8 text-center text-sm text-fg-muted">
-          Full details, FAQs and what is included on the{" "}
-          <Link href="/pricing" className="font-medium text-accent underline">
-            pricing page
-          </Link>
-          .
+          Not ready for a call? Have me{" "}
+          <Link href="/free-opportunities" className="font-medium text-accent underline">
+            send you free opportunities
+          </Link>{" "}
+          in your trade first.
         </p>
       </Section>
 

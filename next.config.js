@@ -23,6 +23,8 @@ const nextConfig = {
         destination: "/opportunity-waste-calculator",
         permanent: true,
       },
+      // Pricing is no longer published. Send it to the free-opportunities lead tool.
+      { source: "/pricing", destination: "/free-opportunities", permanent: false },
     ];
   },
 };

@@ -6,10 +6,38 @@ import { SITE } from "@/lib/site/config";
 
 /**
  * Opportunity Cost Calculator. Estimates what manual portal monitoring and
- * bid review costs per month, then compares it to coverage starting at $599.
- * Numbers are the user's own inputs, so nothing here is fabricated.
+ * bid review costs per month. Numbers are the user's own inputs, so nothing
+ * here is fabricated.
  */
-export function CostCalculator({ compact = false }: { compact?: boolean }) {
+const CC = {
+  en: {
+    eyebrow: "Opportunity cost calculator",
+    title: "What is searching costing you?",
+    rate: "Estimator hourly rate (fully loaded)", rateUnit: "/hr",
+    hours: "Hours per week reviewing & monitoring bids", hoursUnit: "hrs/wk",
+    jur: "Jurisdictions monitored", jur1: "1 jurisdiction", jurN: "jurisdictions",
+    costLabel: "Estimated monthly cost of DIY",
+    costSub: "in estimator time alone, before a single bid is written",
+    body: "That is time your estimator spends searching and reading poor-fit bids, before a single proposal is written. I take that work off your plate so those hours go back on the bids worth winning, and you stop reading the ones that were never a fit.",
+    cta: "See what you are missing",
+    note: "This is an estimate based on the numbers you enter. Your actual time and cost will vary.",
+  },
+  fr: {
+    eyebrow: "Calculateur du coût d'opportunité",
+    title: "Combien la recherche vous coûte-t-elle?",
+    rate: "Taux horaire de l'estimateur (tout compris)", rateUnit: "/h",
+    hours: "Heures par semaine à examiner et surveiller les soumissions", hoursUnit: "h/sem",
+    jur: "Territoires surveillés", jur1: "1 territoire", jurN: "territoires",
+    costLabel: "Coût mensuel estimé du « faites-le vous-même »",
+    costSub: "en temps d'estimateur seulement, avant même de rédiger une soumission",
+    body: "C'est le temps que votre estimateur passe à chercher et à lire des soumissions mal adaptées, avant même qu'une proposition soit rédigée. Je vous enlève ce travail pour que ces heures retournent aux soumissions qui valent la peine d'être gagnées, et que vous cessiez de lire celles qui ne convenaient jamais.",
+    cta: "Voyez ce qui vous échappe",
+    note: "Ceci est une estimation basée sur les chiffres que vous entrez. Votre temps et votre coût réels varieront.",
+  },
+} as const;
+
+export function CostCalculator({ compact = false, lang = "en" }: { compact?: boolean; lang?: "en" | "fr" }) {
+  const C = CC[lang];
   const [rate, setRate] = useState(55); // fully-loaded estimator $/hr
   const [hours, setHours] = useState(8); // hours/week reviewing & monitoring
   const [jurisdictions, setJurisdictions] = useState(3);
@@ -23,43 +51,40 @@ export function CostCalculator({ compact = false }: { compact?: boolean }) {
     return Math.round(monthlyHours * rate);
   }, [rate, hours, jurisdictions]);
 
-  const plan = 599;
-  const delta = monthly - plan;
-
   return (
     <div className={`card overflow-hidden ${compact ? "" : "shadow-lift"}`}>
       <div className="grid lg:grid-cols-2">
         <div className="space-y-6 p-6 sm:p-8">
           <div>
-            <p className="eyebrow">Opportunity cost calculator</p>
-            <h3 className="mt-2 text-xl font-semibold text-fg">What is searching costing you?</h3>
+            <p className="eyebrow">{C.eyebrow}</p>
+            <h3 className="mt-2 text-xl font-semibold text-fg">{C.title}</h3>
           </div>
 
           <Range
-            label="Estimator hourly rate (fully loaded)"
+            label={C.rate}
             value={rate}
             min={30}
             max={150}
             step={5}
-            display={`$${rate}/hr`}
+            display={`$${rate}${C.rateUnit}`}
             onChange={setRate}
           />
           <Range
-            label="Hours per week reviewing & monitoring bids"
+            label={C.hours}
             value={hours}
             min={1}
             max={40}
             step={1}
-            display={`${hours} hrs/wk`}
+            display={`${hours} ${C.hoursUnit}`}
             onChange={setHours}
           />
           <Range
-            label="Jurisdictions monitored"
+            label={C.jur}
             value={jurisdictions}
             min={1}
             max={12}
             step={1}
-            display={jurisdictions === 1 ? "1 jurisdiction" : `${jurisdictions} jurisdictions`}
+            display={jurisdictions === 1 ? C.jur1 : `${jurisdictions} ${C.jurN}`}
             onChange={setJurisdictions}
           />
         </div>
@@ -67,42 +92,22 @@ export function CostCalculator({ compact = false }: { compact?: boolean }) {
         <div className="flex flex-col justify-center gap-5 bg-bg p-6 text-center text-fg sm:p-8">
           <div>
             <p className="text-xs font-semibold uppercase tracking-[0.16em] text-accent">
-              Estimated monthly cost of DIY
+              {C.costLabel}
             </p>
             <p className="mt-2 text-5xl font-bold tabular-nums">
               ${monthly.toLocaleString()}
             </p>
-            <p className="mt-1 text-sm text-fg-subtle">in estimator time alone, before a single bid is written</p>
+            <p className="mt-1 text-sm text-fg-subtle">{C.costSub}</p>
           </div>
 
           <div className="rounded-xl border border-white/10 bg-white/5 p-4 text-sm">
-            <div className="flex items-center justify-between">
-              <span className="text-fg-muted">Single-jurisdiction coverage</span>
-              <span className="font-semibold text-fg">${plan}/mo</span>
-            </div>
-            {delta > 0 ? (
-              <p className="mt-2 text-left text-fg-muted">
-                That is roughly{" "}
-                <span className="font-semibold text-warn">
-                  ${delta.toLocaleString()}/month
-                </span>{" "}
-                of estimator time you could put back on winnable bids, and you stop reading the
-                ones that were never a fit.
-              </p>
-            ) : (
-              <p className="mt-2 text-left text-fg-muted">
-                Even here, coverage buys back the hours and the bids your team never sees, not just
-                the dollars.
-              </p>
-            )}
+            <p className="text-left text-fg-muted">{C.body}</p>
           </div>
 
           <Link href={SITE.bookingUrl} className="btn-gold w-full py-3">
-            See what you are missing
+            {C.cta}
           </Link>
-          <p className="text-xs text-fg-muted">
-            This is an estimate based on the numbers you enter. Your actual time and cost will vary.
-          </p>
+          <p className="text-xs text-fg-muted">{C.note}</p>
         </div>
       </div>
     </div>

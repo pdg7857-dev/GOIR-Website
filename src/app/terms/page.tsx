@@ -115,8 +115,8 @@ export default function TermsPage() {
           <h2>Fees</h2>
           <p>
             Where coverage is purchased, fees and terms are set out separately in the arrangement
-            between us. Public pricing on this site (coverage from $599 per month) is indicative and
-            may change.
+            between us. Coverage is scoped to your footprint and quoted individually. Any figures
+            discussed before that are indicative and may change.
           </p>
 
           <h2>Changes to these terms</h2>

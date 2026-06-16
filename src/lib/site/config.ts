@@ -19,6 +19,8 @@ export const SITE = {
   // Vercel so www.phildave.com redirects here.
   domain: "https://phildave.com",
   email: "phil@phildave.com",
+  // Where inbound leads (free-opportunities requests) are delivered.
+  leadsEmail: "win@phildave.com",
   // Internal booking page (renders the Calendly embed below). All CTAs point here.
   bookingUrl: "/book",
   // Phil Dave's Calendly scheduling link, embedded on /book.
@@ -101,7 +103,7 @@ export const PRIMARY_NAV: NavItem[] = [
       { label: "Contract Expirations", href: "/government-contract-expirations" },
     ],
   },
-  { label: "Pricing", href: "/pricing" },
+  { label: "Free opportunities", href: "/free-opportunities" },
   {
     label: "Resources",
     href: "/resources",

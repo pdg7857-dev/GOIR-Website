@@ -44,7 +44,7 @@ export function IndustryAuthority({ slug }: { slug: string }) {
     },
     {
       q: "How much does coverage cost?",
-      a: "Flat monthly coverage from $599, priced by the geography you need rather than per opportunity or per platform. National and cross-border coverage is scoped to your footprint, from $1,499. See the pricing page for details.",
+      a: "One payment for a full year of coverage, not a monthly plan, priced by the geography you need rather than per opportunity or per platform. Coverage is scoped to your footprint, from a single province or state up to nationwide and cross-border, and quoted on a discovery call once I understand where you bid.",
     },
   ];
 
