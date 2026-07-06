@@ -11,7 +11,7 @@ export const metadata: Metadata = pageMeta({
 });
 
 // EDIT BEFORE LAUNCH: set this to the date the policy was last reviewed.
-const LAST_UPDATED = "[LAST UPDATED: edit this date before launch]";
+const LAST_UPDATED = "July 6, 2026";
 
 export default function PrivacyPage() {
   return (
