@@ -1,10 +1,10 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import {
-  Search, FileSearch, Filter, Send, Bell, Layers, Clock,
+  Search, FileSearch, Filter, Send,
   Building2, ArrowRight, CheckCircle2, BadgeCheck,
 } from "lucide-react";
-import { Section, SectionHead, StatStrip, CtaBand, FeatureCard, CredentialBadge } from "@/components/site/ui";
+import { Section, SectionHead, StatStrip, CtaBand, CredentialBadge } from "@/components/site/ui";
 import { CostCalculator } from "@/components/site/cost-calculator";
 import { VideoEmbed } from "@/components/site/video-embed";
 import { FaqAccordion } from "@/components/site/faq";
@@ -170,54 +170,8 @@ export default function HomeFrPage() {
         </Section>
       )}
 
-      {/* Plateformes */}
-      <section className="border-b border-border bg-bg-subtle">
-        <div className="container py-10">
-          <p className="text-center text-xs font-semibold uppercase tracking-[0.16em] text-fg-muted">
-            Chaque portail canadien, plus les plateformes américaines lorsque vous soumissionnez au sud
-          </p>
-          <div className="mt-6 flex flex-wrap items-center justify-center gap-x-8 gap-y-3 text-sm font-semibold text-fg-muted">
-            {["MERX", "CanadaBuys", "Biddingo", "bids&tenders", "BC Bid", "SEAO", "Bonfire", "BidNet Direct", "SAM.gov"].map(
-              (n) => (
-                <span key={n} className="opacity-80">{n}</span>
-              ),
-            )}
-          </div>
-          <p className="mt-4 text-center text-xs text-fg-subtle">
-            Plus chaque portail provincial et territorial: Alberta Purchasing Connection, SaskTenders, Ontario Tenders Portal, New Brunswick Opportunities Network et les autres.
-          </p>
-        </div>
-      </section>
-
-      {/* Le problème */}
-      <Section muted>
-        <SectionHead
-          eyebrow="Le problème"
-          title="La soumission n'échoue pas à la rédaction. Elle échoue à la recherche."
-          lede="Le temps que la plupart des entrepreneurs s'assoient pour rédiger, ils ont déjà perdu des heures sur la partie pour laquelle personne ne les a formés: trouver le bon travail."
-        />
-        <div className="mt-12 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-          <FeatureCard icon={Layers} title="Trop de portails">
-            MERX, CanadaBuys, SEAO, un portail différent pour presque chaque municipalité. Chacun a
-            sa propre connexion, sa propre recherche, ses propres réglages d'avis.
-          </FeatureCard>
-          <FeatureCard icon={Bell} title="Trop d'avis">
-            Les alertes par mot-clé se déclenchent sur tout et ne qualifient rien. Votre boîte se
-            remplit de travail hors de votre créneau, et la seule soumission qui comptait passe inaperçue.
-          </FeatureCard>
-          <FeatureCard icon={Filter} title="Trop de mauvais ajustements">
-            Les estimateurs passent leurs meilleures heures à lire des documents pour des opportunités
-            que vous n'alliez jamais gagner, au lieu de la poignée que vous devriez réellement viser.
-          </FeatureCard>
-          <FeatureCard icon={Clock} title="Pas assez de temps">
-            Personne n'a le temps d'ouvrir chaque PDF, de trouver la visite obligatoire à la page 14,
-            et de juger l'ajustement avant la date de clôture.
-          </FeatureCard>
-        </div>
-      </Section>
-
       {/* La différence */}
-      <Section>
+      <Section muted>
         <div className="grid items-center gap-12 lg:grid-cols-2">
           <div>
             <SectionHead
@@ -301,8 +255,8 @@ export default function HomeFrPage() {
         <SectionHead
           dark
           eyebrow="Expertise des plateformes"
-          title="Je sais où vivent les opportunités et comment elles se cachent."
-          lede="Chaque plateforme catégorise, intitule et avise différemment. Connaître ces particularités fait la différence entre voir un ajustement et le manquer."
+          title="Chaque portail canadien, plus les États-Unis quand vous soumissionnez au sud."
+          lede="MERX, CanadaBuys, Biddingo, SEAO et chaque portail provincial et territorial, plus SAM.gov et BidNet Direct pour le travail transfrontalier. Chaque plateforme catégorise, intitule et avise différemment, et connaître ces particularités fait la différence entre voir un ajustement et le manquer."
         />
         <div className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
           {FEATURED_PLATFORMS.map((p) => {
@@ -364,20 +318,7 @@ export default function HomeFrPage() {
         </div>
       </Section>
 
-      {/* Chiffres */}
-      <Section muted>
-        <SectionHead
-          center
-          eyebrow="En chiffres"
-          title="Un marché vaste et bruyant. C'est exactement l'intérêt."
-          lede="Les acheteurs publics dépensent des sommes énormes sur des milliers d'opportunités et des dizaines de plateformes. L'échelle est l'occasion, et la raison pour laquelle aucune équipe ne peut tout surveiller seule."
-        />
-        <div className="mx-auto mt-10 max-w-5xl">
-          <StatStrip lang="fr" />
-        </div>
-      </Section>
-
-      {/* Crédibilité */}
+      {/* Crédibilité + échelle du marché */}
       <Section muted>
         <div className="mx-auto max-w-3xl">
           <p className="eyebrow text-center">D'où vient ce service</p>
@@ -404,28 +345,9 @@ export default function HomeFrPage() {
             ))}
           </ul>
         </div>
-      </Section>
-
-      {/* Couverture */}
-      <Section>
-        <SectionHead
-          center
-          eyebrow="Couverture"
-          title="Structurée comme une couverture, pas par opportunité."
-          lede="Pas par portail. Pas à l'heure. Un seul paiement couvre une année complète, ajustée à votre territoire: une province ou un État, plusieurs, ou tout le pays et transfrontalier, y compris le fédéral. Le prix est établi lors d'un court appel."
-        />
-        <div className="mt-10 flex justify-center">
-          <Link href={SITE.bookingUrl} className="btn-gold px-6 py-3.5 text-base">
-            Réserver un appel de découverte
-          </Link>
+        <div className="mx-auto mt-14 max-w-5xl">
+          <StatStrip lang="fr" />
         </div>
-        <p className="mt-8 text-center text-sm text-fg-muted">
-          Pas prêt pour un appel? Laissez-moi d'abord vous{" "}
-          <Link href="/fr/free-opportunities" className="font-medium text-accent underline">
-            envoyer des opportunités gratuites
-          </Link>{" "}
-          dans votre métier.
-        </p>
       </Section>
 
       {/* FAQ + formulaire */}

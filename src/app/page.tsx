@@ -1,10 +1,10 @@
 import Link from "next/link";
 import { platformPath, industryPath } from "@/lib/site/links";
 import {
-  Search, FileSearch, Filter, Send, Bell, Layers, Clock, AlertTriangle,
+  Search, FileSearch, Filter, Send,
   Building2, Sparkles, ArrowRight, CheckCircle2, BadgeCheck,
 } from "lucide-react";
-import { Section, SectionHead, StatStrip, CtaBand, FeatureCard, CredentialBadge } from "@/components/site/ui";
+import { Section, SectionHead, StatStrip, CtaBand, CredentialBadge } from "@/components/site/ui";
 import { CostCalculator } from "@/components/site/cost-calculator";
 import { VideoEmbed } from "@/components/site/video-embed";
 import { FaqAccordion } from "@/components/site/faq";
@@ -104,62 +104,8 @@ export default function HomePage() {
         </Section>
       )}
 
-      {/* Authority / logos band */}
-      <section className="border-b border-border bg-bg-subtle">
-        <div className="container py-10">
-          <p className="text-center text-xs font-semibold uppercase tracking-[0.16em] text-fg-muted">
-            Every Canadian portal, plus the U.S. platforms when you bid south of the border
-          </p>
-          <div className="mt-6 flex flex-wrap items-center justify-center gap-x-8 gap-y-3 text-sm font-semibold text-fg-muted">
-            {["MERX", "CanadaBuys", "Biddingo", "bids&tenders", "BC Bid", "SEAO", "Bonfire", "BidNet Direct", "SAM.gov"].map(
-              (n) => (
-                <span key={n} className="opacity-80">{n}</span>
-              ),
-            )}
-          </div>
-          <p className="mt-4 text-center text-xs text-fg-subtle">
-            Plus every provincial and territorial portal: Alberta Purchasing Connection, SaskTenders, the Ontario Tenders Portal, NBON and the rest.
-          </p>
-        </div>
-      </section>
-
-      {/* Problem */}
-      <Section muted>
-        <SectionHead
-          eyebrow="The problem"
-          title="Bidding does not fail at the proposal. It fails at the search."
-          lede="By the time most contractors sit down to write, they have already lost hours to the part of the job nobody trained them for: finding the right work in the first place."
-        />
-        <div className="mt-12 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-          <FeatureCard icon={Layers} title="Too many portals">
-            MERX, CanadaBuys, SAM.gov, a different SaaS portal for nearly every municipality. Each
-            one has its own login, its own search, its own notification settings.
-          </FeatureCard>
-          <FeatureCard icon={Bell} title="Too many notifications">
-            Keyword alerts fire on everything and qualify nothing. Your inbox fills with work that
-            was never in your lane, and the one bid that mattered slips by unread.
-          </FeatureCard>
-          <FeatureCard icon={Filter} title="Too many poor fits">
-            Estimators spend their best hours reading documents for opportunities you were never
-            going to win, instead of the handful you actually should.
-          </FeatureCard>
-          <FeatureCard icon={Clock} title="Not enough time">
-            Nobody has time to open every PDF, find the mandatory site meeting on page 14, and
-            check the addenda that quietly moved the close date.
-          </FeatureCard>
-          <FeatureCard icon={AlertTriangle} title="Missed opportunities">
-            The work that fits you best is often filed under a title you would never search. If you
-            are not watching the way buyers write, you never see it.
-          </FeatureCard>
-          <FeatureCard icon={Search} title="Opportunity overload">
-            More data has not made bidding easier. It has made it noisier. Volume is not the
-            problem. Knowing what is worth your time is.
-          </FeatureCard>
-        </div>
-      </Section>
-
       {/* Positioning: platforms vs Phil */}
-      <Section>
+      <Section muted>
         <div className="grid items-center gap-12 lg:grid-cols-2">
           <div>
             <SectionHead
@@ -250,8 +196,8 @@ export default function HomePage() {
         <SectionHead
           dark
           eyebrow="Platform expertise"
-          title="I know where opportunities live and how they hide."
-          lede="Each platform categorizes, titles and notifies differently. Knowing those quirks is the difference between seeing a fit and missing it."
+          title="Every Canadian portal, plus the U.S. when you bid south of the border."
+          lede="MERX, CanadaBuys, Biddingo and every provincial and territorial portal, plus SAM.gov and BidNet Direct for cross-border work. Each one categorizes, titles and notifies differently, and knowing those quirks is the difference between seeing a fit and missing it."
         />
         <div className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
           {FEATURED_PLATFORMS.map((p) => (
@@ -307,28 +253,9 @@ export default function HomePage() {
         </div>
       </Section>
 
-      {/* Stats */}
-      <Section muted>
-        <SectionHead
-          center
-          eyebrow="By the numbers"
-          title="A big, noisy market. That is exactly the point."
-          lede="Government buyers spend enormous sums across thousands of opportunities and dozens of platforms. The scale is the opportunity, and the reason no team can watch it all alone."
-        />
-        <div className="mx-auto mt-10 max-w-5xl">
-          <StatStrip />
-          <p className="mt-4 text-center text-xs text-fg-subtle">
-            See{" "}
-            <Link href="/government-procurement-statistics" className="font-medium text-accent underline">
-              Government Contracting by the Numbers
-            </Link>{" "}
-            for the market data behind this.
-          </p>
-        </div>
-      </Section>
-
-      {/* Background credential. Replaces borrowed reviews: states only what I did,
-          never a client outcome. No testimonials until real, permissioned ones exist. */}
+      {/* Background credential + market scale. Replaces borrowed reviews: states only
+          what I did, never a client outcome. No testimonials until real, permissioned
+          ones exist. */}
       <Section muted>
         <div className="mx-auto max-w-3xl">
           <p className="eyebrow text-center">Where this comes from</p>
@@ -354,28 +281,16 @@ export default function HomePage() {
             ))}
           </ul>
         </div>
-      </Section>
-
-      {/* Coverage */}
-      <Section>
-        <SectionHead
-          center
-          eyebrow="Coverage"
-          title="Structured as coverage, not per opportunity."
-          lede="Not per portal. Not hourly. Coverage is scoped to your footprint, a single province or state, several, or nationwide and cross-border including federal, and quoted on a short discovery call."
-        />
-        <div className="mt-10 flex justify-center">
-          <Link href={SITE.bookingUrl} className="btn-gold px-6 py-3.5 text-base">
-            Book a discovery call
-          </Link>
+        <div className="mx-auto mt-14 max-w-5xl">
+          <StatStrip />
+          <p className="mt-4 text-center text-xs text-fg-subtle">
+            See{" "}
+            <Link href="/government-procurement-statistics" className="font-medium text-accent underline">
+              Government Contracting by the Numbers
+            </Link>{" "}
+            for the market data behind this.
+          </p>
         </div>
-        <p className="mt-8 text-center text-sm text-fg-muted">
-          Not ready for a call? Have me{" "}
-          <Link href="/free-opportunities" className="font-medium text-accent underline">
-            send you free opportunities
-          </Link>{" "}
-          in your trade first.
-        </p>
       </Section>
 
       {/* FAQ + lead form */}
