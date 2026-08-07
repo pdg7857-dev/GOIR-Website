@@ -1,8 +1,5 @@
 import type { Metadata } from "next";
-import { Search, Filter, Send } from "lucide-react";
-import { Breadcrumbs, CtaBand, Section, SectionHead, CredentialBadge } from "@/components/site/ui";
-import { RequestOpportunitiesForm } from "@/components/site/request-opportunities-form";
-import { FaqAccordion } from "@/components/site/faq";
+import { IntelLeadForm } from "@/components/intel/lead-form";
 import { pageMeta, JsonLd, breadcrumbJsonLd, faqJsonLd } from "@/lib/site/seo";
 import { SITE } from "@/lib/site/config";
 
@@ -32,37 +29,23 @@ export const metadata: Metadata = {
 };
 
 const FAQS = [
-  {
-    q: "Is it really free?",
-    a: "Yes. No cost and no obligation. I send you real opportunities so you can see the quality of what I do before you ever consider paying for ongoing coverage.",
-  },
-  {
-    q: "What exactly will I get?",
-    a: "A short list of current government opportunities that fit your trade and where you bid, each with a link to the source bid on the issuing platform so you can review it. The full document review and qualification is what I do for paying clients.",
-  },
-  {
-    q: "I am new to government bidding. Is this for me?",
-    a: "Yes. Whether you have never submitted a bid or you bid every week, I meet you where you are and show you what is open and genuinely worth pursuing in your trade.",
-  },
-  {
-    q: "How soon will I hear back?",
-    a: "Within 1 to 2 business days. I prepare each list personally, so it is real research on your trade and jurisdictions, not an automated email.",
-  },
-  {
-    q: "What do you do with my details?",
-    a: "They come straight to me so I can prepare your opportunities and follow up. No spam, no list-selling.",
-  },
+  { q: "Is it really free?", a: "Yes. No cost and no obligation. I send you real opportunities so you can see the quality of what I do before you ever consider paying for ongoing coverage." },
+  { q: "What exactly will I get?", a: "A short list of current government opportunities that fit your trade and where you bid, each with a link to the source bid on the issuing platform. The full document review and qualification is what I do for paying clients." },
+  { q: "How soon will I hear back?", a: "Within 3 business days. I prepare each list personally, so it is real research on your trade and jurisdictions, not an automated email." },
 ];
 
+const muted = (n: number) => `color-mix(in srgb, var(--color-text) ${n}%, transparent)`;
+const accent = "var(--color-accent)";
+
 const STEPS = [
-  { icon: Search, title: "I look where you bid", body: "Across the platforms that matter in your province, state or region, not just the one you watch." },
-  { icon: Filter, title: "I match your trade", body: "I pick out the opportunities that actually fit what you do and where you bid, not a keyword dump." },
-  { icon: Send, title: "I send you the short list", body: "Real, current opportunities with a link to the source bid so you can review each one yourself." },
+  { n: "01", t: "You send three lines", b: "Trade, jurisdictions, rough contract size you go after. That is the whole brief." },
+  { n: "02", t: "I run the sweep", b: "Every platform in your footprint, documents opened, fit judged against what you told me." },
+  { n: "03", t: "You get the short list, inside 3 business days", b: "Plain language summaries and direct links. Bid them yourself, with or without me. No pitch attached." },
 ];
 
 export default function FreeOpportunitiesPage() {
   return (
-    <>
+    <div className="intel" style={{ background: "var(--nz-page)", position: "relative", overflowX: "hidden", minHeight: "100vh" }}>
       <JsonLd
         data={[
           breadcrumbJsonLd([
@@ -72,72 +55,42 @@ export default function FreeOpportunitiesPage() {
           faqJsonLd(FAQS),
         ]}
       />
+      <div className="nz-gridwash" />
 
-      <section className="border-b border-border bg-ink-900 text-white">
-        <div className="container py-14">
-          <Breadcrumbs items={[{ name: "Home", href: "/" }, { name: "Free opportunities" }]} />
-          <div className="mt-6 grid items-start gap-12 lg:grid-cols-[1.05fr_0.95fr]">
-            <div className="max-w-xl">
-              <p className="eyebrow text-accent">Request your free opportunities</p>
-              <h1 className="mt-3 text-4xl font-bold sm:text-5xl">
-                Let me show you what you are missing.
-              </h1>
-              <p className="mt-5 text-lg leading-8 text-white/70">
-                Tell me what you do and where you bid. I will look across the platforms that matter
-                in your area, pick out the ones that fit your trade, and send you a short list of
-                real, current opportunities you have not found. Free, and no obligation.
-              </p>
-              <div className="mt-7">
-                <CredentialBadge lg />
-              </div>
-              <ul className="mt-8 space-y-3 text-sm text-white/70">
-                <li>Real opportunities, not a sales pitch.</li>
-                <li>New to bidding or seasoned, I meet you where you are.</li>
-                <li>Your details come straight to me. No spam, no list-selling.</li>
-              </ul>
-            </div>
+      <main
+        className="relative mx-auto grid max-w-[1100px] items-start gap-14 px-4 sm:px-7"
+        style={{ zIndex: 1, gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 360px), 1fr))", padding: "clamp(40px, 7vw, 80px) clamp(16px, 4vw, 28px) 80px" }}
+      >
+        <div>
+          <div className="flex items-center gap-2.5">
+            <span className="blip" />
+            <span className="hud" style={{ fontSize: 10, letterSpacing: "0.24em", color: muted(58) }}>Free intel report · no obligation</span>
+          </div>
+          <h1 className="mt-5" style={{ fontSize: "clamp(32px, 4.6vw, 52px)", lineHeight: 1.0, letterSpacing: "-0.035em", maxWidth: "15ch" }}>
+            See the bids you are missing.
+          </h1>
+          <div className="rule mt-6" />
+          <p className="mt-6" style={{ fontSize: 17, lineHeight: 1.6, color: muted(78), maxWidth: "46ch" }}>
+            Tell me your trade and where you bid. I will go through the platforms serving your
+            footprint and send back a short list of real, currently open opportunities you have not
+            seen, read, qualified and linked.
+          </p>
 
-            <div className="card bg-bg p-6 text-fg sm:p-8">
-              <h2 className="text-xl font-semibold text-fg">Where should I send them?</h2>
-              <p className="mt-1.5 text-sm text-fg-muted">
-                A few quick details so I can target your short list.
-              </p>
-              <div className="mt-6">
-                <RequestOpportunitiesForm />
+          <div className="mt-9 grid gap-5 pt-7" style={{ borderTop: `1px solid color-mix(in srgb, var(--color-accent) 22%, transparent)` }}>
+            {STEPS.map((s) => (
+              <div key={s.n} className="flex gap-4">
+                <span style={{ flex: "none", fontSize: 11, letterSpacing: "0.16em", color: accent, paddingTop: 3 }}>{s.n}</span>
+                <div>
+                  <div style={{ fontSize: 17, fontWeight: 500, marginBottom: 5, color: "var(--color-text)" }}>{s.t}</div>
+                  <p className="text-sm" style={{ color: muted(66), lineHeight: 1.55 }}>{s.b}</p>
+                </div>
               </div>
-            </div>
+            ))}
           </div>
         </div>
-      </section>
 
-      <Section>
-        <SectionHead
-          center
-          eyebrow="How it works"
-          title="What happens after you send the form"
-          lede="A preview of what I do for clients, on real opportunities in your trade."
-        />
-        <div className="mt-12 grid gap-6 sm:grid-cols-3">
-          {STEPS.map((s) => (
-            <div key={s.title} className="card p-6">
-              <s.icon className="h-6 w-6 text-accent" />
-              <h3 className="mt-4 text-lg font-semibold text-fg">{s.title}</h3>
-              <p className="mt-2 text-sm text-fg-muted">{s.body}</p>
-            </div>
-          ))}
-        </div>
-      </Section>
-
-      <Section muted>
-        <div className="mx-auto max-w-3xl">
-          <SectionHead center title="Common questions" />
-          <div className="mt-8">
-            <FaqAccordion faqs={FAQS} />
-          </div>
-        </div>
-      </Section>
-
-      <CtaBand />
-    </>
+        <IntelLeadForm />
+      </main>
+    </div>
   );
 }
