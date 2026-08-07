@@ -1,8 +1,5 @@
 import type { Metadata } from "next";
-import { Search, Filter, Send } from "lucide-react";
-import { Breadcrumbs, CtaBand, Section, SectionHead, CredentialBadge } from "@/components/site/ui";
-import { RequestOpportunitiesForm } from "@/components/site/request-opportunities-form";
-import { FaqAccordion } from "@/components/site/faq";
+import { IntelLeadForm } from "@/components/intel/lead-form";
 import { pageMeta, JsonLd, breadcrumbJsonLd, faqJsonLd } from "@/lib/site/seo";
 import { SITE } from "@/lib/site/config";
 
@@ -25,38 +22,24 @@ export const metadata: Metadata = {
   },
 };
 
-const STEPS = [
-  { icon: Search, title: "Je cherche là où vous soumissionnez", body: "Sur les plateformes qui comptent dans votre province ou région, pas seulement celle que vous surveillez." },
-  { icon: Filter, title: "Je cible votre métier", body: "Je repère les opportunités qui correspondent vraiment à ce que vous faites et à l'endroit où vous soumissionnez, pas un déversement de mots-clés." },
-  { icon: Send, title: "Je vous envoie la liste", body: "Des opportunités réelles et actuelles, avec un lien vers l'appel d'offres source pour que vous examiniez chacune vous-même." },
+const FAQS = [
+  { q: "Est-ce vraiment gratuit?", a: "Oui. Sans frais et sans engagement. Je vous envoie de vraies opportunités pour que vous voyiez la qualité de mon travail avant même d'envisager une couverture payante." },
+  { q: "Qu'est-ce que je reçois exactement?", a: "Une courte liste d'opportunités gouvernementales actuelles qui correspondent à votre métier et à l'endroit où vous soumissionnez, chacune avec un lien vers l'appel d'offres d'origine. L'examen complet des documents et la qualification, c'est ce que je fais pour mes clients payants." },
+  { q: "Quand vais-je avoir de vos nouvelles?", a: "En 3 jours ouvrables. Je prépare chaque liste personnellement, c'est de la vraie recherche sur votre métier et vos territoires, pas un courriel automatisé." },
 ];
 
-const FAQS = [
-  {
-    q: "Est-ce vraiment gratuit?",
-    a: "Oui. Sans frais et sans engagement. Je vous envoie de vraies opportunités pour que vous voyiez la qualité de mon travail avant même d'envisager une couverture payante.",
-  },
-  {
-    q: "Qu'est-ce que je reçois exactement?",
-    a: "Une courte liste d'opportunités gouvernementales actuelles qui correspondent à votre métier et à l'endroit où vous soumissionnez, chacune avec un lien vers l'appel d'offres sur la plateforme d'origine pour que vous l'examiniez. L'examen complet des documents et la qualification, c'est ce que je fais pour mes clients payants.",
-  },
-  {
-    q: "Je suis nouveau dans les appels d'offres publics. Est-ce pour moi?",
-    a: "Oui. Que vous n'ayez jamais soumissionné ou que vous le fassiez chaque semaine, je m'adapte à votre situation et vous montre ce qui est ouvert et réellement digne d'intérêt dans votre métier.",
-  },
-  {
-    q: "Quand vais-je avoir de vos nouvelles?",
-    a: "En 1 à 2 jours ouvrables. Je prépare chaque liste personnellement, c'est de la vraie recherche sur votre métier et vos territoires, pas un courriel automatisé.",
-  },
-  {
-    q: "Que faites-vous de mes coordonnées?",
-    a: "Elles me parviennent directement pour que je prépare vos opportunités et fasse un suivi. Pas de pourriel, pas de revente de listes.",
-  },
+const muted = (n: number) => `color-mix(in srgb, var(--color-text) ${n}%, transparent)`;
+const accent = "var(--color-accent)";
+
+const STEPS = [
+  { n: "01", t: "Vous envoyez trois lignes", b: "Métier, territoires, ordre de grandeur des contrats visés. C'est tout le mandat." },
+  { n: "02", t: "Je fais le balayage", b: "Chaque plateforme de votre territoire, documents ouverts, ajustement jugé selon ce que vous m'avez dit." },
+  { n: "03", t: "Vous recevez la courte liste, en 3 jours ouvrables", b: "Résumés en langage clair et liens directs. Soumissionnez vous-même, avec ou sans moi. Aucun argumentaire." },
 ];
 
 export default function FreeOpportunitiesFrPage() {
   return (
-    <>
+    <div className="intel" style={{ background: "var(--nz-page)", position: "relative", overflowX: "hidden", minHeight: "100vh" }}>
       <JsonLd
         data={[
           breadcrumbJsonLd([
@@ -66,73 +49,42 @@ export default function FreeOpportunitiesFrPage() {
           faqJsonLd(FAQS),
         ]}
       />
+      <div className="nz-gridwash" />
 
-      <section className="border-b border-border bg-ink-900 text-white">
-        <div className="container py-14">
-          <Breadcrumbs items={[{ name: "Accueil", href: "/fr" }, { name: "Opportunités gratuites" }]} />
-          <div className="mt-6 grid items-start gap-12 lg:grid-cols-[1.05fr_0.95fr]">
-            <div className="max-w-xl">
-              <p className="eyebrow text-accent">Demandez vos opportunités gratuites</p>
-              <h1 className="mt-3 text-4xl font-bold sm:text-5xl">
-                Laissez-moi vous montrer ce qui vous échappe.
-              </h1>
-              <p className="mt-5 text-lg leading-8 text-white/70">
-                Dites-moi ce que vous faites et où vous soumissionnez. Je vais chercher sur les
-                plateformes qui comptent dans votre région, repérer celles qui correspondent à votre
-                métier, et vous envoyer une courte liste d'opportunités réelles et actuelles que vous
-                n'avez pas trouvées. Gratuit, et sans engagement.
-              </p>
-              <div className="mt-7">
-                <CredentialBadge lg />
-              </div>
-              <ul className="mt-8 space-y-3 text-sm text-white/70">
-                <li>De vraies opportunités, pas un argumentaire de vente.</li>
-                <li>Nouveau ou expérimenté, je m'adapte à votre situation.</li>
-                <li>Vos coordonnées me parviennent directement. Pas de pourriel, pas de revente.</li>
-              </ul>
-            </div>
+      <main
+        className="relative mx-auto grid max-w-[1100px] items-start gap-14 px-4 sm:px-7"
+        style={{ zIndex: 1, gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 360px), 1fr))", padding: "clamp(40px, 7vw, 80px) clamp(16px, 4vw, 28px) 80px" }}
+      >
+        <div>
+          <div className="flex items-center gap-2.5">
+            <span className="blip" />
+            <span className="hud" style={{ fontSize: 10, letterSpacing: "0.24em", color: muted(58) }}>Rapport de renseignement gratuit · sans engagement</span>
+          </div>
+          <h1 className="mt-5" style={{ fontSize: "clamp(32px, 4.6vw, 52px)", lineHeight: 1.0, letterSpacing: "-0.035em", maxWidth: "16ch" }}>
+            Voyez les soumissions qui vous échappent.
+          </h1>
+          <div className="rule mt-6" />
+          <p className="mt-6" style={{ fontSize: 17, lineHeight: 1.6, color: muted(78), maxWidth: "46ch" }}>
+            Dites-moi votre métier et où vous soumissionnez. Je passe en revue les plateformes
+            desservant votre territoire et je renvoie une courte liste de vraies opportunités
+            ouvertes que vous n'avez pas vues, lues, qualifiées et liées.
+          </p>
 
-            <div className="card bg-bg p-6 text-fg sm:p-8">
-              <h2 className="text-xl font-semibold text-fg">Où dois-je les envoyer?</h2>
-              <p className="mt-1.5 text-sm text-fg-muted">
-                Quelques détails rapides pour que je cible votre liste.
-              </p>
-              <div className="mt-6">
-                <RequestOpportunitiesForm lang="fr" />
+          <div className="mt-9 grid gap-5 pt-7" style={{ borderTop: `1px solid color-mix(in srgb, var(--color-accent) 22%, transparent)` }}>
+            {STEPS.map((s) => (
+              <div key={s.n} className="flex gap-4">
+                <span style={{ flex: "none", fontSize: 11, letterSpacing: "0.16em", color: accent, paddingTop: 3 }}>{s.n}</span>
+                <div>
+                  <div style={{ fontSize: 17, fontWeight: 500, marginBottom: 5, color: "var(--color-text)" }}>{s.t}</div>
+                  <p className="text-sm" style={{ color: muted(66), lineHeight: 1.55 }}>{s.b}</p>
+                </div>
               </div>
-            </div>
+            ))}
           </div>
         </div>
-      </section>
 
-      <Section>
-        <SectionHead
-          center
-          eyebrow="Comment ça fonctionne"
-          title="Ce qui se passe après l'envoi du formulaire"
-          lede="Un aperçu de ce que je fais pour mes clients, sur de vraies opportunités dans votre métier."
-        />
-        <div className="mt-12 grid gap-6 sm:grid-cols-3">
-          {STEPS.map((s) => (
-            <div key={s.title} className="card p-6">
-              <s.icon className="h-6 w-6 text-accent" />
-              <h3 className="mt-4 text-lg font-semibold text-fg">{s.title}</h3>
-              <p className="mt-2 text-sm text-fg-muted">{s.body}</p>
-            </div>
-          ))}
-        </div>
-      </Section>
-
-      <Section muted>
-        <div className="mx-auto max-w-3xl">
-          <SectionHead center title="Questions fréquentes" />
-          <div className="mt-8">
-            <FaqAccordion faqs={FAQS} />
-          </div>
-        </div>
-      </Section>
-
-      <CtaBand lang="fr" />
-    </>
+        <IntelLeadForm lang="fr" />
+      </main>
+    </div>
   );
 }
