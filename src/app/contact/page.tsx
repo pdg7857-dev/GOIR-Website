@@ -1,126 +1,76 @@
 import Link from "next/link";
 import type { Metadata } from "next";
-import { Mail, MessageSquare, Clock } from "lucide-react";
-import {
-  Breadcrumbs,
-  CtaBand,
-  Section,
-} from "@/components/site/ui";
-import { LeadForm } from "@/components/site/lead-form";
+import { Mail, Clock, CalendarCheck } from "lucide-react";
+import { IntelLeadForm } from "@/components/intel/lead-form";
 import { SITE } from "@/lib/site/config";
 import { pageMeta, JsonLd, breadcrumbJsonLd } from "@/lib/site/seo";
 
 export const metadata: Metadata = pageMeta({
   title: "Contact Phil Dave",
   description:
-    "Get in touch with Phil Dave. Email me directly or send a message and I will reply personally, usually the same business day. I read every message myself.",
+    "Get in touch with Phil Dave. Email me directly, book a call, or send your trade and I will reply personally, usually the same business day. I read every message myself.",
   path: "/contact",
-  keywords: [
-    "contact government opportunity intelligence",
-    "contact phil procurement",
-    "government bid discovery contact",
-  ],
+  keywords: ["contact government opportunity intelligence", "contact phil procurement", "government bid discovery contact"],
 });
+
+const accent = "var(--color-accent)";
+const accent20 = "color-mix(in srgb, var(--color-accent) 20%, transparent)";
+const muted = (n: number) => `color-mix(in srgb, var(--color-text) ${n}%, transparent)`;
 
 export default function ContactPage() {
   return (
-    <>
-      <JsonLd
-        data={breadcrumbJsonLd([
-          { name: "Home", path: "/" },
-          { name: "Contact", path: "/contact" },
-        ])}
-      />
+    <div className="intel" style={{ background: "var(--nz-page)", position: "relative", overflowX: "hidden", minHeight: "100vh" }}>
+      <JsonLd data={breadcrumbJsonLd([{ name: "Home", path: "/" }, { name: "Contact", path: "/contact" }])} />
+      <div className="nz-gridwash" />
 
-      {/* Hero */}
-      <section className="border-b border-border bg-bg">
-        <div className="container py-12 lg:py-16">
-          <Breadcrumbs items={[{ name: "Home", href: "/" }, { name: "Contact" }]} />
-          <div className="mt-6 max-w-3xl">
-            <p className="eyebrow text-accent">Contact</p>
-            <h1 className="mt-3 text-4xl font-bold text-fg sm:text-5xl">
-              Get in touch. You will be talking to me, not a queue.
-            </h1>
-            <p className="mt-5 text-lg leading-8 text-fg-muted">
-              Question about coverage, a jurisdiction, a platform, or whether I can help with your
-              trade? Send it over. I read every message myself and reply personally, usually the
-              same business day.
-            </p>
-          </div>
+      <main className="relative mx-auto max-w-[1100px] px-4 sm:px-7" style={{ zIndex: 1, padding: "clamp(40px, 7vw, 80px) clamp(16px, 4vw, 28px) 80px" }}>
+        <div className="flex items-center gap-2.5">
+          <span className="blip" />
+          <span className="hud" style={{ fontSize: 10, letterSpacing: "0.24em", color: muted(58) }}>Contact · direct line</span>
         </div>
-      </section>
+        <h1 className="mt-5" style={{ fontSize: "clamp(32px, 4.6vw, 52px)", lineHeight: 1.0, letterSpacing: "-0.035em", maxWidth: "18ch" }}>
+          You will be talking to me, not a queue.
+        </h1>
+        <div className="rule mt-6" />
+        <p className="mt-6" style={{ fontSize: 17, lineHeight: 1.6, color: muted(78), maxWidth: "52ch" }}>
+          A question about coverage, a jurisdiction, a platform, or whether I can help with your
+          trade? Send it over. I read every message myself and reply personally, usually the same
+          business day.
+        </p>
 
-      {/* Contact options + form */}
-      <Section>
-        <div className="grid items-start gap-12 lg:grid-cols-2">
-          <div>
-            <p className="eyebrow">Reach me directly</p>
-            <h2 className="mt-3 text-3xl font-semibold text-fg">A real person reads this</h2>
-            <p className="mt-4 text-lg leading-8 text-fg-muted">
-              There is no support desk and no auto-responder loop here. It is just me. Use the form,
-              or email me straight away if that is easier.
-            </p>
+        <div className="mt-12 grid gap-14" style={{ gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 320px), 1fr))" }}>
+          <div className="space-y-4">
+            <a href={`mailto:${SITE.email}`} className="panel flex items-start gap-4 p-5" style={{ textDecoration: "none" }}>
+              <span className="grid h-11 w-11 shrink-0 place-items-center rounded" style={{ border: `1px solid ${accent20}`, color: accent }}><Mail className="h-5 w-5" /></span>
+              <span>
+                <span className="block" style={{ color: "var(--color-text)", fontWeight: 500 }}>Email me</span>
+                <span className="mt-1 block break-all text-sm" style={{ color: muted(65) }}>{SITE.email}</span>
+              </span>
+            </a>
 
-            <div className="mt-8 space-y-5">
-              <a
-                href={`mailto:${SITE.email}`}
-                className="card group flex items-start gap-4 p-5"
-              >
-                <div className="grid h-11 w-11 shrink-0 place-items-center rounded-xl bg-accent-soft text-accent">
-                  <Mail className="h-5 w-5" />
-                </div>
-                <div>
-                  <h3 className="font-semibold text-fg group-hover:text-accent">Email me</h3>
-                  <p className="mt-1 break-all text-sm text-fg-muted">{SITE.email}</p>
-                </div>
-              </a>
+            <Link href={SITE.bookingUrl} className="panel flex items-start gap-4 p-5" style={{ textDecoration: "none" }}>
+              <span className="grid h-11 w-11 shrink-0 place-items-center rounded" style={{ border: `1px solid ${accent20}`, color: accent }}><CalendarCheck className="h-5 w-5" /></span>
+              <span>
+                <span className="block" style={{ color: "var(--color-text)", fontWeight: 500 }}>Book a discovery call</span>
+                <span className="mt-1 block text-sm" style={{ color: muted(65) }}>Pick a time and I will bring real opportunities in your trade.</span>
+              </span>
+            </Link>
 
-              <div className="card flex items-start gap-4 p-5">
-                <div className="grid h-11 w-11 shrink-0 place-items-center rounded-xl bg-accent-soft text-accent">
-                  <Clock className="h-5 w-5" />
-                </div>
-                <div>
-                  <h3 className="font-semibold text-fg">Response time</h3>
-                  <p className="mt-1 text-sm text-fg-muted">
-                    I reply personally, usually within the same business day.
-                  </p>
-                </div>
-              </div>
-
-              <div className="card flex items-start gap-4 p-5">
-                <div className="grid h-11 w-11 shrink-0 place-items-center rounded-xl bg-accent-soft text-accent">
-                  <MessageSquare className="h-5 w-5" />
-                </div>
-                <div>
-                  <h3 className="font-semibold text-fg">Rather see it in action?</h3>
-                  <p className="mt-1 text-sm text-fg-muted">
-                    <Link
-                      href={SITE.bookingUrl}
-                      className="font-medium text-accent hover:text-accent"
-                    >
-                      Book a discovery call
-                    </Link>{" "}
-                    or{" "}
-                    <Link
-                      href={SITE.sampleUrl}
-                      className="font-medium text-accent hover:text-accent"
-                    >
-                      request a sample opportunity
-                    </Link>
-                    .
-                  </p>
-                </div>
-              </div>
+            <div className="panel flex items-start gap-4 p-5">
+              <span className="grid h-11 w-11 shrink-0 place-items-center rounded" style={{ border: `1px solid ${accent20}`, color: accent }}><Clock className="h-5 w-5" /></span>
+              <span>
+                <span className="block" style={{ color: "var(--color-text)", fontWeight: 500 }}>Response time</span>
+                <span className="mt-1 block text-sm" style={{ color: muted(65) }}>I reply personally, usually within the same business day.</span>
+              </span>
             </div>
           </div>
 
-          <div className="lg:sticky lg:top-24">
-            <LeadForm variant="call" />
+          <div>
+            <p className="hud mb-4" style={{ color: accent }}>Or send your trade and I will reply with real opportunities</p>
+            <IntelLeadForm formLabel="Message · 3 fields" />
           </div>
         </div>
-      </Section>
-
-      <CtaBand />
-    </>
+      </main>
+    </div>
   );
 }

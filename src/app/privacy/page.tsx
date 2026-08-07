@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import { Breadcrumbs, CtaBand, Section } from "@/components/site/ui";
 import { SITE } from "@/lib/site/config";
 import { pageMeta, JsonLd, breadcrumbJsonLd } from "@/lib/site/seo";
 
@@ -10,34 +9,24 @@ export const metadata: Metadata = pageMeta({
   path: "/privacy",
 });
 
-// EDIT BEFORE LAUNCH: set this to the date the policy was last reviewed.
 const LAST_UPDATED = "July 6, 2026";
+const muted = (n: number) => `color-mix(in srgb, var(--color-text) ${n}%, transparent)`;
 
 export default function PrivacyPage() {
   return (
-    <>
-      <JsonLd
-        data={breadcrumbJsonLd([
-          { name: "Home", path: "/" },
-          { name: "Privacy", path: "/privacy" },
-        ])}
-      />
+    <div className="intel" style={{ background: "var(--nz-page)", position: "relative", overflowX: "hidden", minHeight: "100vh" }}>
+      <JsonLd data={breadcrumbJsonLd([{ name: "Home", path: "/" }, { name: "Privacy", path: "/privacy" }])} />
+      <div className="nz-gridwash" />
 
-      <section className="border-b border-border bg-bg">
-        <div className="container py-12 lg:py-16">
-          <Breadcrumbs items={[{ name: "Home", href: "/" }, { name: "Privacy" }]} />
-          <div className="mt-6 max-w-3xl">
-            <h1 className="text-4xl font-bold text-fg sm:text-5xl">Privacy Policy</h1>
-            <p className="mt-5 text-lg leading-8 text-fg-muted">
-              Plain English about what I collect, why, and what I will never do with it.
-            </p>
-          </div>
-        </div>
-      </section>
+      <main className="relative mx-auto max-w-[1100px] px-4 sm:px-7" style={{ zIndex: 1, padding: "clamp(40px, 7vw, 72px) clamp(16px, 4vw, 28px) 80px" }}>
+        <p className="hud" style={{ fontSize: 10, letterSpacing: "0.22em", color: muted(58) }}>Privacy Policy</p>
+        <h1 className="mt-4" style={{ fontSize: "clamp(30px, 4vw, 46px)", lineHeight: 1.02, letterSpacing: "-0.03em", maxWidth: "20ch" }}>
+          Plain English about what I collect, why, and what I will never do with it.
+        </h1>
+        <div className="rule mt-6" />
 
-      <Section>
-        <div className="prose-site max-w-3xl">
-          <p className="text-sm text-fg-muted">Last updated: {LAST_UPDATED}</p>
+        <div className="prose mt-10">
+          <p style={{ fontSize: 13, color: muted(50) }}>Last updated: {LAST_UPDATED}</p>
 
           <p>
             This site is operated by {SITE.brandFull}, an independent practice (referred to here as
@@ -49,10 +38,7 @@ export default function PrivacyPage() {
           <h2>Who runs this site</h2>
           <p>
             {SITE.brandFull} is an independent service. I am{" "}
-            <strong>
-              not affiliated with, endorsed by, or operated by any procurement platform or any
-              government body
-            </strong>
+            <strong>not affiliated with, endorsed by, or operated by any procurement platform or any government body</strong>
             , including but not limited to MERX, BidNet Direct, CanadaBuys, SAM.gov, or any federal,
             provincial, state or municipal agency. Platform and agency names are used only to
             describe the publicly available systems I monitor.
@@ -129,16 +115,8 @@ export default function PrivacyPage() {
             Questions about this policy or your information? Email me at{" "}
             <a href={`mailto:${SITE.email}`}>{SITE.email}</a>.
           </p>
-
-          <p className="text-sm text-fg-muted">
-            Note for the operator: this is a general, good-faith policy template and is not legal
-            advice. Have qualified counsel review and tailor it to your jurisdictions and tools before
-            launch.
-          </p>
         </div>
-      </Section>
-
-      <CtaBand />
-    </>
+      </main>
+    </div>
   );
 }

@@ -3,13 +3,27 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
-import { ChevronDown, Menu, X, Globe } from "lucide-react";
-import { PRIMARY_NAV, SITE } from "@/lib/site/config";
-import { localeFromPath, toFrPath, toEnPath, dict, FR_NAV } from "@/lib/i18n";
+import { Menu, X, Globe } from "lucide-react";
+import { SITE } from "@/lib/site/config";
+import { localeFromPath, toFrPath, toEnPath, dict } from "@/lib/i18n";
 import { HudReadouts } from "@/components/intel/console";
 
 const accent20 = "color-mix(in srgb, var(--color-accent) 20%, transparent)";
 const accent24 = "color-mix(in srgb, var(--color-accent) 24%, transparent)";
+
+/** Minimal nav for the trimmed 4-5 page site. */
+const NAV = {
+  en: [
+    { label: "Coverage & Pricing", href: "/#pricing" },
+    { label: "Free report", href: "/free-opportunities" },
+    { label: "Contact", href: "/contact" },
+  ],
+  fr: [
+    { label: "Couverture et prix", href: "/fr#pricing" },
+    { label: "Rapport gratuit", href: "/fr/free-opportunities" },
+    { label: "Contact", href: "/fr/contact" },
+  ],
+};
 
 /** The ring logo mark from the design: a 22px accent circle with an inner ring. */
 function LogoMark() {
@@ -31,7 +45,7 @@ export function SiteHeader() {
   const freeHref = locale === "fr" ? "/fr/free-opportunities" : "/free-opportunities";
   const homeHref = locale === "fr" ? "/fr" : "/";
   const toggleHref = locale === "fr" ? toEnPath(pathname) : toFrPath(pathname);
-  const nav = locale === "fr" ? FR_NAV : PRIMARY_NAV;
+  const nav = NAV[locale];
 
   useEffect(() => {
     document.body.style.overflow = mobileOpen ? "hidden" : "";
@@ -65,28 +79,11 @@ export function SiteHeader() {
 
         {/* Primary nav */}
         <nav className="ml-auto hidden items-center gap-1 lg:flex" aria-label="Primary">
-          {nav.map((item) => {
-            const children = (item as { children?: { label: string; href: string }[] }).children;
-            return children ? (
-              <div key={item.label} className="group relative">
-                <Link href={item.href} className="inline-flex items-center gap-1 rounded px-3 py-2 transition-colors" style={{ fontSize: 11, letterSpacing: "0.16em", textTransform: "uppercase", color: "color-mix(in srgb, var(--color-text) 68%, transparent)" }}>
-                  {item.label}
-                  <ChevronDown className="h-3 w-3 opacity-60" />
-                </Link>
-                <div className="invisible absolute left-0 top-full w-64 translate-y-1 p-2 opacity-0 transition-all group-hover:visible group-hover:translate-y-0 group-hover:opacity-100" style={{ background: "var(--nz-page)", border: `1px solid ${accent20}`, borderRadius: 4 }}>
-                  {children.map((c) => (
-                    <Link key={c.href} href={c.href} className="block rounded px-3 py-2 transition-colors hover:bg-white/5" style={{ fontSize: 13, color: "color-mix(in srgb, var(--color-text) 72%, transparent)" }}>
-                      {c.label}
-                    </Link>
-                  ))}
-                </div>
-              </div>
-            ) : (
-              <Link key={item.href} href={item.href} className="rounded px-3 py-2 transition-colors hover:text-white" style={{ fontSize: 11, letterSpacing: "0.16em", textTransform: "uppercase", color: "color-mix(in srgb, var(--color-text) 68%, transparent)" }}>
-                {item.label}
-              </Link>
-            );
-          })}
+          {nav.map((item) => (
+            <Link key={item.href} href={item.href} className="rounded px-3 py-2 transition-colors hover:text-white" style={{ fontSize: 11, letterSpacing: "0.16em", textTransform: "uppercase", color: "color-mix(in srgb, var(--color-text) 68%, transparent)" }}>
+              {item.label}
+            </Link>
+          ))}
         </nav>
 
         {/* Actions */}
@@ -114,27 +111,13 @@ export function SiteHeader() {
       </div>
 
       {mobileOpen && (
-        <div className="absolute inset-x-0 top-full max-h-[calc(100dvh-4rem)] overflow-y-auto overscroll-contain lg:hidden" style={{ background: "var(--nz-page)", borderTop: `1px solid ${accent20}` }}>
+        <div className="absolute inset-x-0 top-full lg:hidden" style={{ background: "var(--nz-page)", borderTop: `1px solid ${accent20}` }}>
           <div className="mx-auto max-w-[1360px] space-y-1 px-4 py-4 sm:px-7">
-            {nav.map((item) => {
-              const children = (item as { children?: { label: string; href: string }[] }).children;
-              return (
-                <div key={item.href}>
-                  <Link href={item.href} className="block rounded px-3 py-2" style={{ fontSize: 12, letterSpacing: "0.12em", textTransform: "uppercase", color: "var(--color-text)" }} onClick={() => setMobileOpen(false)}>
-                    {item.label}
-                  </Link>
-                  {children && (
-                    <div className="ml-3 pl-3" style={{ borderLeft: `1px solid ${accent20}` }}>
-                      {children.map((c) => (
-                        <Link key={c.href} href={c.href} className="block rounded px-3 py-1.5" style={{ fontSize: 13, color: "color-mix(in srgb, var(--color-text) 66%, transparent)" }} onClick={() => setMobileOpen(false)}>
-                          {c.label}
-                        </Link>
-                      ))}
-                    </div>
-                  )}
-                </div>
-              );
-            })}
+            {nav.map((item) => (
+              <Link key={item.href} href={item.href} className="block rounded px-3 py-2.5" style={{ fontSize: 12, letterSpacing: "0.12em", textTransform: "uppercase", color: "var(--color-text)" }} onClick={() => setMobileOpen(false)}>
+                {item.label}
+              </Link>
+            ))}
             <div className="flex gap-2 pt-3">
               <Link href={freeHref} className="btn btn-primary btn-block" style={{ padding: "10px", fontSize: 11, letterSpacing: "0.14em", textTransform: "uppercase" }} onClick={() => setMobileOpen(false)}>
                 {t.ctaFreeShort}
