@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import { Breadcrumbs, CtaBand, Section } from "@/components/site/ui";
 import { SITE } from "@/lib/site/config";
 import { pageMeta, JsonLd, breadcrumbJsonLd } from "@/lib/site/seo";
 
@@ -10,34 +9,24 @@ export const metadata: Metadata = pageMeta({
   path: "/terms",
 });
 
-// EDIT BEFORE LAUNCH: set this to the date the terms were last reviewed.
 const LAST_UPDATED = "July 6, 2026";
+const muted = (n: number) => `color-mix(in srgb, var(--color-text) ${n}%, transparent)`;
 
 export default function TermsPage() {
   return (
-    <>
-      <JsonLd
-        data={breadcrumbJsonLd([
-          { name: "Home", path: "/" },
-          { name: "Terms", path: "/terms" },
-        ])}
-      />
+    <div className="intel" style={{ background: "var(--nz-page)", position: "relative", overflowX: "hidden", minHeight: "100vh" }}>
+      <JsonLd data={breadcrumbJsonLd([{ name: "Home", path: "/" }, { name: "Terms", path: "/terms" }])} />
+      <div className="nz-gridwash" />
 
-      <section className="border-b border-border bg-bg">
-        <div className="container py-12 lg:py-16">
-          <Breadcrumbs items={[{ name: "Home", href: "/" }, { name: "Terms" }]} />
-          <div className="mt-6 max-w-3xl">
-            <h1 className="text-4xl font-bold text-fg sm:text-5xl">Terms of Service</h1>
-            <p className="mt-5 text-lg leading-8 text-fg-muted">
-              The plain-language terms for using this website and the service it describes.
-            </p>
-          </div>
-        </div>
-      </section>
+      <main className="relative mx-auto max-w-[1100px] px-4 sm:px-7" style={{ zIndex: 1, padding: "clamp(40px, 7vw, 72px) clamp(16px, 4vw, 28px) 80px" }}>
+        <p className="hud" style={{ fontSize: 10, letterSpacing: "0.22em", color: muted(58) }}>Terms of Service</p>
+        <h1 className="mt-4" style={{ fontSize: "clamp(30px, 4vw, 46px)", lineHeight: 1.02, letterSpacing: "-0.03em", maxWidth: "22ch" }}>
+          The plain-language terms for using this site and the service it describes.
+        </h1>
+        <div className="rule mt-6" />
 
-      <Section>
-        <div className="prose-site max-w-3xl">
-          <p className="text-sm text-fg-muted">Last updated: {LAST_UPDATED}</p>
+        <div className="prose mt-10">
+          <p style={{ fontSize: 13, color: muted(50) }}>Last updated: {LAST_UPDATED}</p>
 
           <p>
             These terms govern your use of this website, operated by {SITE.brandFull} (referred to
@@ -48,10 +37,7 @@ export default function TermsPage() {
           <h2>Independent practice</h2>
           <p>
             {SITE.brandFull} is an independent practice. I am{" "}
-            <strong>
-              not affiliated with, endorsed by, or operated by any procurement platform or any
-              government body
-            </strong>
+            <strong>not affiliated with, endorsed by, or operated by any procurement platform or any government body</strong>
             , including but not limited to MERX, BidNet Direct, CanadaBuys, SAM.gov, or any federal,
             provincial, state or municipal agency. Those names are used only to describe the publicly
             available systems I monitor on behalf of clients.
@@ -130,16 +116,8 @@ export default function TermsPage() {
             Questions about these terms? Email me at{" "}
             <a href={`mailto:${SITE.email}`}>{SITE.email}</a>.
           </p>
-
-          <p className="text-sm text-fg-muted">
-            Note for the operator: these are general, good-faith terms and are not legal advice. Have
-            qualified counsel review and tailor them, including the governing-law and dispute-resolution
-            provisions, to your jurisdictions before launch.
-          </p>
         </div>
-      </Section>
-
-      <CtaBand />
-    </>
+      </main>
+    </div>
   );
 }

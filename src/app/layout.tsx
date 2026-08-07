@@ -1,4 +1,5 @@
 import "./globals.css";
+import "../styles/nocturne.css";
 import type { Metadata, Viewport } from "next";
 import { SiteHeader } from "@/components/site/header";
 import { SiteFooter } from "@/components/site/footer";

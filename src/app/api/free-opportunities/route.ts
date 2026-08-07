@@ -15,14 +15,17 @@ export const dynamic = "force-dynamic";
  * leads inbox as a backstop so nothing is lost if the DB is unreachable.
  */
 const schema = z.object({
-  contactName: z.string().min(1, "Your name is required").max(120),
+  // contactName / region / experience are optional so the design's compact
+  // three-field free-report form can post the minimal shape, while the full
+  // request form keeps sending everything. Defaults are applied below.
+  contactName: z.string().max(120).optional().nullable(),
   companyName: z.string().min(1, "Company name is required").max(160),
   email: z.string().email("A valid email is required").max(160),
   phone: z.string().max(40).optional().nullable(),
   website: z.string().max(200).optional().nullable(),
-  trade: z.string().min(1, "Tell me what you do").max(120),
-  region: z.string().min(1, "Where you bid is required").max(120),
-  experience: z.enum(["new", "some", "experienced"]),
+  trade: z.string().min(1, "Tell me what you do").max(600),
+  region: z.string().max(200).optional().nullable(),
+  experience: z.enum(["new", "some", "experienced"]).optional().nullable(),
   platformsUsed: z.array(z.string().max(60)).max(30).optional(),
   notes: z.string().max(2000).optional().nullable(),
 });
@@ -53,17 +56,19 @@ export async function POST(req: NextRequest) {
     );
   }
   const d = parsed.data;
-  const experienceLabel = EXPERIENCE_LABEL[d.experience];
+  const contactName = d.contactName?.trim() || d.companyName;
+  const region = d.region?.trim() || "Shared in the trade field";
+  const experienceLabel = d.experience ? EXPERIENCE_LABEL[d.experience] : "Not specified";
   const platforms = (d.platformsUsed ?? []).filter(Boolean);
 
   const rows: [string, string][] = [
-    ["Name", d.contactName],
+    ["Name", contactName],
     ["Company", d.companyName],
     ["Email", d.email],
     ["Phone", d.phone?.trim() || "n/a"],
     ["Website", d.website?.trim() || "n/a"],
     ["Trade / work", d.trade],
-    ["Where they bid", d.region],
+    ["Where they bid", region],
     ["Bidding experience", experienceLabel],
     ["Platforms used", platforms.length ? platforms.join(", ") : "n/a"],
     ["Notes", d.notes?.trim() || "n/a"],
@@ -73,7 +78,7 @@ export async function POST(req: NextRequest) {
   const crmNotes = [
     `Website: ${d.website?.trim() || "n/a"}`,
     `Trade: ${d.trade}`,
-    `Where they bid: ${d.region}`,
+    `Where they bid: ${region}`,
     `Bidding experience: ${experienceLabel}`,
     `Platforms used: ${platforms.length ? platforms.join(", ") : "n/a"}`,
     d.notes?.trim() ? `Notes: ${d.notes.trim()}` : null,
@@ -83,12 +88,12 @@ export async function POST(req: NextRequest) {
     .join("\n");
 
   await captureLead({
-    contactName: d.contactName,
+    contactName,
     companyName: d.companyName,
     email: d.email,
     phone: d.phone,
     industry: d.trade,
-    businessInfo: `Free-opportunities request. ${experienceLabel}. Bids in ${d.region}.`,
+    businessInfo: `Free-opportunities request. ${experienceLabel}. Bids in ${region}.`,
     notes: crmNotes,
   });
 
@@ -107,12 +112,12 @@ export async function POST(req: NextRequest) {
   }).catch(() => ({ ok: false }));
 
   // Confirm to the prospect.
-  const confirmHtml = `<p>Thanks ${esc(d.contactName)}.</p><p>I'm going to look at where ${esc(
+  const confirmHtml = `<p>Thanks ${esc(contactName)}.</p><p>I'm going to look at where ${esc(
     d.companyName
   )} bids and pull a short list of real, current opportunities that actually fit your trade, already found and qualified the way I do it for clients. You'll hear from me within 1 to 2 business days.</p><p>- ${esc(
     SITE.brand
   )}</p>`;
-  const confirmText = `Thanks ${d.contactName}.
+  const confirmText = `Thanks ${contactName}.
 
 I'm going to look at where ${d.companyName} bids and pull a short list of real, current opportunities that actually fit your trade, already found and qualified the way I do it for clients. You'll hear from me within 1 to 2 business days.
 
