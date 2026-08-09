@@ -30,6 +30,7 @@ const muted = (n: number) => `color-mix(in srgb, var(--color-text) ${n}%, transp
 
 const FAQS = [
   { q: "Rédigez-vous ou déposez-vous la soumission?", a: "Non. Je ne rédige pas et je ne dépose rien en votre nom. Je trouve, je lis et je qualifie les opportunités. Le prix et la rédaction restent à votre équipe, là où c'est votre force." },
+  { q: "Puis-je l'essayer avant de m'engager pour une année complète?", a: "Oui. Un pilote de soixante jours coûte 2 000 $, une seule fois, et se déroule à pleine portée: même surveillance, même examen des documents, même qualification qu'un terme complet. Si vous continuez, la totalité des 2 000 $ est créditée sur votre couverture annuelle. Sinon, vous gardez chaque opportunité que je vous ai envoyée." },
   { q: "En quoi est-ce différent des alertes que je reçois déjà?", a: "Les alertes se déclenchent sur des mots-clés et ne qualifient rien. Je lis les documents, je juge l'ajustement selon votre métier et votre capacité, et je vous remets une courte liste avec un verdict, pas une boîte pleine à trier." },
   { q: "Et si vous manquez une soumission?", a: "Chaque entente comporte un minimum garanti d'opportunités qualifiées, fixé selon votre métier et votre territoire au départ. Si je ne le livre pas, je continue sans frais jusqu'à ce que ce soit fait." },
   { q: "J'ai déjà quelqu'un à l'interne. Pourquoi vous?", a: "Alors vous savez déjà combien d'heures la recherche gruge. Je retire la surveillance, la lecture et la qualification de son assiette, pour que ces heures servent à chiffrer et à gagner plutôt qu'à vivre dans les portails." },
@@ -66,17 +67,17 @@ const PLATFORM_FR: Record<string, { qualifier: string; body: string }> = {
 
 const TIERS = [
   {
-    name: "Palier I · Une seule juridiction", scope: "Une province ou un État", price: "6 500 $ à 9 500 $", featured: false,
+    name: "Palier I · Une seule juridiction", scope: "Une province ou un État", price: "À partir de 6 500 $", featured: false,
     features: ["40 à 60 opportunités qualifiées garanties", "Chaque plateforme desservant une province ou un État", "Documents ouverts, lus et résumés", "Ajustement qualifié selon votre métier et votre capacité", "Liens directs vers l'appel d'offres source"],
     cta: { label: "Discuter de la couverture", href: "/book" },
   },
   {
-    name: "Palier II · Régional", scope: "Jusqu'à cinq juridictions plus le fédéral", price: "14 500 $ à 22 000 $", featured: true,
+    name: "Palier II · Régional", scope: "Jusqu'à cinq juridictions plus le fédéral", price: "À partir de 14 500 $", featured: true,
     features: ["100 à 150 opportunités qualifiées garanties", "Jusqu'à cinq provinces ou États, plus le fédéral", "Tout le Palier I, sur toute votre région", "Alertes prioritaires quand une soumission ne peut pas attendre", "Tableau de bord partagé et un sommaire hebdomadaire"],
     cta: { label: "Demander un rapport gratuit", href: "/fr/free-opportunities" },
   },
   {
-    name: "Palier III · National et transfrontalier", scope: "Le Canada, les États-Unis, ou les deux", price: "29 000 $ à 45 000 $", featured: false,
+    name: "Palier III · National et transfrontalier", scope: "Le Canada, les États-Unis, ou les deux", price: "À partir de 29 000 $", featured: false,
     features: ["250 à 400 opportunités qualifiées garanties", "Couverture nationale, le Canada, les États-Unis, ou les deux", "Fédéral, provincial, État et local, de bout en bout", "Tout le Palier II, à l'échelle nationale", "Une ligne directe avec moi quand une soumission ne peut pas attendre"],
     cta: { label: "Discuter de la couverture", href: "/book" },
   },
@@ -277,9 +278,47 @@ export default function HomeFrPage() {
         <Section id="pricing" index="07 / Couverture et prix">
           <div className="grid gap-6 lg:grid-cols-[1fr_1fr] lg:items-end">
             <h2 data-reveal style={{ fontSize: "clamp(28px, 3.2vw, 40px)", letterSpacing: "-0.03em", maxWidth: "18ch" }}>La couverture, ajustée à votre territoire. Facturée une fois par année.</h2>
-            <p data-reveal style={{ color: muted(76), lineHeight: 1.6 }}>Un seul paiement pour une année complète de couverture, jamais un forfait mensuel. Le montant est établi selon votre secteur et le nombre de juridictions. Aucun frais par opportunité. J'en révise autant qu'il le faut.</p>
+            <p data-reveal style={{ color: muted(76), lineHeight: 1.6 }}>La couverture est facturée une fois par année, jamais au mois. Commencez par un pilote de soixante jours ou passez directement à un terme complet. Le montant est établi selon votre secteur et le nombre de juridictions. Aucun frais par opportunité. J'en révise autant qu'il le faut.</p>
           </div>
-          <div data-reveal className="mt-8 flex flex-wrap items-center gap-x-5 gap-y-2 p-5" style={{ maxWidth: 900, border: `1px solid ${accent}`, background: "color-mix(in srgb, var(--color-accent) 10%, transparent)", borderRadius: 4 }}>
+          {/* Pilote de 60 jours: le point d'entrée vers les paliers */}
+          <div
+            data-reveal
+            className="mt-8 grid gap-6 p-6 sm:p-8 lg:grid-cols-[1.5fr_1fr] lg:items-center"
+            style={{ border: `1px solid ${accent}`, background: "color-mix(in srgb, var(--color-accent) 11%, transparent)", borderRadius: 4, boxShadow: "0 0 60px color-mix(in srgb, var(--color-accent) 18%, transparent)" }}
+          >
+            <div>
+              <p className="hud" style={{ color: "var(--color-accent-200)", letterSpacing: "0.2em" }}>Commencez ici</p>
+              <h3 className="mt-2" style={{ fontSize: "clamp(22px, 2.4vw, 30px)", letterSpacing: "-0.02em" }}>Faites d'abord un pilote de 60 jours.</h3>
+              <p className="mt-3 text-sm" style={{ color: muted(80), lineHeight: 1.6, maxWidth: "62ch" }}>
+                Soixante jours de couverture réelle pour votre métier et vos territoires, menés
+                exactement comme un terme complet: plateformes surveillées, documents ouverts,
+                ajustement qualifié, opportunités livrées. Si vous continuez, la totalité des 2 000 $
+                est déduite de votre première année. Sinon, vous gardez tout ce que je vous ai envoyé
+                et nous nous quittons.
+              </p>
+              <ul className="mt-4 grid gap-1.5 text-sm">
+                {[
+                  "Surveillance et qualification complètes, sans portée réduite",
+                  "Chaque opportunité qualifiée livrée avec un verdict et un lien source",
+                  "Crédité en totalité sur le Palier I, II ou III",
+                ].map((b) => (
+                  <li key={b} className="flex items-start gap-2" style={{ color: muted(72) }}>
+                    <span aria-hidden style={{ color: accent, lineHeight: 1.5 }}>&rsaquo;</span>
+                    <span>{b}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <div className="flex flex-col items-start gap-3 lg:items-end lg:text-right">
+              <div>
+                <p className="tabular-nums" style={{ fontSize: 44, letterSpacing: "-0.03em", color: "var(--color-accent-200)", lineHeight: 1 }}>2 000 $</p>
+                <p className="mt-2 text-xs" style={{ color: muted(60), maxWidth: "28ch" }}>Une seule fois. Crédité en totalité sur votre couverture annuelle.</p>
+              </div>
+              <Link href="/book" className="btn btn-primary mt-1" style={{ fontSize: 12, letterSpacing: "0.16em", textTransform: "uppercase" }}>Démarrer un pilote</Link>
+            </div>
+          </div>
+
+          <div data-reveal className="mt-6 flex flex-wrap items-center gap-x-5 gap-y-2 p-5" style={{ maxWidth: 900, border: `1px solid ${accent}`, background: "color-mix(in srgb, var(--color-accent) 10%, transparent)", borderRadius: 4 }}>
             <span className="hud" style={{ color: "var(--color-accent-200)" }}>Garantie</span>
             <span style={{ fontSize: 15, color: muted(84), lineHeight: 1.5 }}>Chaque entente comporte un minimum garanti d'opportunités qualifiées, fixé selon votre métier et votre territoire à l'admission. Si je ne le livre pas, le travail continue sans frais jusqu'à ce que ce soit fait.</span>
           </div>
@@ -298,7 +337,7 @@ export default function HomeFrPage() {
               </div>
             ))}
           </div>
-          <p data-reveal className="mt-4 text-xs" style={{ color: muted(45) }}>Les nombres d'opportunités garanties sont fixés avec vous à l'admission, selon le métier et le territoire. Annuel seulement. Il n'y a pas de forfait mensuel.</p>
+          <p data-reveal className="mt-4 text-xs" style={{ color: muted(45) }}>Les nombres d'opportunités garanties sont fixés avec vous à l'admission, selon le métier et le territoire. Les termes complets sont annuels. Il n'y a pas de forfait mensuel.</p>
         </Section>
 
         {/* 08 Fiche opérateur */}

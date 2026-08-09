@@ -28,6 +28,10 @@ const FAQS = [
     a: "No. I am not a bid writer and I do not submit anything on your behalf. I find, read and qualify the opportunities. Pricing and proposals stay with your team, where they belong.",
   },
   {
+    q: "Can I try it before committing to a full year?",
+    a: "Yes. A sixty day pilot is $2,000, one time, and runs at full scope, same monitoring, same document review, same qualification a full term gets. If you continue, the entire $2,000 is credited against your annual coverage. If you do not, you keep every opportunity I sent you.",
+  },
+  {
     q: "How is this different from the alerts I already get?",
     a: "Alerts fire on keywords and qualify nothing. I read the documents, judge the fit against your trade and capacity, and hand you a short list with a verdict, not a full inbox you still have to triage.",
   },
@@ -317,14 +321,51 @@ export default function HomePage() {
               Coverage, scoped to your footprint. Billed once a year.
             </h2>
             <p data-reveal style={{ color: muted(76), lineHeight: 1.6 }}>
-              One payment for a full year of coverage, never a monthly plan. The figure is set by
-              your industry and how many jurisdictions you bid. There is no per opportunity charge.
-              I review as many as it takes.
+              Coverage is billed once a year, never as a monthly plan. Start with a sixty day pilot
+              or go straight to a full term. The figure is set by your industry and how many
+              jurisdictions you bid. There is no per opportunity charge. I review as many as it takes.
             </p>
           </div>
 
+          {/* 60-day pilot: the entry point to the tiers below */}
+          <div
+            data-reveal
+            className="mt-8 grid gap-6 p-6 sm:p-8 lg:grid-cols-[1.5fr_1fr] lg:items-center"
+            style={{ border: `1px solid ${accent}`, background: "color-mix(in srgb, var(--color-accent) 11%, transparent)", borderRadius: 4, boxShadow: "0 0 60px color-mix(in srgb, var(--color-accent) 18%, transparent)" }}
+          >
+            <div>
+              <p className="hud" style={{ color: "var(--color-accent-200)", letterSpacing: "0.2em" }}>Start here</p>
+              <h3 className="mt-2" style={{ fontSize: "clamp(22px, 2.4vw, 30px)", letterSpacing: "-0.02em" }}>Run a 60 day pilot first.</h3>
+              <p className="mt-3 text-sm" style={{ color: muted(80), lineHeight: 1.6, maxWidth: "60ch" }}>
+                Sixty days of live coverage across your trade and jurisdictions, run exactly as a full
+                term is run: platforms monitored, documents opened, fit qualified, opportunities
+                delivered. If you continue, the full $2,000 comes off your first year. If you do not,
+                you keep everything I sent and we part ways.
+              </p>
+              <ul className="mt-4 grid gap-1.5 text-sm sm:grid-cols-1">
+                {[
+                  "Full monitoring and qualification, no reduced scope",
+                  "Every qualified opportunity delivered with a verdict and a source link",
+                  "Credited in full toward Tier I, II or III",
+                ].map((b) => (
+                  <li key={b} className="flex items-start gap-2" style={{ color: muted(72) }}>
+                    <span aria-hidden style={{ color: accent, lineHeight: 1.5 }}>&rsaquo;</span>
+                    <span>{b}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <div className="flex flex-col items-start gap-3 lg:items-end lg:text-right">
+              <div>
+                <p className="tabular-nums" style={{ fontSize: 44, letterSpacing: "-0.03em", color: "var(--color-accent-200)", lineHeight: 1 }}>$2,000</p>
+                <p className="mt-2 text-xs" style={{ color: muted(60), maxWidth: "26ch" }}>One time. Credited in full against your annual coverage.</p>
+              </div>
+              <Link href="/book" className="btn btn-primary mt-1" style={{ fontSize: 12, letterSpacing: "0.16em", textTransform: "uppercase" }}>Start a pilot</Link>
+            </div>
+          </div>
+
           {/* Guarantee callout */}
-          <div data-reveal className="mt-8 flex flex-wrap items-center gap-x-5 gap-y-2 p-5" style={{ maxWidth: 900, border: `1px solid ${accent}`, background: "color-mix(in srgb, var(--color-accent) 10%, transparent)", borderRadius: 4 }}>
+          <div data-reveal className="mt-6 flex flex-wrap items-center gap-x-5 gap-y-2 p-5" style={{ maxWidth: 900, border: `1px solid ${accent}`, background: "color-mix(in srgb, var(--color-accent) 10%, transparent)", borderRadius: 4 }}>
             <span className="hud" style={{ color: "var(--color-accent-200)" }}>Guarantee</span>
             <span style={{ fontSize: 15, color: muted(84), lineHeight: 1.5 }}>
               Every term carries a guaranteed minimum of qualified opportunities, set against your
@@ -375,7 +416,7 @@ export default function HomePage() {
           </div>
           <p data-reveal className="mt-4 text-xs" style={{ color: muted(45) }}>
             Guaranteed opportunity counts are set with you at intake, per trade and footprint.
-            Annual only. There is no monthly plan.
+            Full terms are annual. There is no monthly plan.
           </p>
         </Section>
 

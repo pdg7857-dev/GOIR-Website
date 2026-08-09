@@ -125,7 +125,7 @@ export const TIERS: Tier[] = [
   {
     name: "Tier I · Single jurisdiction",
     scope: "One province or state",
-    price: "$6,500 to $9,500",
+    price: "From $6,500",
     guarantee: "40 to 60 qualified opportunities",
     features: [
       "40 to 60 qualified opportunities guaranteed",
@@ -139,7 +139,7 @@ export const TIERS: Tier[] = [
   {
     name: "Tier II · Regional",
     scope: "Up to five jurisdictions plus federal",
-    price: "$14,500 to $22,000",
+    price: "From $14,500",
     guarantee: "100 to 150",
     features: [
       "100 to 150 qualified opportunities guaranteed",
@@ -154,7 +154,7 @@ export const TIERS: Tier[] = [
   {
     name: "Tier III · National & cross border",
     scope: "Canada, the US, or both",
-    price: "$29,000 to $45,000",
+    price: "From $29,000",
     guarantee: "250 to 400",
     features: [
       "250 to 400 qualified opportunities guaranteed",

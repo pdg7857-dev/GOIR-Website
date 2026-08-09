@@ -45,8 +45,8 @@ export function SiteFooter() {
         <div className="mt-12 pt-6" style={{ borderTop: `1px solid ${accent20}` }}>
           <p className="max-w-3xl text-xs leading-6" style={{ color: muted(40) }}>
             {SITE.person} provides opportunity monitoring and qualification. I do not write or submit
-            proposals, and I do not guarantee contract awards. Counters and demonstrations on this
-            site are illustrative. Background figures reflect prior industry experience. Not
+            proposals, and I do not guarantee contract awards. Demonstrations on this site are
+            illustrative. Background figures reflect prior industry experience. Not
             affiliated with any procurement platform or government body.
           </p>
           <p className="mt-4 text-xs" style={{ color: muted(50) }}>&copy; {year} {SITE.brandFull}.</p>
