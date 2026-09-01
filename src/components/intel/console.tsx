@@ -305,6 +305,7 @@ export function CostBand({ lang = "en" }: { lang?: Lang }) {
         rate: "Taux estimateur, tout compris", hoursL: "Heures par semaine sur les portails", jurL: "Territoires surveillés",
         inhouse: "En interne", inhouseYear: "par an en temps de surveillance", perMonth: "par mois",
         split: "Attention partagée avec l'estimation", vac: "La couverture s'arrête en vacances",
+        from: "À partir de", byQuote: "Sur devis", quoteNote: "La couverture nationale et transfrontalière est établie et facturée selon votre territoire.",
         feeSuffix: "par an, dédié. Chiffre de départ pour ce périmètre, votre secteur fixe le montant final.",
         freed: "libérés sur l'année", moreThan: "de plus par an qu'en interne",
         foot: "Estimation seulement. Les honoraires partent des chiffres indiqués et montent avec la charge du secteur.",
@@ -316,6 +317,7 @@ export function CostBand({ lang = "en" }: { lang?: Lang }) {
         rate: "Estimator rate, fully loaded", hoursL: "Hours a week on portals", jurL: "Jurisdictions monitored",
         inhouse: "Doing it in house", inhouseYear: "a year in monitoring time", perMonth: "a month",
         split: "Attention split with estimating", vac: "Coverage stops on vacation",
+        from: "From", byQuote: "By quote", quoteNote: "National and cross border coverage is scoped and quoted to your footprint.",
         feeSuffix: "a year, dedicated. Starting figure for this footprint, your industry sets the final number.",
         freed: "freed up over the year", moreThan: "more per year than in house time",
         foot: "Estimate only. Fees start at the figures shown and rise with industry workload.",
@@ -380,14 +382,25 @@ export function CostBand({ lang = "en" }: { lang?: Lang }) {
 
             <div className="panel-accent flex flex-col p-6">
               <p className="hud" style={{ color: "var(--color-accent-200)" }}>{tier}</p>
-              <p className="tabular-nums mt-3" style={{ fontSize: 40, letterSpacing: "-0.03em", color: "var(--color-accent-200)" }}>{usd(fee)}</p>
-              <p className="text-sm" style={{ color: "color-mix(in srgb, var(--color-text) 70%, transparent)" }}>{L.feeSuffix}</p>
-              <p className="tabular-nums mt-auto pt-4" style={{ fontSize: 17, color: "var(--color-accent-200)" }}>
-                {usd(Math.abs(delta))}{" "}
-                <span className="text-sm" style={{ color: "color-mix(in srgb, var(--color-text) 60%, transparent)" }}>
-                  {delta >= 0 ? L.freed : L.moreThan}
-                </span>
-              </p>
+              {jur > 5 ? (
+                <>
+                  <p className="mt-3" style={{ fontSize: 40, letterSpacing: "-0.03em", color: "var(--color-accent-200)" }}>{L.byQuote}</p>
+                  <p className="text-sm" style={{ color: "color-mix(in srgb, var(--color-text) 70%, transparent)" }}>{L.quoteNote}</p>
+                </>
+              ) : (
+                <>
+                  <p className="tabular-nums mt-3" style={{ fontSize: 40, letterSpacing: "-0.03em", color: "var(--color-accent-200)" }}>
+                    <span style={{ fontSize: 18, letterSpacing: 0 }}>{L.from} </span>{usd(fee)}
+                  </p>
+                  <p className="text-sm" style={{ color: "color-mix(in srgb, var(--color-text) 70%, transparent)" }}>{L.feeSuffix}</p>
+                  <p className="tabular-nums mt-auto pt-4" style={{ fontSize: 17, color: "var(--color-accent-200)" }}>
+                    {usd(Math.abs(delta))}{" "}
+                    <span className="text-sm" style={{ color: "color-mix(in srgb, var(--color-text) 60%, transparent)" }}>
+                      {delta >= 0 ? L.freed : L.moreThan}
+                    </span>
+                  </p>
+                </>
+              )}
             </div>
           </div>
         </div>

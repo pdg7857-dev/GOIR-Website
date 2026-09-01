@@ -6,7 +6,6 @@ import { useEffect, useState } from "react";
 import { Menu, X, Globe } from "lucide-react";
 import { SITE } from "@/lib/site/config";
 import { localeFromPath, toFrPath, toEnPath, dict } from "@/lib/i18n";
-import { HudReadouts } from "@/components/intel/console";
 
 const accent20 = "color-mix(in srgb, var(--color-accent) 20%, transparent)";
 const accent24 = "color-mix(in srgb, var(--color-accent) 24%, transparent)";
@@ -74,11 +73,8 @@ export function SiteHeader() {
           </span>
         </Link>
 
-        {/* Live readouts */}
-        <HudReadouts lang={locale} />
-
         {/* Primary nav */}
-        <nav className="ml-auto hidden items-center gap-1 lg:flex" aria-label="Primary">
+        <nav className="ml-auto hidden items-center gap-2 lg:flex" aria-label="Primary">
           {nav.map((item) => (
             <Link key={item.href} href={item.href} className="rounded px-3 py-2 transition-colors hover:text-white" style={{ fontSize: 11, letterSpacing: "0.16em", textTransform: "uppercase", color: "color-mix(in srgb, var(--color-text) 68%, transparent)" }}>
               {item.label}
