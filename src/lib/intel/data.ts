@@ -115,7 +115,8 @@ export type Tier = {
   name: string;
   scope: string;
   price: string;
-  guarantee: string;
+  /** When true, no figure is shown; the tier is quoted individually. */
+  quote?: boolean;
   features: string[];
   featured?: boolean;
   cta: { label: string; href: string };
@@ -126,9 +127,7 @@ export const TIERS: Tier[] = [
     name: "Tier I · Single jurisdiction",
     scope: "One province or state",
     price: "From $6,500",
-    guarantee: "40 to 60 qualified opportunities",
     features: [
-      "40 to 60 qualified opportunities guaranteed",
       "Every platform serving one province or state",
       "Documents opened, read and summarized",
       "Fit qualified against your trade and capacity",
@@ -140,9 +139,7 @@ export const TIERS: Tier[] = [
     name: "Tier II · Regional",
     scope: "Up to five jurisdictions plus federal",
     price: "From $14,500",
-    guarantee: "100 to 150",
     features: [
-      "100 to 150 qualified opportunities guaranteed",
       "Up to five provinces or states, plus federal",
       "Everything in Tier I, across your whole region",
       "Priority alerts when a bid cannot wait",
@@ -154,16 +151,15 @@ export const TIERS: Tier[] = [
   {
     name: "Tier III · National & cross border",
     scope: "Canada, the US, or both",
-    price: "From $29,000",
-    guarantee: "250 to 400",
+    price: "By quote",
+    quote: true,
     features: [
-      "250 to 400 qualified opportunities guaranteed",
       "Nationwide coverage, Canada, the US, or both",
       "Federal, provincial, state and local, end to end",
       "Everything in Tier II, at national scale",
       "A standing line to me when a bid cannot wait",
     ],
-    cta: { label: "Discuss coverage", href: "/book" },
+    cta: { label: "Request a quote", href: "/book" },
   },
 ];
 

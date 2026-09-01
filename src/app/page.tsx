@@ -37,7 +37,7 @@ const FAQS = [
   },
   {
     q: "What if you miss a bid?",
-    a: "Every term carries a guaranteed minimum of qualified opportunities, set against your trade and footprint when we start. If I do not deliver it, I keep working at no charge until I do.",
+    a: "Every term carries a guaranteed minimum of qualified opportunities, set with you when we scope your coverage, since every industry is different. If I do not deliver it, I keep working at no charge until I do.",
   },
   {
     q: "We already have someone in house. Why you?",
@@ -45,7 +45,7 @@ const FAQS = [
   },
   {
     q: "How is pricing set, and what is the guarantee?",
-    a: "Coverage is scoped to your footprint and billed once a year, never monthly. The figure is set by your industry and the number of jurisdictions. Each tier carries a guaranteed minimum of qualified opportunities, agreed with you at intake.",
+    a: "Coverage is scoped to your footprint and billed once a year, never monthly. The figure is set by your industry and the number of jurisdictions you bid, and national coverage is quoted individually. Every term carries a guaranteed minimum of qualified opportunities, which I agree with you when we scope it, since every industry is different. You can start with a sixty day pilot before committing to a full term.",
   },
 ];
 
@@ -364,13 +364,13 @@ export default function HomePage() {
             </div>
           </div>
 
-          {/* Guarantee callout */}
+          {/* Guarantee: kept, but the number is set per client, not published */}
           <div data-reveal className="mt-6 flex flex-wrap items-center gap-x-5 gap-y-2 p-5" style={{ maxWidth: 900, border: `1px solid ${accent}`, background: "color-mix(in srgb, var(--color-accent) 10%, transparent)", borderRadius: 4 }}>
             <span className="hud" style={{ color: "var(--color-accent-200)" }}>Guarantee</span>
             <span style={{ fontSize: 15, color: muted(84), lineHeight: 1.5 }}>
-              Every term carries a guaranteed minimum of qualified opportunities, set against your
-              trade and footprint at intake. If I do not deliver it, work continues at no charge
-              until I do.
+              Every term carries a guaranteed minimum of qualified opportunities. Because every
+              industry is different, I set that number with you when we scope your coverage, not off
+              a chart. If I do not deliver it, work continues at no charge until I do.
             </span>
           </div>
 
@@ -395,12 +395,15 @@ export default function HomePage() {
                   <p className="hud" style={{ color: featured ? "var(--color-accent-200)" : accent }}>{tier.name}</p>
                   <p className="mt-2 text-sm" style={{ color: muted(60) }}>{tier.scope}</p>
                   <p className="mt-4 tabular-nums" style={{ fontSize: 30, letterSpacing: "-0.02em", color: "var(--color-text)" }}>
-                    {tier.price} <span style={{ fontSize: 14, color: muted(55) }}>/ year</span>
+                    {tier.price}{!tier.quote && <span style={{ fontSize: 14, color: muted(55) }}> / year</span>}
                   </p>
-                  <p className="hud mt-1" style={{ fontSize: 9 }}>Billed annually. Figure set by your industry.</p>
+                  <p className="hud mt-1" style={{ fontSize: 9 }}>{tier.quote ? "Scoped and quoted to your footprint." : "Billed annually. Figure set by your industry."}</p>
                   <ul className="mt-5 flex-1 space-y-2 text-sm">
-                    {tier.features.map((f, i) => (
-                      <li key={f} style={{ color: i === 0 ? "var(--color-accent-200)" : muted(72), lineHeight: 1.5 }}>{f}</li>
+                    {tier.features.map((f) => (
+                      <li key={f} className="flex items-start gap-2" style={{ color: muted(72), lineHeight: 1.5 }}>
+                        <span aria-hidden style={{ color: accent }}>&rsaquo;</span>
+                        <span>{f}</span>
+                      </li>
                     ))}
                   </ul>
                   <Link
@@ -415,8 +418,8 @@ export default function HomePage() {
             })}
           </div>
           <p data-reveal className="mt-4 text-xs" style={{ color: muted(45) }}>
-            Guaranteed opportunity counts are set with you at intake, per trade and footprint.
-            Full terms are annual. There is no monthly plan.
+            Full terms are annual, not monthly. National and cross border coverage is scoped and
+            quoted to your footprint.
           </p>
         </Section>
 
