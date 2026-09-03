@@ -73,7 +73,7 @@ export default function ContactFrPage() {
 
           <div>
             <p className="hud mb-4" style={{ color: accent }}>Ou envoyez votre métier et je réponds avec de vraies opportunités</p>
-            <IntelLeadForm lang="fr" formLabel="Message · 3 champs" />
+            <IntelLeadForm lang="fr" formLabel="Message" />
           </div>
         </div>
       </main>

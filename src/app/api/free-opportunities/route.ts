@@ -19,6 +19,7 @@ const schema = z.object({
   // three-field free-report form can post the minimal shape, while the full
   // request form keeps sending everything. Defaults are applied below.
   contactName: z.string().max(120).optional().nullable(),
+  title: z.string().max(120).optional().nullable(),
   companyName: z.string().min(1, "Company name is required").max(160),
   email: z.string().email("A valid email is required").max(160),
   phone: z.string().max(40).optional().nullable(),
@@ -63,6 +64,7 @@ export async function POST(req: NextRequest) {
 
   const rows: [string, string][] = [
     ["Name", contactName],
+    ["Title", d.title?.trim() || "n/a"],
     ["Company", d.companyName],
     ["Email", d.email],
     ["Phone", d.phone?.trim() || "n/a"],
@@ -76,6 +78,7 @@ export async function POST(req: NextRequest) {
 
   // Connect the lead to the CRM (eprocurement business) we built together.
   const crmNotes = [
+    `Title: ${d.title?.trim() || "n/a"}`,
     `Website: ${d.website?.trim() || "n/a"}`,
     `Trade: ${d.trade}`,
     `Where they bid: ${region}`,
@@ -87,7 +90,7 @@ export async function POST(req: NextRequest) {
     .filter(Boolean)
     .join("\n");
 
-  await captureLead({
+  const crm = await captureLead({
     contactName,
     companyName: d.companyName,
     email: d.email,
@@ -103,13 +106,20 @@ export async function POST(req: NextRequest) {
     .join("")}</table>`;
   const leadText = rows.map(([k, v]) => `${k}: ${v}`).join("\n");
 
-  await sendEmail({
+  const notify = await sendEmail({
     to: SITE.leadsEmail,
     replyTo: d.email,
     subject: `Free-opportunities request: ${d.companyName} (${experienceLabel})`,
     html: leadHtml,
     text: leadText,
   }).catch(() => ({ ok: false }));
+
+  // Durable fallback: always emit the full lead to the server logs (visible in
+  // Vercel), so a lead is recoverable even if both the CRM write and the email
+  // fail. Never throws.
+  console.log(
+    `[LEAD] ${new Date().toISOString()} crm=${crm.ok} notify=${notify.ok} :: ${leadText.replace(/\s*\n\s*/g, " | ")}`,
+  );
 
   // Confirm to the prospect.
   const confirmHtml = `<p>Thanks ${esc(contactName)}.</p><p>I'm going to look at where ${esc(

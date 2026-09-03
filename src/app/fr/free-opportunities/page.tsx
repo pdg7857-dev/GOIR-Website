@@ -32,7 +32,7 @@ const muted = (n: number) => `color-mix(in srgb, var(--color-text) ${n}%, transp
 const accent = "var(--color-accent)";
 
 const STEPS = [
-  { n: "01", t: "Vous envoyez trois lignes", b: "Métier, territoires, ordre de grandeur des contrats visés. C'est tout le mandat." },
+  { n: "01", t: "Vous me donnez les bases", b: "Votre métier, où vous soumissionnez, et quelques détails sur votre entreprise. Une minute." },
   { n: "02", t: "Je fais le balayage", b: "Chaque plateforme de votre territoire, documents ouverts, ajustement jugé selon ce que vous m'avez dit." },
   { n: "03", t: "Vous recevez la courte liste, en 3 jours ouvrables", b: "Résumés en langage clair et liens directs. Soumissionnez vous-même, avec ou sans moi. Aucun argumentaire." },
 ];
