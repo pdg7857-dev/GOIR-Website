@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
 import { prisma } from "@/lib/prisma";
+import { goirOffResponse } from "@/lib/goir/guard";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -9,6 +10,9 @@ const schema = z.object({ code: z.string().min(3).max(40) });
 
 // Resolve an access code to its report id so the client can open it.
 export async function POST(req: NextRequest) {
+  const off = goirOffResponse();
+  if (off) return off;
+
   let body: unknown;
   try {
     body = await req.json();

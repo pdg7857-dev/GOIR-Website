@@ -1,6 +1,30 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
+  poweredByHeader: false,
+  async headers() {
+    return [
+      {
+        source: "/:path*",
+        headers: [
+          { key: "X-Content-Type-Options", value: "nosniff" },
+          { key: "X-Frame-Options", value: "SAMEORIGIN" },
+          { key: "Referrer-Policy", value: "strict-origin-when-cross-origin" },
+          { key: "Permissions-Policy", value: "camera=(), microphone=(), geolocation=(), interest-cohort=()" },
+          { key: "Strict-Transport-Security", value: "max-age=63072000; includeSubDomains; preload" },
+          // frame-ancestors is the modern equivalent of X-Frame-Options. A full
+          // CSP is deliberately not set here: the Calendly embed and the
+          // analytics scripts would need an allowlist worked out first.
+          { key: "Content-Security-Policy", value: "frame-ancestors 'self'" },
+        ],
+      },
+      {
+        // Vendored console runtime is immutable, cache it hard.
+        source: "/intel/:path*",
+        headers: [{ key: "Cache-Control", value: "public, max-age=31536000, immutable" }],
+      },
+    ];
+  },
   async redirects() {
     return [
       // Old nested platform pages now live at flat /{slug}-expert URLs.

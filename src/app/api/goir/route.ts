@@ -9,6 +9,7 @@ import { sendEmail } from "@/lib/integrations/email";
 import { generateAccessCode } from "@/lib/goir/codes";
 import { captureLead } from "@/lib/crm/capture";
 import type { GoirInput } from "@/lib/goir/types";
+import { goirOffResponse } from "@/lib/goir/guard";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -46,6 +47,9 @@ async function createWithUniqueCode(data: any) {
 }
 
 export async function POST(req: NextRequest) {
+  const off = goirOffResponse();
+  if (off) return off;
+
   let body: unknown;
   try {
     body = await req.json();

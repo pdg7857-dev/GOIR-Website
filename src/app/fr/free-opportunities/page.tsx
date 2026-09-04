@@ -39,7 +39,7 @@ const STEPS = [
 
 export default function FreeOpportunitiesFrPage() {
   return (
-    <div className="intel" style={{ background: "var(--nz-page)", position: "relative", overflowX: "hidden", minHeight: "100vh" }}>
+    <div className="intel" lang="fr-CA" style={{ background: "var(--nz-page)", position: "relative", overflowX: "hidden", minHeight: "100vh" }}>
       <JsonLd
         data={[
           breadcrumbJsonLd([

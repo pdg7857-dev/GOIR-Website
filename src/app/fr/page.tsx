@@ -99,7 +99,7 @@ function Section({ id, index, children }: { id?: string; index?: string; childre
 
 export default function HomeFrPage() {
   return (
-    <div className="intel" style={{ background: "var(--nz-page)", position: "relative", overflowX: "hidden" }}>
+    <div className="intel" lang="fr-CA" style={{ background: "var(--nz-page)", position: "relative", overflowX: "hidden" }}>
       <JsonLd data={faqJsonLd(FAQS)} />
       <IntelScripts />
       <ScrollReveal />
@@ -389,7 +389,7 @@ export default function HomeFrPage() {
               <p className="mt-5" style={{ color: muted(76), lineHeight: 1.6, maxWidth: "44ch" }}>Dites-moi votre métier et où vous soumissionnez. Je passe en revue les plateformes desservant votre territoire et je renvoie une courte liste de vraies opportunités ouvertes que vous n'avez pas vues, lues, qualifiées et liées.</p>
               <div className="mt-8"><ChannelLog lang="fr" /></div>
             </div>
-            <div data-reveal className="lg:pt-4"><IntelLeadForm lang="fr" /></div>
+            <div data-reveal className="lg:pt-4"><IntelLeadForm lang="fr" source="home" /></div>
           </div>
         </Section>
       </div>

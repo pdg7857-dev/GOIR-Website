@@ -57,6 +57,19 @@ export default function PrivacyPage() {
               technical information such as your browser type, device and pages visited, through
               server logs or analytics tools, to keep the site working and understand how it is used.
             </li>
+            <li>
+              <strong>Form submissions in server logs.</strong> When you send me a form, the details
+              you submitted are also written to my hosting provider's server logs. This is a
+              deliberate safeguard so that an enquiry is never lost if my email or database is
+              temporarily unavailable. Those logs are retained by the host for a limited period and
+              are not used for anything else.
+            </li>
+            <li>
+              <strong>Session analytics, if enabled.</strong> I may use a product analytics tool that
+              records anonymised page interactions such as clicks and scrolling to understand how the
+              site is used. Where it is enabled, form fields are masked so the contents of what you
+              type are not captured. You can ask me at any time whether it is running.
+            </li>
           </ul>
 
           <h2>How I use it</h2>

@@ -11,7 +11,16 @@ type Lang = "en" | "fr";
  * bidding experience and notes. Posts to /api/free-opportunities (CRM capture +
  * email to win@phildave.com + a durable server log).
  */
-export function IntelLeadForm({ lang = "en", formLabel }: { lang?: Lang; formLabel?: string }) {
+export function IntelLeadForm({
+  lang = "en",
+  formLabel,
+  source = "free-report",
+}: {
+  lang?: Lang;
+  formLabel?: string;
+  /** Which form this is, so the notification and auto-reply match it. */
+  source?: "free-report" | "contact" | "home";
+}) {
   const [pending, setPending] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [done, setDone] = useState(false);
@@ -32,7 +41,7 @@ export function IntelLeadForm({ lang = "en", formLabel }: { lang?: Lang; formLab
         notes: "Autre chose?", notesPh: "Ce que vous visez, votre capacité, tout ce qui aide à cibler.",
         optional: "facultatif",
         submit: "Envoyer", sending: "Envoi en cours",
-        note: "Arrive directement chez moi, phil@phildave.com. Gratuit, sans engagement.",
+        note: "Arrive directement dans ma boîte de réception. Gratuit, sans engagement.",
         okTitle: "Demande reçue",
         okBody: "Je passe en revue vos territoires et je reviens avec une courte liste, en 3 jours ouvrables.",
         err: "Une erreur est survenue. Veuillez réessayer.",
@@ -53,7 +62,7 @@ export function IntelLeadForm({ lang = "en", formLabel }: { lang?: Lang; formLab
         notes: "Anything else?", notesPh: "What you chase, your capacity, anything that helps me target.",
         optional: "optional",
         submit: "Send", sending: "Sending",
-        note: "Goes straight to me, phil@phildave.com. Free, and there is no obligation.",
+        note: "Comes straight to my inbox. Free, and there is no obligation.",
         okTitle: "Request received",
         okBody: "I will go through your footprint and come back with a short list, inside 3 business days.",
         err: "Something went wrong. Please try again.",
@@ -76,6 +85,9 @@ export function IntelLeadForm({ lang = "en", formLabel }: { lang?: Lang; formLab
       trade: get("trade"),
       region: get("region"),
       notes: get("notes"),
+      source,
+      lang,
+      companyWebsiteUrl: get("companyWebsiteUrl"), // honeypot, always empty for people
     };
     if (experience) payload.experience = experience;
 
@@ -113,6 +125,12 @@ export function IntelLeadForm({ lang = "en", formLabel }: { lang?: Lang; formLab
   return (
     <form onSubmit={onSubmit} className="panel-accent grid gap-4 p-7">
       <div className="hud" style={{ color: "var(--color-accent-200)" }}>{L.label}</div>
+
+      {/* Honeypot: hidden from people, irresistible to bots. */}
+      <div aria-hidden style={{ position: "absolute", left: "-9999px", width: 1, height: 1, overflow: "hidden" }}>
+        <label htmlFor="lf-companyWebsiteUrl">Do not fill this in</label>
+        <input id="lf-companyWebsiteUrl" name="companyWebsiteUrl" type="text" tabIndex={-1} autoComplete="off" />
+      </div>
 
       <div className="grid gap-4 sm:grid-cols-2">
         <div className="field">

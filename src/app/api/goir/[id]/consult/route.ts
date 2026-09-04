@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
 import { prisma } from "@/lib/prisma";
+import { goirOffResponse } from "@/lib/goir/guard";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -15,9 +16,21 @@ const schema = z.object({
 });
 
 export async function POST(req: NextRequest, { params }: { params: { id: string } }) {
+  const off = goirOffResponse();
+  if (off) return off;
+
   const report = await prisma.goirReport.findUnique({ where: { id: params.id } });
   if (!report) {
     return NextResponse.json({ ok: false, error: "Report not found." }, { status: 404 });
+  }
+
+  // The report's access code must be presented. Without this any caller who
+  // knows a report id could write attacker-supplied name, phone and message
+  // into the operator's live CRM pipeline.
+  const providedCode =
+    req.headers.get("x-access-code") ?? new URL(req.url).searchParams.get("code") ?? "";
+  if (!report.accessCode || providedCode.trim().toUpperCase() !== report.accessCode.toUpperCase()) {
+    return NextResponse.json({ ok: false, error: "Invalid access code." }, { status: 401 });
   }
 
   let body: any = {};

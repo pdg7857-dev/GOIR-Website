@@ -67,7 +67,7 @@ export default function ContactPage() {
 
           <div>
             <p className="hud mb-4" style={{ color: accent }}>Or send your trade and I will reply with real opportunities</p>
-            <IntelLeadForm formLabel="Message" />
+            <IntelLeadForm formLabel="Message" source="contact" />
           </div>
         </div>
       </main>

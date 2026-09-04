@@ -490,7 +490,7 @@ export default function HomePage() {
               </div>
             </div>
             <div data-reveal className="lg:pt-4">
-              <IntelLeadForm />
+              <IntelLeadForm source="home" />
             </div>
           </div>
         </Section>
