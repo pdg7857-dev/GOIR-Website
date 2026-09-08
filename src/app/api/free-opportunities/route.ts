@@ -19,6 +19,7 @@ const schema = z.object({
   // three-field free-report form can post the minimal shape, while the full
   // request form keeps sending everything. Defaults are applied below.
   contactName: z.string().max(120).optional().nullable(),
+  title: z.string().max(120).optional().nullable(),
   companyName: z.string().min(1, "Company name is required").max(160),
   email: z.string().email("A valid email is required").max(160),
   phone: z.string().max(40).optional().nullable(),
@@ -28,6 +29,12 @@ const schema = z.object({
   experience: z.enum(["new", "some", "experienced"]).optional().nullable(),
   platformsUsed: z.array(z.string().max(60)).max(30).optional(),
   notes: z.string().max(2000).optional().nullable(),
+  /** Which form this came from, so a contact message is not labelled a free-report request. */
+  source: z.enum(["free-report", "contact", "home"]).optional().nullable(),
+  /** Page language, so a French visitor gets a French confirmation. */
+  lang: z.enum(["en", "fr"]).optional().nullable(),
+  /** Honeypot. Real people never see this field, so anything in it is a bot. */
+  companyWebsiteUrl: z.string().max(200).optional().nullable(),
 });
 
 const EXPERIENCE_LABEL: Record<string, string> = {
@@ -36,8 +43,34 @@ const EXPERIENCE_LABEL: Record<string, string> = {
   experienced: "Experienced bidder",
 };
 
+const SOURCE_LABEL: Record<string, string> = {
+  "free-report": "Free report request",
+  contact: "Contact form message",
+  home: "Homepage request",
+};
+
 function esc(s: string) {
-  return s.replace(/[<>&]/g, (c) => ({ "<": "&lt;", ">": "&gt;", "&": "&amp;" }[c] as string));
+  return s.replace(
+    /[<>&"']/g,
+    (c) => ({ "<": "&lt;", ">": "&gt;", "&": "&amp;", '"': "&quot;", "'": "&#39;" }[c] as string),
+  );
+}
+
+/**
+ * Small in-memory throttle. Serverless instances are short lived so this is not
+ * a hard limit, but together with the honeypot it stops the naive volume that
+ * would otherwise let anyone send mail from the verified sending domain.
+ */
+const HITS = new Map<string, number[]>();
+const WINDOW_MS = 10 * 60 * 1000;
+const MAX_PER_WINDOW = 5;
+function rateLimited(ip: string) {
+  const now = Date.now();
+  const recent = (HITS.get(ip) ?? []).filter((t) => now - t < WINDOW_MS);
+  recent.push(now);
+  HITS.set(ip, recent);
+  if (HITS.size > 500) for (const [k, v] of HITS) if (!v.some((t) => now - t < WINDOW_MS)) HITS.delete(k);
+  return recent.length > MAX_PER_WINDOW;
 }
 
 export async function POST(req: NextRequest) {
@@ -56,6 +89,27 @@ export async function POST(req: NextRequest) {
     );
   }
   const d = parsed.data;
+
+  // Bots fill every field they can see, including the hidden one. Answer 200 so
+  // they cannot tell they were caught, but send and store nothing.
+  if (d.companyWebsiteUrl?.trim()) {
+    return NextResponse.json({ ok: true });
+  }
+
+  const ip =
+    req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ||
+    req.headers.get("x-real-ip") ||
+    "unknown";
+  if (rateLimited(ip)) {
+    return NextResponse.json(
+      { ok: false, error: "Too many requests. Please try again in a few minutes." },
+      { status: 429 },
+    );
+  }
+
+  const isFr = d.lang === "fr";
+  const source = d.source ?? "free-report";
+  const sourceLabel = SOURCE_LABEL[source];
   const contactName = d.contactName?.trim() || d.companyName;
   const region = d.region?.trim() || "Shared in the trade field";
   const experienceLabel = d.experience ? EXPERIENCE_LABEL[d.experience] : "Not specified";
@@ -63,6 +117,7 @@ export async function POST(req: NextRequest) {
 
   const rows: [string, string][] = [
     ["Name", contactName],
+    ["Title", d.title?.trim() || "n/a"],
     ["Company", d.companyName],
     ["Email", d.email],
     ["Phone", d.phone?.trim() || "n/a"],
@@ -76,59 +131,74 @@ export async function POST(req: NextRequest) {
 
   // Connect the lead to the CRM (eprocurement business) we built together.
   const crmNotes = [
+    `Title: ${d.title?.trim() || "n/a"}`,
     `Website: ${d.website?.trim() || "n/a"}`,
     `Trade: ${d.trade}`,
     `Where they bid: ${region}`,
     `Bidding experience: ${experienceLabel}`,
     `Platforms used: ${platforms.length ? platforms.join(", ") : "n/a"}`,
     d.notes?.trim() ? `Notes: ${d.notes.trim()}` : null,
-    "Source: Request your free opportunities form",
+    `Source: ${sourceLabel}${isFr ? " (French page)" : ""}`,
   ]
     .filter(Boolean)
     .join("\n");
 
-  await captureLead({
+  const crm = await captureLead({
     contactName,
     companyName: d.companyName,
     email: d.email,
     phone: d.phone,
     industry: d.trade,
-    businessInfo: `Free-opportunities request. ${experienceLabel}. Bids in ${region}.`,
+    businessInfo: `${sourceLabel}. ${experienceLabel}. Bids in ${region}.`,
     notes: crmNotes,
   });
 
   // Notify me with the full lead so I can pull opportunities and follow up.
-  const leadHtml = `<h2>New free-opportunities request</h2><table cellpadding="6" style="border-collapse:collapse">${rows
+  const leadHtml = `<h2>${esc(sourceLabel)}</h2><table cellpadding="6" style="border-collapse:collapse">${rows
     .map(([k, v]) => `<tr><td style="color:#5c6b78">${esc(k)}</td><td><strong>${esc(v)}</strong></td></tr>`)
     .join("")}</table>`;
   const leadText = rows.map(([k, v]) => `${k}: ${v}`).join("\n");
 
-  await sendEmail({
+  const notify = await sendEmail({
     to: SITE.leadsEmail,
     replyTo: d.email,
-    subject: `Free-opportunities request: ${d.companyName} (${experienceLabel})`,
+    subject: `${sourceLabel}: ${d.companyName}${isFr ? " [FR]" : ""}`,
     html: leadHtml,
     text: leadText,
-  }).catch(() => ({ ok: false }));
+  }).catch((e) => ({ ok: false, error: String(e?.message ?? e) }));
 
-  // Confirm to the prospect.
-  const confirmHtml = `<p>Thanks ${esc(contactName)}.</p><p>I'm going to look at where ${esc(
-    d.companyName
-  )} bids and pull a short list of real, current opportunities that actually fit your trade, already found and qualified the way I do it for clients. You'll hear from me within 1 to 2 business days.</p><p>- ${esc(
-    SITE.brand
-  )}</p>`;
-  const confirmText = `Thanks ${contactName}.
+  // Durable fallback: always emit the full lead to the server logs (visible in
+  // Vercel), so a lead is recoverable even if both the CRM write and the email
+  // fail. Never throws.
+  console.log(
+    `[LEAD] ${new Date().toISOString()} source=${source} lang=${isFr ? "fr" : "en"} crm=${crm.ok} notify=${notify.ok}` +
+      `${"error" in notify && notify.error ? ` notifyError=${notify.error}` : ""} :: ${leadText.replace(/\s*\n\s*/g, " | ")}`,
+  );
 
-I'm going to look at where ${d.companyName} bids and pull a short list of real, current opportunities that actually fit your trade, already found and qualified the way I do it for clients. You'll hear from me within 1 to 2 business days.
+  // Confirm to the prospect, in their language, and matched to the form they
+  // actually used. Three business days everywhere, matching every page.
+  const confirmBody = isFr
+    ? source === "contact"
+      ? `Merci ${contactName}. J'ai bien reçu votre message et je vous réponds personnellement, habituellement le jour ouvrable même.`
+      : `Merci ${contactName}. Je vais regarder où ${d.companyName} soumissionne et préparer une courte liste d'opportunités réelles et actuelles qui correspondent à votre métier, déjà trouvées et qualifiées. Vous aurez de mes nouvelles en 3 jours ouvrables.`
+    : source === "contact"
+      ? `Thanks ${contactName}. I have your message and I will reply personally, usually the same business day.`
+      : `Thanks ${contactName}. I am going to look at where ${d.companyName} bids and pull a short list of real, current opportunities that fit your trade, already found and qualified the way I do it for clients. You will hear from me inside 3 business days.`;
 
-- ${SITE.brand}`;
+  const subject = isFr
+    ? source === "contact"
+      ? "J'ai bien reçu votre message"
+      : "Je prépare vos opportunités gratuites"
+    : source === "contact"
+      ? "I have your message"
+      : "I am pulling your free opportunities";
 
   await sendEmail({
     to: d.email,
     replyTo: SITE.email,
-    subject: "I'm pulling your free opportunities",
-    html: confirmHtml,
-    text: confirmText,
+    subject,
+    html: `<p>${esc(confirmBody)}</p><p>${esc(SITE.brand)}</p>`,
+    text: `${confirmBody}\n\n${SITE.brand}`,
   }).catch(() => ({ ok: false }));
 
   return NextResponse.json({ ok: true });

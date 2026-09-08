@@ -25,7 +25,7 @@ const muted = (n: number) => `color-mix(in srgb, var(--color-text) ${n}%, transp
 
 export default function ContactFrPage() {
   return (
-    <div className="intel" style={{ background: "var(--nz-page)", position: "relative", overflowX: "hidden", minHeight: "100vh" }}>
+    <div className="intel" lang="fr-CA" style={{ background: "var(--nz-page)", position: "relative", overflowX: "hidden", minHeight: "100vh" }}>
       <JsonLd data={breadcrumbJsonLd([{ name: "Accueil", path: "/fr" }, { name: "Contact", path: "/fr/contact" }])} />
       <div className="nz-gridwash" />
 
@@ -73,7 +73,7 @@ export default function ContactFrPage() {
 
           <div>
             <p className="hud mb-4" style={{ color: accent }}>Ou envoyez votre métier et je réponds avec de vraies opportunités</p>
-            <IntelLeadForm lang="fr" formLabel="Message · 3 champs" />
+            <IntelLeadForm lang="fr" formLabel="Message" source="contact" />
           </div>
         </div>
       </main>

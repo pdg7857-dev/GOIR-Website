@@ -13,9 +13,12 @@ import { SpeedInsights } from "@vercel/speed-insights/next";
  *  - Vercel Speed Insights -> Core Web Vitals (mobile + desktop).
  */
 export function SiteAnalytics() {
-  // Public Clarity project ID. Committed so heatmaps/recordings work on deploy;
-  // override per-environment with NEXT_PUBLIC_CLARITY_ID if ever needed.
-  const clarityId = process.env.NEXT_PUBLIC_CLARITY_ID || "wzymksdq10";
+  // Clarity records session replays, including interaction with the lead forms,
+  // so it is strictly opt-in: it loads only when NEXT_PUBLIC_CLARITY_ID is set
+  // in the environment. Do not reinstate a hardcoded default. If you enable it,
+  // turn on input masking in the Clarity dashboard and keep the privacy policy's
+  // session-recording paragraph accurate.
+  const clarityId = process.env.NEXT_PUBLIC_CLARITY_ID;
   return (
     <>
       {clarityId ? (

@@ -38,7 +38,7 @@ const muted = (n: number) => `color-mix(in srgb, var(--color-text) ${n}%, transp
 const accent = "var(--color-accent)";
 
 const STEPS = [
-  { n: "01", t: "You send three lines", b: "Trade, jurisdictions, rough contract size you go after. That is the whole brief." },
+  { n: "01", t: "You tell me the basics", b: "Your trade, where you bid, and a few quick details about your shop. Takes a minute." },
   { n: "02", t: "I run the sweep", b: "Every platform in your footprint, documents opened, fit judged against what you told me." },
   { n: "03", t: "You get the short list, inside 3 business days", b: "Plain language summaries and direct links. Bid them yourself, with or without me. No pitch attached." },
 ];

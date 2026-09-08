@@ -5,15 +5,21 @@
  * public pages. See POSITIONING.md.
  */
 
-/** Headline promise shown wherever coverage is described. */
+/**
+ * Headline promise shown wherever coverage is described.
+ *
+ * NOTE: published opportunity counts were deliberately removed. The guaranteed
+ * minimum varies by industry and is agreed with each client when coverage is
+ * scoped, so no number is stated on the site. Do not reintroduce one here.
+ */
 export const GUARANTEE = {
   title: "Qualified Opportunity Guarantee",
   body:
-    "If I don't identify at least 3 opportunities that match your approved targeting criteria within the first 90 days, I'll extend your subscription at no cost until the guarantee is fulfilled.",
+    "Every term carries a guaranteed minimum of qualified opportunities. Because every industry is different, that number is set with you when your coverage is scoped, not off a chart. If I do not deliver it, work continues at no charge until I do.",
   // Definition that keeps the guarantee tied to my deliverable, not the client's
   // award. Rendered alongside the guarantee wherever it appears. See POSITIONING.md.
   definition:
-    "Qualified opportunity: an open solicitation I have matched to the trades, capacity, and coverage area you give me, summarized in plain language with a source link. The guarantee covers delivery of qualified opportunities, not contract awards, which depend on your bid. It assumes an active subscription and an accurate profile from you.",
+    "Qualified opportunity: an open solicitation I have matched to the trades, capacity, and coverage area you give me, summarized in plain language with a source link. The guarantee covers delivery of qualified opportunities, not contract awards, which depend on your bid. It assumes active coverage and an accurate profile from you.",
 };
 
 export const INCLUDED_EVERYWHERE: string[] = [
