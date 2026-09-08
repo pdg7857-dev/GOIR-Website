@@ -26,7 +26,7 @@ const FAQS = [
   { q: "Is the call free, and is there any pressure?", a: "Yes, it is free, and no, there is no pressure. The point of the call is to show you the quality of what I find. If it is obviously useful, we talk about coverage. If it is not a fit, you walk away with real opportunities you can pursue anyway." },
   { q: "Will you really show me live opportunities before I pay?", a: "I will. Tell me your trade and where you bid when you book, and I will come to the call with actual, current opportunities in your jurisdictions, already read and qualified. There is no better way to judge what I do than to see it on your own work." },
   { q: "Do you write or submit the bid for me?", a: "No. I find, read and qualify opportunities so your team spends time only on the ones worth pursuing. You own the pricing, the proposal and the submission. I am the discovery and qualification side, not a proposal shop." },
-  { q: "What does coverage cost after the call?", a: "Coverage is billed once a year, never monthly, and priced by the geography you need rather than per opportunity or per platform. You can start with a sixty day pilot. I quote it on the call, and only if the opportunities I show you make it worth your while." },
+  { q: "What does coverage cost after the call?", a: "Coverage is billed once a year, never monthly, and priced by the geography you need rather than per opportunity or per platform. Every term carries a guaranteed minimum of qualified opportunities, agreed with you up front, and if I do not reach it I keep working at no charge until I do. I quote coverage on the call, and only if the opportunities I show you make it worth your while." },
 ];
 
 const STEPS = [
