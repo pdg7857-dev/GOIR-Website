@@ -367,14 +367,14 @@ export default function HomeFrPage() {
 
               <div className="grid content-start gap-4">
                 {[
-                  { label: "Canada", price: "16 000 $", body: "PSPC, CanadaBuys, MDN et MERX fédéral, plus le travail en cascade des maîtres d'oeuvre que les fournisseurs canadiens sont censés obtenir." },
-                  { label: "Canada et États-Unis", price: "28 000 $", body: "Tout ce qui précède, plus SAM.gov, DIBBS et GSA eBuy pour la défense fédérale américaine et le travail transfrontalier qui vient avec." },
+                  { label: "Canada", price: "16 000 $", quote: false, body: "PSPC, CanadaBuys, MDN et MERX fédéral, plus le travail en cascade des maîtres d'oeuvre que les fournisseurs canadiens sont censés obtenir." },
+                  { label: "Canada et États-Unis", price: "Sur devis", quote: true, body: "Tout ce qui précède, plus SAM.gov, DIBBS et GSA eBuy pour la défense fédérale américaine et le travail transfrontalier qui vient avec. Établi selon vos codes NAICS et votre niveau d'habilitation, puis chiffré." },
                 ].map((o) => (
                   <div key={o.label} className="p-5" style={{ border: `1px solid ${accent22}`, borderRadius: 4 }}>
                     <div className="flex items-baseline justify-between gap-3">
                       <span className="hud" style={{ fontSize: 10 }}>{o.label}</span>
                       <span className="tabular-nums" style={{ fontSize: 24, letterSpacing: "-0.02em", color: "var(--color-accent-200)" }}>
-                        {o.price} <span style={{ fontSize: 13, color: muted(55) }}>/ an</span>
+                        {o.price}{!o.quote && <span style={{ fontSize: 13, color: muted(55) }}> / an</span>}
                       </span>
                     </div>
                     <p className="mt-2 text-sm" style={{ color: muted(66), lineHeight: 1.5 }}>{o.body}</p>

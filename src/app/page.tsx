@@ -468,7 +468,7 @@ export default function HomePage() {
                     <div className="flex items-baseline justify-between gap-3">
                       <span className="hud" style={{ fontSize: 10 }}>{o.label}</span>
                       <span className="tabular-nums" style={{ fontSize: 24, letterSpacing: "-0.02em", color: "var(--color-accent-200)" }}>
-                        {o.price} <span style={{ fontSize: 13, color: muted(55) }}>/ year</span>
+                        {o.price}{!o.quote && <span style={{ fontSize: 13, color: muted(55) }}> / year</span>}
                       </span>
                     </div>
                     <p className="mt-2 text-sm" style={{ color: muted(66), lineHeight: 1.5 }}>{o.body}</p>

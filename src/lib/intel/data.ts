@@ -180,12 +180,14 @@ export const DEFENCE = {
     {
       label: "Canada",
       price: "$16,000",
+      quote: false,
       body: "PSPC, CanadaBuys, DND and MERX federal, plus the prime flow-down work Canadian suppliers are meant to be found for.",
     },
     {
       label: "Canada and the United States",
-      price: "$28,000",
-      body: "Everything above, plus SAM.gov, DIBBS and GSA eBuy for US federal defence and the cross border work that comes with it.",
+      price: "By quote",
+      quote: true,
+      body: "Everything above, plus SAM.gov, DIBBS and GSA eBuy for US federal defence and the cross border work that comes with it. Scoped to your NAICS codes and clearance level, then quoted.",
     },
   ],
   features: [
