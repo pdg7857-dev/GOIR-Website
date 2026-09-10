@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import { IntelScripts, IntelGlobe, CoverageMap } from "@/components/intel/intel-scripts";
 import {
@@ -17,6 +18,37 @@ import {
 } from "@/lib/intel/data";
 import { SITE } from "@/lib/site/config";
 import { JsonLd, faqJsonLd } from "@/lib/site/seo";
+
+/**
+ * The homepage previously had no metadata of its own and inherited the layout
+ * defaults. It is the most linked page on the site, so it gets a title and
+ * description written for it, plus reciprocal hreflang with the French home.
+ */
+export const metadata: Metadata = {
+  title: { absolute: "Government Bid Monitoring and Opportunity Intelligence | Phil Dave" },
+  description:
+    "I monitor every government procurement platform across Canada and the United States, read the bid documents and qualify the fit, so contractors only work the opportunities worth winning. Start with a free competitive position report.",
+  keywords: [
+    "government bid monitoring",
+    "government opportunity intelligence",
+    "government contract opportunities Canada",
+    "bid qualification service",
+    "defence contract opportunities",
+    "MERX CanadaBuys SAM.gov monitoring",
+  ],
+  alternates: {
+    canonical: SITE.domain + "/",
+    languages: { en: SITE.domain + "/", "fr-CA": SITE.domain + "/fr" },
+  },
+  openGraph: {
+    title: "Government Bid Monitoring and Opportunity Intelligence",
+    description:
+      "I find, read and qualify the government contracts worth your time, across Canada and the United States.",
+    url: SITE.domain + "/",
+    siteName: SITE.brandFull,
+    type: "website",
+  },
+};
 
 const accent = "var(--color-accent)";
 const accent20 = "color-mix(in srgb, var(--color-accent) 20%, transparent)";

@@ -47,7 +47,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const supporting: MetadataRoute.Sitemap = [
     entry("/book", 0.8, "monthly"),
     entry("/sample-opportunity", 0.8, "monthly"),
-    entry("/contact", 0.6, "monthly"),
+    entry("/contact", 0.7, "monthly"),
     entry("/faq", 0.6, "monthly"),
     entry("/about", 0.6, "monthly"),
     entry("/resources", 0.7, "weekly"),
@@ -59,39 +59,52 @@ export default function sitemap(): MetadataRoute.Sitemap {
     entry("/terms", 0.3, "yearly"),
   ];
 
+  // French routes. Previously absent, which left the whole /fr tree effectively
+  // undiscoverable and made the hreflang pairs one sided.
+  const french: MetadataRoute.Sitemap = [
+    entry("/fr", 0.95, "weekly"),
+    entry("/fr/free-opportunities", 0.9, "monthly"),
+    entry("/fr/contact", 0.6, "monthly"),
+    entry("/fr/how-it-works", 0.6, "monthly"),
+    entry("/fr/about", 0.5, "monthly"),
+    entry("/fr/faq", 0.5, "monthly"),
+    entry("/fr/opportunity-waste-calculator", 0.5, "monthly"),
+  ];
+
   // Money, renewal and authority pages (flat URLs).
-  const moneyPriority: Record<string, number> = { money: 0.85, renewal: 0.8, authority: 0.75 };
+  const moneyPriority: Record<string, number> = { money: 0.5, renewal: 0.45, authority: 0.45 };
   const money: MetadataRoute.Sitemap = MONEY_PAGES.map((p) =>
     entry(`/${p.slug}`, moneyPriority[p.group] ?? 0.7, "monthly"),
   );
 
   // Platform authority pages (flat /{slug}-expert).
   const platforms: MetadataRoute.Sitemap = PLATFORMS.map((p) =>
-    entry(platformPath(p.slug), 0.85, "monthly"),
+    entry(platformPath(p.slug), 0.5, "monthly"),
   );
   // Industry pages (flat /{slug}-government-contracts).
   const industries: MetadataRoute.Sitemap = INDUSTRIES.map((i) =>
-    entry(industryPath(i.slug), 0.8, "monthly"),
+    entry(industryPath(i.slug), 0.5, "monthly"),
   );
 
   const provinces: MetadataRoute.Sitemap = PROVINCES.map((p) =>
-    entry(`/coverage/canada/${p.slug}`, 0.6, "monthly"),
+    entry(`/coverage/canada/${p.slug}`, 0.35, "monthly"),
   );
   const states: MetadataRoute.Sitemap = STATES.map((s) =>
-    entry(`/coverage/usa/${s.slug}`, 0.6, "monthly"),
+    entry(`/coverage/usa/${s.slug}`, 0.35, "monthly"),
   );
 
   const blog: MetadataRoute.Sitemap = BLOG_TOPICS.map((b) =>
-    entry(`/blog/${b.slug}`, 0.6, "weekly"),
+    entry(`/blog/${b.slug}`, 0.4, "weekly"),
   );
   const resources: MetadataRoute.Sitemap = RESOURCES.map((r) =>
-    entry(`/resources/${r.slug}`, 0.7, "monthly"),
+    entry(`/resources/${r.slug}`, 0.4, "monthly"),
   );
 
   return [
     ...cornerstone,
     ...supporting,
     ...legal,
+    ...french,
     ...money,
     ...platforms,
     ...industries,
