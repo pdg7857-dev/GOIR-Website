@@ -43,7 +43,7 @@ export function IntelLeadForm({
         submit: "Envoyer", sending: "Envoi en cours",
         note: "Arrive directement dans ma boîte de réception. Gratuit, sans engagement.",
         okTitle: "Demande reçue",
-        okBody: "Je passe en revue vos territoires et je reviens avec une courte liste, en 3 jours ouvrables.",
+        okBody: "Je consulte le registre public des adjudications pour votre catégorie et je reviens avec votre rapport de position, en 5 jours ouvrables.",
         err: "Une erreur est survenue. Veuillez réessayer.",
         net: "Erreur réseau. Veuillez réessayer.",
       }
@@ -64,7 +64,7 @@ export function IntelLeadForm({
         submit: "Send", sending: "Sending",
         note: "Comes straight to my inbox. Free, and there is no obligation.",
         okTitle: "Request received",
-        okBody: "I will go through your footprint and come back with a short list, inside 3 business days.",
+        okBody: "I will pull the public award record for your category and come back with your position report, inside 5 business days.",
         err: "Something went wrong. Please try again.",
         net: "Network error. Please try again.",
       };

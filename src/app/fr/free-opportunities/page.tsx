@@ -4,11 +4,11 @@ import { pageMeta, JsonLd, breadcrumbJsonLd, faqJsonLd } from "@/lib/site/seo";
 import { SITE } from "@/lib/site/config";
 
 const base = pageMeta({
-  title: "Obtenez des opportunités gouvernementales gratuites pour votre métier",
+  title: "Rapport de position concurrentielle gratuit",
   description:
-    "Dites-moi votre métier et où vous soumissionnez, et je vous enverrai une courte liste d'opportunités gouvernementales réelles et actuelles que vous n'avez pas trouvées, déjà qualifiées avec les liens source. Gratuit, sans engagement.",
+    "Découvrez qui remporte les contrats publics que vous devriez soumissionner. Je consulte le registre public des adjudications pour votre métier et vos territoires, et je renvoie une analyse de vos concurrents, des acheteurs et de ce qui vous échappe. Gratuit, sans engagement.",
   path: "/fr/free-opportunities",
-  keywords: ["appels d'offres gouvernementaux", "opportunités de contrats publics", "soumissions gouvernementales"],
+  keywords: ["analyse concurrentielle contrats publics", "qui remporte les appels d'offres", "adjudications publiques"],
 });
 
 export const metadata: Metadata = {
@@ -23,18 +23,26 @@ export const metadata: Metadata = {
 };
 
 const FAQS = [
-  { q: "Est-ce vraiment gratuit?", a: "Oui. Sans frais et sans engagement. Je vous envoie de vraies opportunités pour que vous voyiez la qualité de mon travail avant même d'envisager une couverture payante." },
-  { q: "Qu'est-ce que je reçois exactement?", a: "Une courte liste d'opportunités gouvernementales actuelles qui correspondent à votre métier et à l'endroit où vous soumissionnez, chacune avec un lien vers l'appel d'offres d'origine. L'examen complet des documents et la qualification, c'est ce que je fais pour mes clients payants." },
-  { q: "Quand vais-je avoir de vos nouvelles?", a: "En 3 jours ouvrables. Je prépare chaque liste personnellement, c'est de la vraie recherche sur votre métier et vos territoires, pas un courriel automatisé." },
+  { q: "Est-ce vraiment gratuit?", a: "Oui. Sans frais et sans engagement. Je le bâtis à partir du registre public des adjudications, cela me coûte du temps de recherche et rien à vous. Vous gardez le rapport dans tous les cas." },
+  { q: "D'où viennent les informations?", a: "De sources publiques. Les acheteurs publics publient qui a remporté un contrat, pour quoi et pour quel montant. Presque aucun entrepreneur ne consulte ce registre. Je le consulte pour votre catégorie et vos territoires et j'en tire quelque chose d'utilisable." },
+  { q: "Qu'est-ce que je reçois exactement?", a: "Une analyse de votre coin de marché: les entreprises qui remportent le travail que vous devriez soumissionner, à quelle fréquence et à quels montants, les acheteurs qui l'adjugent régulièrement, et les endroits où du travail est adjugé sans que vous y soyez présent. Plus une lecture honnête de votre meilleure ouverture." },
+  { q: "Quand vais-je le recevoir?", a: "En 5 jours ouvrables. Je prépare chacun à la main, c'est de la vraie recherche sur votre métier et vos territoires, pas une extraction automatisée." },
 ];
 
 const muted = (n: number) => `color-mix(in srgb, var(--color-text) ${n}%, transparent)`;
 const accent = "var(--color-accent)";
 
 const STEPS = [
-  { n: "01", t: "Vous me donnez les bases", b: "Votre métier, où vous soumissionnez, et quelques détails sur votre entreprise. Une minute." },
-  { n: "02", t: "Je fais le balayage", b: "Chaque plateforme de votre territoire, documents ouverts, ajustement jugé selon ce que vous m'avez dit." },
-  { n: "03", t: "Vous recevez la courte liste, en 3 jours ouvrables", b: "Résumés en langage clair et liens directs. Soumissionnez vous-même, avec ou sans moi. Aucun argumentaire." },
+  { n: "01", t: "Vous me donnez les bases", b: "Votre métier, où vous travaillez, et l'ordre de grandeur des contrats que vous pouvez livrer. Une minute." },
+  { n: "02", t: "Je consulte le registre public des adjudications", b: "Qui a remporté quoi dans votre catégorie, auprès de quels acheteurs, à quels montants, sur les plateformes qui desservent votre territoire." },
+  { n: "03", t: "Vous recevez l'analyse, en 5 jours ouvrables", b: "Vos concurrents nommés, les acheteurs qui achètent sans arrêt, et les écarts où vous devriez soumissionner sans le faire." },
+];
+
+const INCLUDES = [
+  "Les entreprises qui remportent des contrats dans votre catégorie, à quelle fréquence et à quels montants",
+  "Les acheteurs qui adjugent ce travail régulièrement, et ce qu'ils achètent réellement",
+  "Les endroits où du travail est adjugé sans que vous y soyez présent",
+  "Une lecture honnête de votre meilleure ouverture, et de ce qu'elle exigerait",
 ];
 
 export default function FreeOpportunitiesFrPage() {
@@ -44,7 +52,7 @@ export default function FreeOpportunitiesFrPage() {
         data={[
           breadcrumbJsonLd([
             { name: "Accueil", path: "/fr" },
-            { name: "Opportunités gratuites", path: "/fr/free-opportunities" },
+            { name: "Rapport de position concurrentielle", path: "/fr/free-opportunities" },
           ]),
           faqJsonLd(FAQS),
         ]}
@@ -58,16 +66,17 @@ export default function FreeOpportunitiesFrPage() {
         <div>
           <div className="flex items-center gap-2.5">
             <span className="blip" />
-            <span className="hud" style={{ fontSize: 10, letterSpacing: "0.24em", color: muted(58) }}>Rapport de renseignement gratuit · sans engagement</span>
+            <span className="hud" style={{ fontSize: 10, letterSpacing: "0.24em", color: muted(58) }}>Rapport de position concurrentielle gratuit · sans engagement</span>
           </div>
-          <h1 className="mt-5" style={{ fontSize: "clamp(32px, 4.6vw, 52px)", lineHeight: 1.0, letterSpacing: "-0.035em", maxWidth: "16ch" }}>
-            Voyez les soumissions qui vous échappent.
+          <h1 className="mt-5" style={{ fontSize: "clamp(32px, 4.6vw, 52px)", lineHeight: 1.0, letterSpacing: "-0.035em", maxWidth: "18ch" }}>
+            Voyez qui remporte les contrats que vous devriez soumissionner.
           </h1>
           <div className="rule mt-6" />
-          <p className="mt-6" style={{ fontSize: 17, lineHeight: 1.6, color: muted(78), maxWidth: "46ch" }}>
-            Dites-moi votre métier et où vous soumissionnez. Je passe en revue les plateformes
-            desservant votre territoire et je renvoie une courte liste de vraies opportunités
-            ouvertes que vous n'avez pas vues, lues, qualifiées et liées.
+          <p className="mt-6" style={{ fontSize: 17, lineHeight: 1.6, color: muted(78), maxWidth: "50ch" }}>
+            Les acheteurs publics publient qui a gagné, pour quoi, et pour combien. Presque personne
+            ne lit ce registre. Dites-moi votre métier et où vous travaillez, et je le consulte pour
+            votre catégorie, puis je renvoie une analyse de vos concurrents, des acheteurs derrière
+            eux, et du travail où vous n'êtes pas présent.
           </p>
 
           <div className="mt-9 grid gap-5 pt-7" style={{ borderTop: `1px solid color-mix(in srgb, var(--color-accent) 22%, transparent)` }}>
@@ -80,6 +89,22 @@ export default function FreeOpportunitiesFrPage() {
                 </div>
               </div>
             ))}
+          </div>
+
+          <div className="panel mt-8 p-5">
+            <p className="hud" style={{ color: accent }}>Ce qu'il contient</p>
+            <ul className="mt-3 space-y-2">
+              {INCLUDES.map((i) => (
+                <li key={i} className="flex items-start gap-2 text-sm" style={{ color: muted(72), lineHeight: 1.5 }}>
+                  <span aria-hidden style={{ color: accent }}>&rsaquo;</span>
+                  <span>{i}</span>
+                </li>
+              ))}
+            </ul>
+            <p className="mt-4 text-xs" style={{ color: muted(50), lineHeight: 1.5 }}>
+              Bâti entièrement à partir des adjudications publiées. Rien de confidentiel, rien que
+              vous ne pourriez trouver vous-même avec assez d'heures.
+            </p>
           </div>
         </div>
 
