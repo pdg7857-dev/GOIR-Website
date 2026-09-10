@@ -74,7 +74,7 @@ const TIERS = [
   {
     name: "Palier II · Régional", scope: "Jusqu'à cinq juridictions plus le fédéral", price: "À partir de 14 500 $", featured: true, quote: false,
     features: ["Jusqu'à cinq provinces ou États, plus le fédéral", "Tout le Palier I, sur toute votre région", "Alertes prioritaires quand une soumission ne peut pas attendre", "Tableau de bord partagé et un sommaire hebdomadaire"],
-    cta: { label: "Demander un rapport gratuit", href: "/fr/free-opportunities" },
+    cta: { label: "Rapport de position gratuit", href: "/fr/free-opportunities" },
   },
   {
     name: "Palier III · National et transfrontalier", scope: "Le Canada, les États-Unis, ou les deux", price: "Sur devis", featured: false, quote: true,
@@ -337,6 +337,59 @@ export default function HomeFrPage() {
               </div>
             ))}
           </div>
+          {/* Défense: une verticale qui traverse les régions, donc un complément, pas un quatrième palier. */}
+          <div data-reveal className="mt-10 p-6 sm:p-8" style={{ border: `1px solid ${accent20}`, background: "color-mix(in srgb, #161826 66%, transparent)", borderRadius: 4 }}>
+            <div className="grid gap-8 lg:grid-cols-[1.1fr_1fr]">
+              <div>
+                <p className="hud" style={{ color: accent, letterSpacing: "0.2em" }}>En complément ou seul</p>
+                <h3 className="mt-2" style={{ fontSize: "clamp(21px, 2.2vw, 28px)", letterSpacing: "-0.02em" }}>Couverture des contrats de défense</h3>
+                <p className="mt-3 text-sm" style={{ color: muted(76), lineHeight: 1.6, maxWidth: "56ch" }}>
+                  La défense n'est pas une région de plus, c'est un autre système: ses propres
+                  plateformes, ses propres critères d'admissibilité, et le travail en cascade des
+                  maîtres d'oeuvre qui n'apparaît jamais dans une recherche régionale. Prenez-la
+                  seule, ou ajoutez-la à n'importe quel palier ci-dessus. Vous voulez les deux, vous
+                  payez les deux.
+                </p>
+                <ul className="mt-4 grid gap-1.5 text-sm">
+                  {[
+                    "Chaque appel d'offres ouvert correspondant à vos codes NAICS, votre niveau d'habilitation et votre capacité, examiné",
+                    "Admissibilité filtrée avant que cela vous parvienne: marchandises contrôlées, habilitation, mises de côté",
+                    "Travail en cascade des maîtres d'oeuvre et retombées industrielles, pas seulement les adjudications directes",
+                    "Livré avec un verdict et un lien vers l'appel d'offres source",
+                  ].map((f) => (
+                    <li key={f} className="flex items-start gap-2" style={{ color: muted(72), lineHeight: 1.5 }}>
+                      <span aria-hidden style={{ color: accent }}>&rsaquo;</span>
+                      <span>{f}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              <div className="grid content-start gap-4">
+                {[
+                  { label: "Canada", price: "16 000 $", body: "PSPC, CanadaBuys, MDN et MERX fédéral, plus le travail en cascade des maîtres d'oeuvre que les fournisseurs canadiens sont censés obtenir." },
+                  { label: "Canada et États-Unis", price: "28 000 $", body: "Tout ce qui précède, plus SAM.gov, DIBBS et GSA eBuy pour la défense fédérale américaine et le travail transfrontalier qui vient avec." },
+                ].map((o) => (
+                  <div key={o.label} className="p-5" style={{ border: `1px solid ${accent22}`, borderRadius: 4 }}>
+                    <div className="flex items-baseline justify-between gap-3">
+                      <span className="hud" style={{ fontSize: 10 }}>{o.label}</span>
+                      <span className="tabular-nums" style={{ fontSize: 24, letterSpacing: "-0.02em", color: "var(--color-accent-200)" }}>
+                        {o.price} <span style={{ fontSize: 13, color: muted(55) }}>/ an</span>
+                      </span>
+                    </div>
+                    <p className="mt-2 text-sm" style={{ color: muted(66), lineHeight: 1.5 }}>{o.body}</p>
+                  </div>
+                ))}
+                <Link href="/book" className="btn btn-primary" style={{ fontSize: 11, letterSpacing: "0.14em", textTransform: "uppercase" }}>Demander un devis</Link>
+                <p className="text-xs" style={{ color: muted(50), lineHeight: 1.5 }}>
+                  La couverture défense garantit l'exhaustivité plutôt qu'un nombre: chaque appel
+                  d'offres correspondant à votre profil, examiné. En défense le volume est faible et
+                  la valeur est élevée, un nombre serait la mauvaise promesse.
+                </p>
+              </div>
+            </div>
+          </div>
+
           <p data-reveal className="mt-4 text-xs" style={{ color: muted(45) }}>Les termes sont annuels, pas mensuels. La couverture nationale et transfrontalière est établie selon votre territoire. Le nombre d'opportunités garanti est convenu avec vous au moment d'établir la couverture et inscrit à l'entente.</p>
         </Section>
 
@@ -378,8 +431,8 @@ export default function HomeFrPage() {
         <Section id="contact" index="10 / Demander du renseignement">
           <div className="grid gap-14 pt-2" style={{ gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 360px), 1fr))" }}>
             <div data-reveal>
-              <h2 style={{ fontSize: "clamp(28px, 3.2vw, 40px)", letterSpacing: "-0.03em", maxWidth: "14ch" }}>Voyez ce qui vous échappe. Gratuit.</h2>
-              <p className="mt-5" style={{ color: muted(76), lineHeight: 1.6, maxWidth: "44ch" }}>Dites-moi votre métier et où vous soumissionnez. Je passe en revue les plateformes desservant votre territoire et je renvoie une courte liste de vraies opportunités ouvertes que vous n'avez pas vues, lues, qualifiées et liées.</p>
+              <h2 style={{ fontSize: "clamp(28px, 3.2vw, 40px)", letterSpacing: "-0.03em", maxWidth: "14ch" }}>Voyez qui remporte votre travail. Gratuit.</h2>
+              <p className="mt-5" style={{ color: muted(76), lineHeight: 1.6, maxWidth: "44ch" }}>Dites-moi votre métier et où vous travaillez. Je consulte le registre public des adjudications pour votre catégorie et je renvoie une analyse: qui remporte ce travail, quels acheteurs l'adjugent, et où vous n'êtes pas présent. Gratuit, sans engagement.</p>
               <div className="mt-8"><ChannelLog lang="fr" /></div>
             </div>
             <div data-reveal className="lg:pt-4"><IntelLeadForm lang="fr" source="home" /></div>

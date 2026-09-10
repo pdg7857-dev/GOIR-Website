@@ -146,7 +146,7 @@ export const TIERS: Tier[] = [
       "Shared dashboard and a weekly brief",
     ],
     featured: true,
-    cta: { label: "Request free intel report", href: "/free-opportunities" },
+    cta: { label: "Free position report", href: "/free-opportunities" },
   },
   {
     name: "Tier III · National & cross border",
@@ -162,6 +162,40 @@ export const TIERS: Tier[] = [
     cta: { label: "Request a quote", href: "/book" },
   },
 ];
+
+/**
+ * Defence contracting coverage. Deliberately not a fourth region tier: it is a
+ * vertical that cuts across jurisdictions, with its own platforms (PSPC,
+ * CanadaBuys, DND, SAM.gov, DIBBS, GSA eBuy) and its own eligibility gates
+ * (Controlled Goods, security clearance, NAICS and set-asides). Sold standalone
+ * or added to any region tier. Both are paid for if both are wanted.
+ *
+ * The guarantee here is completeness rather than a count: defence volume is low
+ * and value is high, so promising a number is the wrong shape of promise.
+ */
+export const DEFENCE = {
+  name: "Defence contracting coverage",
+  scope: "Standalone, or added to any region tier",
+  options: [
+    {
+      label: "Canada",
+      price: "$16,000",
+      body: "PSPC, CanadaBuys, DND and MERX federal, plus the prime flow-down work Canadian suppliers are meant to be found for.",
+    },
+    {
+      label: "Canada and the United States",
+      price: "$28,000",
+      body: "Everything above, plus SAM.gov, DIBBS and GSA eBuy for US federal defence and the cross border work that comes with it.",
+    },
+  ],
+  features: [
+    "Every open solicitation matching your NAICS codes, clearance level and capability, reviewed",
+    "Eligibility screened before it reaches you: Controlled Goods, clearance, set-asides",
+    "Prime flow-down and ITB driven opportunities, not just direct awards",
+    "Delivered with a verdict and a link to the source solicitation",
+  ],
+  cta: { label: "Request a quote", href: "/book" },
+};
 
 /** Cost calculator fee bands, keyed by jurisdiction count. Matches the tiers. */
 export function calcFee(jurisdictions: number): number {

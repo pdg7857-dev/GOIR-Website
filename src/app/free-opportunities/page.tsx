@@ -4,16 +4,16 @@ import { pageMeta, JsonLd, breadcrumbJsonLd, faqJsonLd } from "@/lib/site/seo";
 import { SITE } from "@/lib/site/config";
 
 const meta = pageMeta({
-  title: "Get Free Government Bid Opportunities for Your Trade",
+  title: "Free Competitive Position Report for Government Contractors",
   description:
-    "Tell me your trade and where you bid, and I'll send you a short list of real, current government opportunities you have not found, already qualified with source links. Free, no obligation, no spam.",
+    "Find out who is winning the government contracts you should be bidding. I pull the public award record for your trade and jurisdictions and send back a deep dive on your competitors, the buyers, and the gaps you are missing. Free, no obligation.",
   path: "/free-opportunities",
   keywords: [
-    "free government bid opportunities",
-    "government contract leads",
-    "bid opportunities for contractors",
-    "find government tenders",
-    "government RFP leads",
+    "government contract competitor analysis",
+    "who wins government contracts",
+    "public procurement award data",
+    "government contract market analysis",
+    "competitor bid intelligence",
   ],
 });
 
@@ -29,18 +29,26 @@ export const metadata: Metadata = {
 };
 
 const FAQS = [
-  { q: "Is it really free?", a: "Yes. No cost and no obligation. I send you real opportunities so you can see the quality of what I do before you ever consider paying for ongoing coverage." },
-  { q: "What exactly will I get?", a: "A short list of current government opportunities that fit your trade and where you bid, each with a link to the source bid on the issuing platform. The full document review and qualification is what I do for paying clients." },
-  { q: "How soon will I hear back?", a: "Within 3 business days. I prepare each list personally, so it is real research on your trade and jurisdictions, not an automated email." },
+  { q: "Is it really free?", a: "Yes. No cost and no obligation. I build it from the public award record, so it costs me research time rather than anything you need to pay for. You keep the report either way." },
+  { q: "Where does the information come from?", a: "Public sources. Government buyers publish who won a contract, what it was for and what it was worth. Most contractors never look at that record. I pull it for your category and jurisdictions and turn it into something you can act on." },
+  { q: "What exactly will I get?", a: "A deep dive on your corner of the market: the companies winning the work you should be bidding, how often they win and at what values, the buyers who award it repeatedly, and where work is being awarded that you are not showing up for. Plus an honest read on your best opening." },
+  { q: "How soon will I get it?", a: "Within 5 business days. I build each one by hand, so it is real research on your trade and your jurisdictions, not an automated export." },
 ];
 
 const muted = (n: number) => `color-mix(in srgb, var(--color-text) ${n}%, transparent)`;
 const accent = "var(--color-accent)";
 
 const STEPS = [
-  { n: "01", t: "You tell me the basics", b: "Your trade, where you bid, and a few quick details about your shop. Takes a minute." },
-  { n: "02", t: "I run the sweep", b: "Every platform in your footprint, documents opened, fit judged against what you told me." },
-  { n: "03", t: "You get the short list, inside 3 business days", b: "Plain language summaries and direct links. Bid them yourself, with or without me. No pitch attached." },
+  { n: "01", t: "You tell me the basics", b: "Your trade, where you work, and roughly the size of contract you can deliver. Takes a minute." },
+  { n: "02", t: "I pull the public award record", b: "Who won what in your category, from which buyers, at what values, across the platforms serving your footprint." },
+  { n: "03", t: "You get the deep dive, inside 5 business days", b: "Your competitors named, the buyers who keep buying, and the gaps where you should be bidding and are not." },
+];
+
+const INCLUDES = [
+  "The companies winning contracts in your category, how often, and at what values",
+  "The buyers who award this work repeatedly, and what they actually buy",
+  "Where work is being awarded that you are not showing up for",
+  "An honest read on where your best opening is, and what it would take",
 ];
 
 export default function FreeOpportunitiesPage() {
@@ -50,7 +58,7 @@ export default function FreeOpportunitiesPage() {
         data={[
           breadcrumbJsonLd([
             { name: "Home", path: "/" },
-            { name: "Request your free opportunities", path: "/free-opportunities" },
+            { name: "Free competitive position report", path: "/free-opportunities" },
           ]),
           faqJsonLd(FAQS),
         ]}
@@ -64,16 +72,17 @@ export default function FreeOpportunitiesPage() {
         <div>
           <div className="flex items-center gap-2.5">
             <span className="blip" />
-            <span className="hud" style={{ fontSize: 10, letterSpacing: "0.24em", color: muted(58) }}>Free intel report · no obligation</span>
+            <span className="hud" style={{ fontSize: 10, letterSpacing: "0.24em", color: muted(58) }}>Free competitive position report · no obligation</span>
           </div>
-          <h1 className="mt-5" style={{ fontSize: "clamp(32px, 4.6vw, 52px)", lineHeight: 1.0, letterSpacing: "-0.035em", maxWidth: "15ch" }}>
-            See the bids you are missing.
+          <h1 className="mt-5" style={{ fontSize: "clamp(32px, 4.6vw, 52px)", lineHeight: 1.0, letterSpacing: "-0.035em", maxWidth: "17ch" }}>
+            See who is winning the contracts you should be bidding.
           </h1>
           <div className="rule mt-6" />
-          <p className="mt-6" style={{ fontSize: 17, lineHeight: 1.6, color: muted(78), maxWidth: "46ch" }}>
-            Tell me your trade and where you bid. I will go through the platforms serving your
-            footprint and send back a short list of real, currently open opportunities you have not
-            seen, read, qualified and linked.
+          <p className="mt-6" style={{ fontSize: 17, lineHeight: 1.6, color: muted(78), maxWidth: "48ch" }}>
+            Government buyers publish who won, what for, and what it was worth. Almost nobody reads
+            that record. Tell me your trade and where you work, and I will pull it for your category
+            and send back a deep dive on your competitors, the buyers behind them, and the work you
+            are not showing up for.
           </p>
 
           <div className="mt-9 grid gap-5 pt-7" style={{ borderTop: `1px solid color-mix(in srgb, var(--color-accent) 22%, transparent)` }}>
@@ -86,6 +95,22 @@ export default function FreeOpportunitiesPage() {
                 </div>
               </div>
             ))}
+          </div>
+
+          <div className="panel mt-8 p-5">
+            <p className="hud" style={{ color: accent }}>What is in it</p>
+            <ul className="mt-3 space-y-2">
+              {INCLUDES.map((i) => (
+                <li key={i} className="flex items-start gap-2 text-sm" style={{ color: muted(72), lineHeight: 1.5 }}>
+                  <span aria-hidden style={{ color: accent }}>&rsaquo;</span>
+                  <span>{i}</span>
+                </li>
+              ))}
+            </ul>
+            <p className="mt-4 text-xs" style={{ color: muted(50), lineHeight: 1.5 }}>
+              Built entirely from published award records. Nothing confidential, nothing you could
+              not find yourself with enough hours.
+            </p>
           </div>
         </div>
 

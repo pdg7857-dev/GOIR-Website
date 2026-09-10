@@ -11,6 +11,7 @@ import { IntelLeadForm } from "@/components/intel/lead-form";
 import {
   PLATFORM_CARDS,
   TIERS,
+  DEFENCE,
   JURISDICTIONS,
   SECTION_CHIPS,
 } from "@/lib/intel/data";
@@ -116,7 +117,7 @@ export default function HomePage() {
               </p>
               <div className="mt-8 flex flex-wrap gap-3">
                 <Link href="/free-opportunities" className="btn btn-primary" style={{ fontSize: 12, letterSpacing: "0.16em", textTransform: "uppercase" }}>
-                  Request free intel report
+                  Free position report
                 </Link>
                 <Link href="#pricing" className="btn btn-secondary" style={{ fontSize: 12, letterSpacing: "0.16em", textTransform: "uppercase" }}>
                   Coverage &amp; pricing
@@ -408,6 +409,51 @@ export default function HomePage() {
               );
             })}
           </div>
+          {/* Defence: a vertical that cuts across regions, so it is an add-on, not a fourth tier. */}
+          <div data-reveal className="mt-10 p-6 sm:p-8" style={{ border: `1px solid ${accent20}`, background: "color-mix(in srgb, #161826 66%, transparent)", borderRadius: 4 }}>
+            <div className="grid gap-8 lg:grid-cols-[1.1fr_1fr]">
+              <div>
+                <p className="hud" style={{ color: accent, letterSpacing: "0.2em" }}>Add on or standalone</p>
+                <h3 className="mt-2" style={{ fontSize: "clamp(21px, 2.2vw, 28px)", letterSpacing: "-0.02em" }}>{DEFENCE.name}</h3>
+                <p className="mt-3 text-sm" style={{ color: muted(76), lineHeight: 1.6, maxWidth: "54ch" }}>
+                  Defence is not another region, it is a different system: its own platforms, its own
+                  eligibility gates, and prime flow-down work that never appears on a regional search.
+                  Buy it on its own, or add it to any tier above. Want both, you pay for both.
+                </p>
+                <ul className="mt-4 grid gap-1.5 text-sm">
+                  {DEFENCE.features.map((f) => (
+                    <li key={f} className="flex items-start gap-2" style={{ color: muted(72), lineHeight: 1.5 }}>
+                      <span aria-hidden style={{ color: accent }}>&rsaquo;</span>
+                      <span>{f}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              <div className="grid content-start gap-4">
+                {DEFENCE.options.map((o) => (
+                  <div key={o.label} className="p-5" style={{ border: `1px solid ${accent22}`, borderRadius: 4 }}>
+                    <div className="flex items-baseline justify-between gap-3">
+                      <span className="hud" style={{ fontSize: 10 }}>{o.label}</span>
+                      <span className="tabular-nums" style={{ fontSize: 24, letterSpacing: "-0.02em", color: "var(--color-accent-200)" }}>
+                        {o.price} <span style={{ fontSize: 13, color: muted(55) }}>/ year</span>
+                      </span>
+                    </div>
+                    <p className="mt-2 text-sm" style={{ color: muted(66), lineHeight: 1.5 }}>{o.body}</p>
+                  </div>
+                ))}
+                <Link href={DEFENCE.cta.href} className="btn btn-primary" style={{ fontSize: 11, letterSpacing: "0.14em", textTransform: "uppercase" }}>
+                  {DEFENCE.cta.label}
+                </Link>
+                <p className="text-xs" style={{ color: muted(50), lineHeight: 1.5 }}>
+                  Defence coverage guarantees completeness rather than a count: every solicitation
+                  matching your profile, reviewed. Volume in defence is low and value is high, so a
+                  number would be the wrong promise.
+                </p>
+              </div>
+            </div>
+          </div>
+
           <p data-reveal className="mt-4 text-xs" style={{ color: muted(45) }}>
             Terms are annual, not monthly. National and cross border coverage is scoped and quoted
             to your footprint. The guaranteed opportunity number is agreed with you at scoping and
@@ -470,12 +516,12 @@ export default function HomePage() {
           <div className="grid gap-14 pt-2" style={{ gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 360px), 1fr))" }}>
             <div data-reveal>
               <h2 style={{ fontSize: "clamp(28px, 3.2vw, 40px)", letterSpacing: "-0.03em", maxWidth: "12ch" }}>
-                See what you are missing. Free.
+                See who is winning your work. Free.
               </h2>
               <p className="mt-5" style={{ color: muted(76), lineHeight: 1.6, maxWidth: "44ch" }}>
-                Tell me your trade and where you bid. I go through the platforms serving your
-                footprint and send back a short list of real, currently open opportunities you have
-                not seen, read, qualified and linked.
+                Tell me your trade and where you work. I pull the public award record for your
+                category and send back a deep dive: who is winning this work, which buyers keep
+                awarding it, and where you are not showing up. Free, and no obligation.
               </p>
               <div className="mt-8">
                 <ChannelLog />

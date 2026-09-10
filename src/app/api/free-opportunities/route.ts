@@ -44,7 +44,7 @@ const EXPERIENCE_LABEL: Record<string, string> = {
 };
 
 const SOURCE_LABEL: Record<string, string> = {
-  "free-report": "Free report request",
+  "free-report": "Position report request",
   contact: "Contact form message",
   home: "Homepage request",
 };
@@ -180,18 +180,18 @@ export async function POST(req: NextRequest) {
   const confirmBody = isFr
     ? source === "contact"
       ? `Merci ${contactName}. J'ai bien reçu votre message et je vous réponds personnellement, habituellement le jour ouvrable même.`
-      : `Merci ${contactName}. Je vais regarder où ${d.companyName} soumissionne et préparer une courte liste d'opportunités réelles et actuelles qui correspondent à votre métier, déjà trouvées et qualifiées. Vous aurez de mes nouvelles en 3 jours ouvrables.`
+      : `Merci ${contactName}. Je vais consulter le registre public des adjudications pour la catégorie de ${d.companyName} et préparer votre rapport de position: qui remporte ce travail, auprès de quels acheteurs, et où vous n'êtes pas présent. Vous aurez de mes nouvelles en 5 jours ouvrables.`
     : source === "contact"
       ? `Thanks ${contactName}. I have your message and I will reply personally, usually the same business day.`
-      : `Thanks ${contactName}. I am going to look at where ${d.companyName} bids and pull a short list of real, current opportunities that fit your trade, already found and qualified the way I do it for clients. You will hear from me inside 3 business days.`;
+      : `Thanks ${contactName}. I am going to pull the public award record for ${d.companyName}'s category and build your position report: who is winning this work, which buyers award it, and where you are not showing up. You will hear from me inside 5 business days.`;
 
   const subject = isFr
     ? source === "contact"
       ? "J'ai bien reçu votre message"
-      : "Je prépare vos opportunités gratuites"
+      : "Je prépare votre rapport de position"
     : source === "contact"
       ? "I have your message"
-      : "I am pulling your free opportunities";
+      : "I am building your position report";
 
   await sendEmail({
     to: d.email,
