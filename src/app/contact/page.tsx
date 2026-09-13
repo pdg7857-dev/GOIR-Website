@@ -5,13 +5,19 @@ import { IntelLeadForm } from "@/components/intel/lead-form";
 import { SITE } from "@/lib/site/config";
 import { pageMeta, JsonLd, breadcrumbJsonLd } from "@/lib/site/seo";
 
-export const metadata: Metadata = pageMeta({
-  title: "Contact Phil Dave",
-  description:
-    "Get in touch with Phil Dave. Email me directly, book a call, or send your trade and I will reply personally, usually the same business day. I read every message myself.",
-  path: "/contact",
-  keywords: ["contact government opportunity intelligence", "contact phil procurement", "government bid discovery contact"],
-});
+export const metadata: Metadata = {
+  ...pageMeta({
+    title: "Contact Phil Dave",
+    description:
+      "Get in touch with Phil Dave. Email me directly, book a call, or send your trade and I will reply personally, usually the same business day. I read every message myself.",
+    path: "/contact",
+    keywords: ["contact government opportunity intelligence", "contact phil procurement", "government bid discovery contact"],
+  }),
+  alternates: {
+    canonical: SITE.domain + "/contact",
+    languages: { en: SITE.domain + "/contact", "fr-CA": SITE.domain + "/fr/contact" },
+  },
+};
 
 const accent = "var(--color-accent)";
 const accent20 = "color-mix(in srgb, var(--color-accent) 20%, transparent)";
