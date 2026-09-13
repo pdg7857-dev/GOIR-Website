@@ -34,7 +34,7 @@ const FAQS = [
   { q: "En quoi est-ce différent des alertes que je reçois déjà?", a: "Les alertes se déclenchent sur des mots-clés et ne qualifient rien. Je lis les documents, je juge l'ajustement selon votre métier et votre capacité, et je vous remets une courte liste avec un verdict, pas une boîte pleine à trier." },
   { q: "Et si vous manquez une soumission?", a: "Chaque entente comporte un minimum garanti d'opportunités qualifiées, fixé selon votre métier et votre territoire au départ. Si je ne le livre pas, je continue sans frais jusqu'à ce que ce soit fait." },
   { q: "J'ai déjà quelqu'un à l'interne. Pourquoi vous?", a: "Alors vous savez déjà combien d'heures la recherche gruge. Je retire la surveillance, la lecture et la qualification de son assiette, pour que ces heures servent à chiffrer et à gagner plutôt qu'à vivre dans les portails." },
-  { q: "Comment le prix est-il fixé, et quelle est la garantie?", a: "La couverture est ajustée à votre territoire et facturée une fois par année, jamais au mois. Le montant est établi selon votre secteur et le nombre de juridictions, et la couverture nationale est établie sur devis. Chaque entente comporte un minimum garanti d'opportunités qualifiées, que je fixe avec vous au moment d'établir votre couverture, puisque chaque secteur est différent. Si je n'atteins pas ce nombre, je continue sans frais jusqu'à ce que ce soit fait." },
+  { q: "Comment le prix est-il fixé, et quelle est la garantie?", a: "La couverture est chiffrée sur devis, pas affichée. Elle est facturée une fois par année, jamais au mois, et le montant est établi selon votre secteur et le nombre de juridictions, donc je le chiffre lors d'un court appel. Chaque entente comporte un minimum garanti d'opportunités qualifiées, que je fixe avec vous au moment d'établir votre couverture, puisque chaque secteur est différent. Si je n'atteins pas ce nombre, je continue sans frais jusqu'à ce que ce soit fait." },
 ];
 
 const VECTORS = [
@@ -67,12 +67,12 @@ const PLATFORM_FR: Record<string, { qualifier: string; body: string }> = {
 
 const TIERS = [
   {
-    name: "Palier I · Une seule juridiction", scope: "Une province ou un État", price: "À partir de 6 500 $", featured: false, quote: false,
+    name: "Palier I · Une seule juridiction", scope: "Une province ou un État", price: "Sur devis", featured: false, quote: true,
     features: ["Chaque plateforme desservant une province ou un État", "Documents ouverts, lus et résumés", "Ajustement qualifié selon votre métier et votre capacité", "Liens directs vers l'appel d'offres source"],
     cta: { label: "Discuter de la couverture", href: "/book" },
   },
   {
-    name: "Palier II · Régional", scope: "Jusqu'à cinq juridictions plus le fédéral", price: "À partir de 14 500 $", featured: true, quote: false,
+    name: "Palier II · Régional", scope: "Jusqu'à cinq juridictions plus le fédéral", price: "Sur devis", featured: true, quote: true,
     features: ["Jusqu'à cinq provinces ou États, plus le fédéral", "Tout le Palier I, sur toute votre région", "Alertes prioritaires quand une soumission ne peut pas attendre", "Tableau de bord partagé et un sommaire hebdomadaire"],
     cta: { label: "Rapport de position gratuit", href: "/fr/free-opportunities" },
   },
@@ -278,7 +278,7 @@ export default function HomeFrPage() {
         <Section id="pricing" index="07 / Couverture et prix">
           <div className="grid gap-6 lg:grid-cols-[1fr_1fr] lg:items-end">
             <h2 data-reveal style={{ fontSize: "clamp(28px, 3.2vw, 40px)", letterSpacing: "-0.03em", maxWidth: "18ch" }}>La couverture, ajustée à votre territoire. Facturée une fois par année.</h2>
-            <p data-reveal style={{ color: muted(76), lineHeight: 1.6 }}>La couverture est facturée une fois par année, jamais au mois. Le montant est établi selon votre secteur et le nombre de juridictions. Aucun frais par opportunité. J'en révise autant qu'il le faut.</p>
+            <p data-reveal style={{ color: muted(76), lineHeight: 1.6 }}>La couverture est facturée une fois par année, jamais au mois, et elle est chiffrée sur devis plutôt qu'affichée. Le montant est établi selon votre secteur et le nombre de juridictions, donc je le chiffre lors d'un court appel. Aucun frais par opportunité. J'en révise autant qu'il le faut.</p>
           </div>
           {/* La garantie est l'offre. Aucun nombre publié: il est fixé par secteur. */}
           <div
@@ -324,7 +324,7 @@ export default function HomeFrPage() {
                 <p className="hud" style={{ color: tier.featured ? "var(--color-accent-200)" : accent }}>{tier.name}</p>
                 <p className="mt-2 text-sm" style={{ color: muted(60) }}>{tier.scope}</p>
                 <p className="mt-4 tabular-nums" style={{ fontSize: 28, letterSpacing: "-0.02em", color: "var(--color-text)" }}>{tier.price}{!tier.quote && <span style={{ fontSize: 14, color: muted(55) }}> / an</span>}</p>
-                <p className="hud mt-1" style={{ fontSize: 9 }}>{tier.quote ? "Établi et facturé selon votre territoire." : "Facturé annuellement. Montant fixé par votre secteur."}</p>
+                <p className="hud mt-1" style={{ fontSize: 9 }}>"Établi selon votre territoire. Facturé annuellement."</p>
                 <ul className="mt-5 flex-1 space-y-2 text-sm">
                   {tier.features.map((f) => (
                     <li key={f} className="flex items-start gap-2" style={{ color: muted(72), lineHeight: 1.5 }}>
@@ -367,7 +367,7 @@ export default function HomeFrPage() {
 
               <div className="grid content-start gap-4">
                 {[
-                  { label: "Canada", price: "16 000 $", quote: false, body: "PSPC, CanadaBuys, MDN et MERX fédéral, plus le travail en cascade des maîtres d'oeuvre que les fournisseurs canadiens sont censés obtenir." },
+                  { label: "Canada", price: "Sur devis", quote: true, body: "PSPC, CanadaBuys, MDN et MERX fédéral, plus le travail en cascade des maîtres d'oeuvre que les fournisseurs canadiens sont censés obtenir." },
                   { label: "Canada et États-Unis", price: "Sur devis", quote: true, body: "Tout ce qui précède, plus SAM.gov, DIBBS et GSA eBuy pour la défense fédérale américaine et le travail transfrontalier qui vient avec. Établi selon vos codes NAICS et votre niveau d'habilitation, puis chiffré." },
                 ].map((o) => (
                   <div key={o.label} className="p-5" style={{ border: `1px solid ${accent22}`, borderRadius: 4 }}>
@@ -390,7 +390,7 @@ export default function HomeFrPage() {
             </div>
           </div>
 
-          <p data-reveal className="mt-4 text-xs" style={{ color: muted(45) }}>Les termes sont annuels, pas mensuels. La couverture nationale et transfrontalière est établie selon votre territoire. Le nombre d'opportunités garanti est convenu avec vous au moment d'établir la couverture et inscrit à l'entente.</p>
+          <p data-reveal className="mt-4 text-xs" style={{ color: muted(45) }}>Les termes sont annuels, pas mensuels, et chaque palier est chiffré selon votre secteur et les juridictions que vous soumissionnez réellement. Je ne publie pas de montants, parce que le bon chiffre pour un métier dans une seule province et pour un fournisseur national ne sont pas comparables. Le nombre d'opportunités garanti est convenu avec vous au moment d'établir la couverture et inscrit à l'entente.</p>
         </Section>
 
         {/* 08 Fiche opérateur */}
