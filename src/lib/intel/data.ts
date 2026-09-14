@@ -126,7 +126,8 @@ export const TIERS: Tier[] = [
   {
     name: "Tier I · Single jurisdiction",
     scope: "One province or state",
-    price: "From $6,500",
+    price: "By quote",
+    quote: true,
     features: [
       "Every platform serving one province or state",
       "Documents opened, read and summarized",
@@ -138,7 +139,8 @@ export const TIERS: Tier[] = [
   {
     name: "Tier II · Regional",
     scope: "Up to five jurisdictions plus federal",
-    price: "From $14,500",
+    price: "By quote",
+    quote: true,
     features: [
       "Up to five provinces or states, plus federal",
       "Everything in Tier I, across your whole region",
@@ -179,8 +181,8 @@ export const DEFENCE = {
   options: [
     {
       label: "Canada",
-      price: "$16,000",
-      quote: false,
+      price: "By quote",
+      quote: true,
       body: "PSPC, CanadaBuys, DND and MERX federal, plus the prime flow-down work Canadian suppliers are meant to be found for.",
     },
     {
@@ -199,10 +201,10 @@ export const DEFENCE = {
   cta: { label: "Request a quote", href: "/book" },
 };
 
-/** Cost calculator fee bands, keyed by jurisdiction count. Matches the tiers. */
-export function calcFee(jurisdictions: number): number {
-  return jurisdictions <= 1 ? 6500 : jurisdictions <= 5 ? 14500 : 29000;
-}
+/**
+ * Tier label for the cost calculator. No fee function: coverage is quoted to
+ * the client's footprint and no figure is published anywhere on the site.
+ */
 export function calcTier(jurisdictions: number): string {
   return jurisdictions <= 1
     ? "Tier I · Single jurisdiction"

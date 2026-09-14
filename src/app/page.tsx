@@ -78,7 +78,7 @@ const FAQS = [
   },
   {
     q: "How is pricing set, and what is the guarantee?",
-    a: "Coverage is scoped to your footprint and billed once a year, never monthly. The figure is set by your industry and the number of jurisdictions you bid, and national coverage is quoted individually. Every term carries a guaranteed minimum of qualified opportunities, agreed with you when we scope it, since every industry is different. If I do not reach that number, I keep working at no charge until I do.",
+    a: "Coverage is quoted, not published. It is billed once a year, never monthly, and the figure is set by your industry and the number of jurisdictions you bid, so I quote it on a short call once I know what you actually need. Every term carries a guaranteed minimum of qualified opportunities, agreed with you when we scope it. If I do not reach that number, I keep working at no charge until I do.",
   },
 ];
 
@@ -354,9 +354,10 @@ export default function HomePage() {
               Coverage, scoped to your footprint. Billed once a year.
             </h2>
             <p data-reveal style={{ color: muted(76), lineHeight: 1.6 }}>
-              Coverage is billed once a year, never as a monthly plan. The figure is set by your
-              industry and how many jurisdictions you bid. There is no per opportunity charge.
-              I review as many as it takes.
+              Coverage is billed once a year, never as a monthly plan, and it is quoted rather than
+              listed. The figure is set by your industry and how many jurisdictions you bid, so I
+              price it on a short call. There is no per opportunity charge. I review as many as it
+              takes.
             </p>
           </div>
 
@@ -421,7 +422,7 @@ export default function HomePage() {
                   <p className="mt-4 tabular-nums" style={{ fontSize: 30, letterSpacing: "-0.02em", color: "var(--color-text)" }}>
                     {tier.price}{!tier.quote && <span style={{ fontSize: 14, color: muted(55) }}> / year</span>}
                   </p>
-                  <p className="hud mt-1" style={{ fontSize: 9 }}>{tier.quote ? "Scoped and quoted to your footprint." : "Billed annually. Figure set by your industry."}</p>
+                  <p className="hud mt-1" style={{ fontSize: 9 }}>"Scoped and quoted to your footprint. Billed annually."</p>
                   <ul className="mt-5 flex-1 space-y-2 text-sm">
                     {tier.features.map((f) => (
                       <li key={f} className="flex items-start gap-2" style={{ color: muted(72), lineHeight: 1.5 }}>
@@ -487,9 +488,10 @@ export default function HomePage() {
           </div>
 
           <p data-reveal className="mt-4 text-xs" style={{ color: muted(45) }}>
-            Terms are annual, not monthly. National and cross border coverage is scoped and quoted
-            to your footprint. The guaranteed opportunity number is agreed with you at scoping and
-            written into the term.
+            Terms are annual, not monthly, and every tier is quoted against your industry and the
+            jurisdictions you actually bid. I do not publish figures because the right number for a
+            single province trade and a national supplier are not comparable. The guaranteed
+            opportunity number is agreed with you at scoping and written into the term.
           </p>
         </Section>
 
