@@ -5,7 +5,6 @@ import {
   SCREENING_SAMPLES,
   SCREENING_TRADES,
   TICKER_INTERCEPTS,
-  calcTier,
   type ScreeningSample,
 } from "@/lib/intel/data";
 
@@ -294,7 +293,6 @@ export function CostBand({ lang = "en" }: { lang?: Lang }) {
   // is quoted to the footprint, so there is no figure to compare against.
   const diyMonth = rate * hours * 4.333 * Math.min(1 + (jur - 1) * 0.18, 2.4);
   const diyYear = diyMonth * 12;
-  const tier = calcTier(jur);
 
   const L = lang === "fr"
     ? {
@@ -304,6 +302,7 @@ export function CostBand({ lang = "en" }: { lang?: Lang }) {
         rate: "Taux estimateur, tout compris", hoursL: "Heures par semaine sur les portails", jurL: "Territoires surveillés",
         inhouse: "En interne", inhouseYear: "par an en temps de surveillance", perMonth: "par mois",
         split: "Attention partagée avec l'estimation", vac: "La couverture s'arrête en vacances",
+        coverage: "Couverture nationale",
         byQuote: "Sur devis",
         quoteLead: "Couverture dédiée",
         quoteBody: "La couverture est ajustée aux territoires que vous soumissionnez réellement, puis chiffrée lors d'un court appel. Aucun frais par opportunité, aucun frais par plateforme.",
@@ -317,6 +316,7 @@ export function CostBand({ lang = "en" }: { lang?: Lang }) {
         rate: "Estimator rate, fully loaded", hoursL: "Hours a week on portals", jurL: "Jurisdictions monitored",
         inhouse: "Doing it in house", inhouseYear: "a year in monitoring time", perMonth: "a month",
         split: "Attention split with estimating", vac: "Coverage stops on vacation",
+        coverage: "Nationwide coverage",
         byQuote: "By quote",
         quoteLead: "Dedicated coverage",
         quoteBody: "Coverage is scoped to the jurisdictions you actually bid, then quoted on a short call. No per opportunity charge, no per platform charge.",
@@ -382,7 +382,7 @@ export function CostBand({ lang = "en" }: { lang?: Lang }) {
             </div>
 
             <div className="panel-accent flex flex-col p-6">
-              <p className="hud" style={{ color: "var(--color-accent-200)" }}>{tier}</p>
+              <p className="hud" style={{ color: "var(--color-accent-200)" }}>{L.coverage}</p>
               <p className="mt-3" style={{ fontSize: 36, letterSpacing: "-0.03em", color: "var(--color-accent-200)", lineHeight: 1.05 }}>
                 {L.byQuote}
               </p>

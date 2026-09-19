@@ -104,111 +104,70 @@ export const SCREENING_TRADES: { key: ScreeningSample["trade"]; label: string; o
 ];
 
 /**
- * Pricing tiers. Premium level, matching the design handoff and the pricing
- * decision to price at the designer's level. Annual only, no monthly plan.
+ * The three coverage streams. Deliberately NOT geographic tiers: coverage is
+ * nationwide across Canada and the United States in every stream, and what
+ * varies is the kind of contract, not the size of the map. A client takes one
+ * stream, two, or all three. Each is quoted separately and paid for separately.
  *
- * The guaranteed opportunity counts are PLACEHOLDERS. They are a contractual
- * promise and must be replaced with Phil's real per trade numbers before this
- * goes public. See README open item 1.
+ * No figures anywhere. Coverage is quoted to the client's footprint on a call.
  */
-export type Tier = {
+export type Stream = {
   name: string;
   scope: string;
   price: string;
-  /** When true, no figure is shown; the tier is quoted individually. */
+  /** When true, no figure is shown; the stream is quoted individually. */
   quote?: boolean;
+  blurb: string;
   features: string[];
   featured?: boolean;
   cta: { label: string; href: string };
 };
 
-export const TIERS: Tier[] = [
+export const STREAMS: Stream[] = [
   {
-    name: "Tier I · Single jurisdiction",
-    scope: "One province or state",
+    name: "Public sector contracts",
+    scope: "Nationwide, Canada and the United States",
     price: "By quote",
     quote: true,
+    blurb:
+      "Federal, provincial, state, municipal and the broader public sector, watched as one market rather than one portal at a time.",
     features: [
-      "Every platform serving one province or state",
-      "Documents opened, read and summarized",
-      "Fit qualified against your trade and capacity",
-      "Direct links to the source bid",
-    ],
-    cta: { label: "Discuss coverage", href: "/book" },
-  },
-  {
-    name: "Tier II · Regional",
-    scope: "Up to five jurisdictions plus federal",
-    price: "By quote",
-    quote: true,
-    features: [
-      "Up to five provinces or states, plus federal",
-      "Everything in Tier I, across your whole region",
-      "Priority alerts when a bid cannot wait",
-      "Shared dashboard and a weekly brief",
+      "Every platform serving your footprint: federal, provincial, state and municipal",
+      "The wider public sector too: school boards, hospitals, universities, transit, Crown corporations",
+      "Documents opened, read and summarized, not a keyword alert forwarded to you",
+      "Fit qualified against your trade and capacity, with a verdict and a link to the source bid",
     ],
     featured: true,
     cta: { label: "Free position report", href: "/free-opportunities" },
   },
   {
-    name: "Tier III · National & cross border",
-    scope: "Canada, the US, or both",
+    name: "Defence contracts",
+    scope: "Canada and the United States, by clearance and NAICS",
     price: "By quote",
     quote: true,
+    blurb:
+      "Defence is a different system, not another region: its own platforms, its own eligibility gates, and prime flow down work that never surfaces in a regional search.",
     features: [
-      "Nationwide coverage, Canada, the US, or both",
-      "Federal, provincial, state and local, end to end",
-      "Everything in Tier II, at national scale",
-      "A standing line to me when a bid cannot wait",
+      "Its own front doors: PSPC, CanadaBuys, DND, SAM.gov, DIBBS and GSA eBuy",
+      "Every open solicitation matching your NAICS codes, clearance level and capability, reviewed",
+      "Eligibility screened before it reaches you: Controlled Goods, clearance, set asides",
+      "Prime flow down and ITB driven work, not just direct awards",
     ],
     cta: { label: "Request a quote", href: "/book" },
   },
+  {
+    name: "Private construction contracts",
+    scope: "Canada and the United States, private and ICI",
+    price: "By quote",
+    quote: true,
+    blurb:
+      "The private side of the same trade. Invitations to bid, plan rooms and subcontract packages, read and qualified the same way the public work is.",
+    features: [
+      "Invitations to bid from general contractors and construction managers, tracked in one place",
+      "Private and ICI bid boards and plan rooms watched alongside the public work",
+      "Subcontract packages read and scoped: drawings, specifications, addenda, closing dates",
+      "Fit qualified against your trade and capacity, exactly as on the public side",
+    ],
+    cta: { label: "Discuss coverage", href: "/book" },
+  },
 ];
-
-/**
- * Defence contracting coverage. Deliberately not a fourth region tier: it is a
- * vertical that cuts across jurisdictions, with its own platforms (PSPC,
- * CanadaBuys, DND, SAM.gov, DIBBS, GSA eBuy) and its own eligibility gates
- * (Controlled Goods, security clearance, NAICS and set-asides). Sold standalone
- * or added to any region tier. Both are paid for if both are wanted.
- *
- * The guarantee here is completeness rather than a count: defence volume is low
- * and value is high, so promising a number is the wrong shape of promise.
- */
-export const DEFENCE = {
-  name: "Defence contracting coverage",
-  scope: "Standalone, or added to any region tier",
-  options: [
-    {
-      label: "Canada",
-      price: "By quote",
-      quote: true,
-      body: "PSPC, CanadaBuys, DND and MERX federal, plus the prime flow-down work Canadian suppliers are meant to be found for.",
-    },
-    {
-      label: "Canada and the United States",
-      price: "By quote",
-      quote: true,
-      body: "Everything above, plus SAM.gov, DIBBS and GSA eBuy for US federal defence and the cross border work that comes with it. Scoped to your NAICS codes and clearance level, then quoted.",
-    },
-  ],
-  features: [
-    "Every open solicitation matching your NAICS codes, clearance level and capability, reviewed",
-    "Eligibility screened before it reaches you: Controlled Goods, clearance, set-asides",
-    "Prime flow-down and ITB driven opportunities, not just direct awards",
-    "Delivered with a verdict and a link to the source solicitation",
-  ],
-  cta: { label: "Request a quote", href: "/book" },
-};
-
-/**
- * Tier label for the cost calculator. No fee function: coverage is quoted to
- * the client's footprint and no figure is published anywhere on the site.
- */
-export function calcTier(jurisdictions: number): string {
-  return jurisdictions <= 1
-    ? "Tier I · Single jurisdiction"
-    : jurisdictions <= 5
-      ? "Tier II · Regional"
-      : "Tier III · National";
-}

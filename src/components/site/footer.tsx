@@ -6,7 +6,7 @@ const muted = (n: number) => `color-mix(in srgb, var(--color-text) ${n}%, transp
 
 const LINKS = [
   { label: "Free report", href: "/free-opportunities" },
-  { label: "Coverage & pricing", href: "/#pricing" },
+  { label: "Coverage", href: "/#pricing" },
   { label: "Contact", href: "/contact" },
   { label: "Privacy", href: "/privacy" },
   { label: "Terms", href: "/terms" },

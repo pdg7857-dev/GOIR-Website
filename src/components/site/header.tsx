@@ -13,12 +13,12 @@ const accent24 = "color-mix(in srgb, var(--color-accent) 24%, transparent)";
 /** Minimal nav for the trimmed 4-5 page site. */
 const NAV = {
   en: [
-    { label: "Coverage & Pricing", href: "/#pricing" },
+    { label: "Coverage", href: "/#pricing" },
     { label: "Free report", href: "/free-opportunities" },
     { label: "Contact", href: "/contact" },
   ],
   fr: [
-    { label: "Couverture et prix", href: "/fr#pricing" },
+    { label: "Couverture", href: "/fr#pricing" },
     { label: "Rapport gratuit", href: "/fr/free-opportunities" },
     { label: "Contact", href: "/fr/contact" },
   ],

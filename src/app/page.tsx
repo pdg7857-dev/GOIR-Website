@@ -11,8 +11,7 @@ import {
 import { IntelLeadForm } from "@/components/intel/lead-form";
 import {
   PLATFORM_CARDS,
-  TIERS,
-  DEFENCE,
+  STREAMS,
   JURISDICTIONS,
   SECTION_CHIPS,
 } from "@/lib/intel/data";
@@ -34,6 +33,7 @@ export const metadata: Metadata = {
     "government contract opportunities Canada",
     "bid qualification service",
     "defence contract opportunities",
+    "private construction bid opportunities",
     "MERX CanadaBuys SAM.gov monitoring",
   ],
   alternates: {
@@ -78,7 +78,7 @@ const FAQS = [
   },
   {
     q: "How is pricing set, and what is the guarantee?",
-    a: "Coverage is quoted, not published. It is billed once a year, never monthly, and the figure is set by your industry and the number of jurisdictions you bid, so I quote it on a short call once I know what you actually need. Every term carries a guaranteed minimum of qualified opportunities, agreed with you when we scope it. If I do not reach that number, I keep working at no charge until I do.",
+    a: "Coverage is quoted, not published. It is billed once a year, never monthly, and the figure is set by your industry and which of the three streams you need, public sector, defence or private construction, so I quote it on a short call once I know what you actually need. Every term carries a guaranteed minimum of qualified opportunities, agreed with you when we scope it. If I do not reach that number, I keep working at no charge until I do.",
   },
 ];
 
@@ -145,14 +145,15 @@ export default function HomePage() {
               <p className="mt-6" style={{ maxWidth: "46ch", fontSize: 17, lineHeight: 1.6, color: muted(78) }}>
                 I am Phil Dave. I watch every procurement platform that matters, read the bid
                 documents, and qualify the fit, so your estimators stop drowning in portals and
-                work only the opportunities worth pursuing. Across Canada and the United States.
+                work only the opportunities worth pursuing. Public sector, defence and private
+                construction, nationwide across Canada and the United States.
               </p>
               <div className="mt-8 flex flex-wrap gap-3">
                 <Link href="/free-opportunities" className="btn btn-primary" style={{ fontSize: 12, letterSpacing: "0.16em", textTransform: "uppercase" }}>
                   Free position report
                 </Link>
                 <Link href="#pricing" className="btn btn-secondary" style={{ fontSize: 12, letterSpacing: "0.16em", textTransform: "uppercase" }}>
-                  Coverage &amp; pricing
+                  Coverage streams
                 </Link>
               </div>
               <div className="mt-10 grid grid-cols-3 gap-4 pt-6" style={{ borderTop: `1px solid ${accent22}` }}>
@@ -347,17 +348,18 @@ export default function HomePage() {
           </p>
         </Section>
 
-        {/* ── 07 Coverage & pricing ────────────────────────────── */}
-        <Section id="pricing" index="07 / Coverage & pricing">
+        {/* ── 07 Coverage streams ──────────────────────────────── */}
+        <Section id="pricing" index="07 / Coverage streams">
           <div className="grid gap-6 lg:grid-cols-[1fr_1fr] lg:items-end">
-            <h2 data-reveal style={{ fontSize: "clamp(28px, 3.2vw, 40px)", letterSpacing: "-0.03em", maxWidth: "18ch" }}>
-              Coverage, scoped to your footprint. Billed once a year.
+            <h2 data-reveal style={{ fontSize: "clamp(28px, 3.2vw, 40px)", letterSpacing: "-0.03em", maxWidth: "20ch" }}>
+              Three streams of coverage. Nationwide across Canada and the United States.
             </h2>
             <p data-reveal style={{ color: muted(76), lineHeight: 1.6 }}>
-              Coverage is billed once a year, never as a monthly plan, and it is quoted rather than
-              listed. The figure is set by your industry and how many jurisdictions you bid, so I
-              price it on a short call. There is no per opportunity charge. I review as many as it
-              takes.
+              I do not sell you a map. Coverage runs nationwide across Canada and the United States
+              in every stream, and what you choose is the kind of contract you want watched: public
+              sector, defence, private construction, or any combination. Each stream is quoted on a
+              short call against your industry and the access you actually need. There is no per
+              opportunity charge. I review as many as it takes.
             </p>
           </div>
 
@@ -399,12 +401,13 @@ export default function HomePage() {
             </div>
           </div>
 
-          <div className="mt-8 grid gap-5" style={{ gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 280px), 1fr))" }}>
-            {TIERS.map((tier) => {
-              const featured = tier.featured;
+          {/* Three streams, not geographic tiers: coverage is nationwide in each. */}
+          <div className="mt-8 grid gap-5" style={{ gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 300px), 1fr))" }}>
+            {STREAMS.map((stream) => {
+              const featured = stream.featured;
               return (
                 <div
-                  key={tier.name}
+                  key={stream.name}
                   data-reveal
                   className="relative flex flex-col p-6"
                   style={{
@@ -417,14 +420,15 @@ export default function HomePage() {
                   {featured && (
                     <span className="tag tag-accent" style={{ position: "absolute", top: 24, right: 24 }}>MOST CHOSEN</span>
                   )}
-                  <p className="hud" style={{ color: featured ? "var(--color-accent-200)" : accent }}>{tier.name}</p>
-                  <p className="mt-2 text-sm" style={{ color: muted(60) }}>{tier.scope}</p>
+                  <p className="hud" style={{ color: featured ? "var(--color-accent-200)" : accent }}>{stream.name}</p>
+                  <p className="mt-2 text-sm" style={{ color: muted(60) }}>{stream.scope}</p>
                   <p className="mt-4 tabular-nums" style={{ fontSize: 30, letterSpacing: "-0.02em", color: "var(--color-text)" }}>
-                    {tier.price}{!tier.quote && <span style={{ fontSize: 14, color: muted(55) }}> / year</span>}
+                    {stream.price}{!stream.quote && <span style={{ fontSize: 14, color: muted(55) }}> / year</span>}
                   </p>
-                  <p className="hud mt-1" style={{ fontSize: 9 }}>"Scoped and quoted to your footprint. Billed annually."</p>
+                  <p className="hud mt-1" style={{ fontSize: 9 }}>Scoped and quoted to your footprint. Billed annually.</p>
+                  <p className="mt-4 text-sm" style={{ color: muted(76), lineHeight: 1.55 }}>{stream.blurb}</p>
                   <ul className="mt-5 flex-1 space-y-2 text-sm">
-                    {tier.features.map((f) => (
+                    {stream.features.map((f) => (
                       <li key={f} className="flex items-start gap-2" style={{ color: muted(72), lineHeight: 1.5 }}>
                         <span aria-hidden style={{ color: accent }}>&rsaquo;</span>
                         <span>{f}</span>
@@ -432,66 +436,23 @@ export default function HomePage() {
                     ))}
                   </ul>
                   <Link
-                    href={tier.cta.href}
+                    href={stream.cta.href}
                     className={`btn ${featured ? "btn-primary" : "btn-secondary"} mt-6`}
                     style={{ fontSize: 11, letterSpacing: "0.14em", textTransform: "uppercase" }}
                   >
-                    {tier.cta.label}
+                    {stream.cta.label}
                   </Link>
                 </div>
               );
             })}
           </div>
-          {/* Defence: a vertical that cuts across regions, so it is an add-on, not a fourth tier. */}
-          <div data-reveal className="mt-10 p-6 sm:p-8" style={{ border: `1px solid ${accent20}`, background: "color-mix(in srgb, #161826 66%, transparent)", borderRadius: 4 }}>
-            <div className="grid gap-8 lg:grid-cols-[1.1fr_1fr]">
-              <div>
-                <p className="hud" style={{ color: accent, letterSpacing: "0.2em" }}>Add on or standalone</p>
-                <h3 className="mt-2" style={{ fontSize: "clamp(21px, 2.2vw, 28px)", letterSpacing: "-0.02em" }}>{DEFENCE.name}</h3>
-                <p className="mt-3 text-sm" style={{ color: muted(76), lineHeight: 1.6, maxWidth: "54ch" }}>
-                  Defence is not another region, it is a different system: its own platforms, its own
-                  eligibility gates, and prime flow-down work that never appears on a regional search.
-                  Buy it on its own, or add it to any tier above. Want both, you pay for both.
-                </p>
-                <ul className="mt-4 grid gap-1.5 text-sm">
-                  {DEFENCE.features.map((f) => (
-                    <li key={f} className="flex items-start gap-2" style={{ color: muted(72), lineHeight: 1.5 }}>
-                      <span aria-hidden style={{ color: accent }}>&rsaquo;</span>
-                      <span>{f}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-
-              <div className="grid content-start gap-4">
-                {DEFENCE.options.map((o) => (
-                  <div key={o.label} className="p-5" style={{ border: `1px solid ${accent22}`, borderRadius: 4 }}>
-                    <div className="flex items-baseline justify-between gap-3">
-                      <span className="hud" style={{ fontSize: 10 }}>{o.label}</span>
-                      <span className="tabular-nums" style={{ fontSize: 24, letterSpacing: "-0.02em", color: "var(--color-accent-200)" }}>
-                        {o.price}{!o.quote && <span style={{ fontSize: 13, color: muted(55) }}> / year</span>}
-                      </span>
-                    </div>
-                    <p className="mt-2 text-sm" style={{ color: muted(66), lineHeight: 1.5 }}>{o.body}</p>
-                  </div>
-                ))}
-                <Link href={DEFENCE.cta.href} className="btn btn-primary" style={{ fontSize: 11, letterSpacing: "0.14em", textTransform: "uppercase" }}>
-                  {DEFENCE.cta.label}
-                </Link>
-                <p className="text-xs" style={{ color: muted(50), lineHeight: 1.5 }}>
-                  Defence coverage guarantees completeness rather than a count: every solicitation
-                  matching your profile, reviewed. Volume in defence is low and value is high, so a
-                  number would be the wrong promise.
-                </p>
-              </div>
-            </div>
-          </div>
 
           <p data-reveal className="mt-4 text-xs" style={{ color: muted(45) }}>
-            Terms are annual, not monthly, and every tier is quoted against your industry and the
-            jurisdictions you actually bid. I do not publish figures because the right number for a
-            single province trade and a national supplier are not comparable. The guaranteed
-            opportunity number is agreed with you at scoping and written into the term.
+            Take one stream, two, or all three. Each is scoped and quoted on its own, and if you
+            want more than one you pay for more than one. Terms are annual, never monthly. I do not
+            publish figures because the right number for a single trade contractor and a national
+            supplier are not comparable. The guaranteed opportunity number is agreed with you at
+            scoping and written into the term.
           </p>
         </Section>
 
