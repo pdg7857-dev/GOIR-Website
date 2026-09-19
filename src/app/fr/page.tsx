@@ -34,7 +34,7 @@ const FAQS = [
   { q: "En quoi est-ce différent des alertes que je reçois déjà?", a: "Les alertes se déclenchent sur des mots-clés et ne qualifient rien. Je lis les documents, je juge l'ajustement selon votre métier et votre capacité, et je vous remets une courte liste avec un verdict, pas une boîte pleine à trier." },
   { q: "Et si vous manquez une soumission?", a: "Chaque entente comporte un minimum garanti d'opportunités qualifiées, fixé selon votre métier et votre territoire au départ. Si je ne le livre pas, je continue sans frais jusqu'à ce que ce soit fait." },
   { q: "J'ai déjà quelqu'un à l'interne. Pourquoi vous?", a: "Alors vous savez déjà combien d'heures la recherche gruge. Je retire la surveillance, la lecture et la qualification de son assiette, pour que ces heures servent à chiffrer et à gagner plutôt qu'à vivre dans les portails." },
-  { q: "Comment le prix est-il fixé, et quelle est la garantie?", a: "La couverture est chiffrée sur devis, pas affichée. Elle est facturée une fois par année, jamais au mois, et le montant est établi selon votre secteur et le volet dont vous avez besoin, secteur public, défense ou construction privée, donc je le chiffre lors d'un court appel. Chaque entente comporte un minimum garanti d'opportunités qualifiées, que je fixe avec vous au moment d'établir votre couverture, puisque chaque secteur est différent. Si je n'atteins pas ce nombre, je continue sans frais jusqu'à ce que ce soit fait." },
+  { q: "Comment le prix est-il fixé, et quelle est la garantie?", a: "La couverture est chiffrée sur devis, pas affichée. Elle est facturée une fois par année, jamais au mois, et le montant est établi selon votre secteur et le volet dont vous avez besoin, secteur public ou défense, donc je le chiffre lors d'un court appel. Chaque entente comporte un minimum garanti d'opportunités qualifiées, que je fixe avec vous au moment d'établir votre couverture, puisque chaque secteur est différent. Si je n'atteins pas ce nombre, je continue sans frais jusqu'à ce que ce soit fait." },
 ];
 
 const VECTORS = [
@@ -66,7 +66,7 @@ const PLATFORM_FR: Record<string, { qualifier: string; body: string }> = {
 };
 
 /**
- * Les trois volets de couverture. Ce ne sont pas des paliers géographiques: la
+ * Les volets de couverture. Ce ne sont pas des paliers géographiques: la
  * couverture est nationale, au Canada et aux États-Unis, dans chaque volet. Ce
  * qui varie est le type de contrat, pas la taille de la carte.
  */
@@ -102,22 +102,6 @@ const STREAMS = [
       "Travail en cascade des maîtres d'oeuvre et retombées industrielles, pas seulement les adjudications directes",
     ],
     cta: { label: "Demander un devis", href: "/book" },
-  },
-  {
-    name: "Contrats de construction privée",
-    scope: "Canada et États-Unis, privé et ICI",
-    price: "Sur devis",
-    featured: false,
-    quote: true,
-    blurb:
-      "Le côté privé du même métier. Invitations à soumissionner, salles de plans et lots de sous-traitance, lus et qualifiés comme le travail public.",
-    features: [
-      "Invitations à soumissionner des entrepreneurs généraux et gérants de construction, suivies au même endroit",
-      "Babillards privés et ICI et salles de plans surveillés en parallèle du travail public",
-      "Lots de sous-traitance lus et cadrés: plans, devis, addendas, dates de clôture",
-      "Ajustement qualifié selon votre métier et votre capacité, exactement comme du côté public",
-    ],
-    cta: { label: "Discuter de la couverture", href: "/book" },
   },
 ];
 
@@ -160,7 +144,7 @@ export default function HomeFrPage() {
                 Je suis Phil Dave. Je surveille chaque plateforme d'approvisionnement qui compte, je
                 lis les documents et je qualifie l'ajustement, pour que vos estimateurs cessent de se
                 noyer dans les portails et ne travaillent que les opportunités qui valent la peine.
-                Secteur public, défense et construction privée, partout au Canada et aux États-Unis.
+                Secteur public et défense, partout au Canada et aux États-Unis.
               </p>
               <div className="mt-8 flex flex-wrap gap-3">
                 <Link href="/fr/free-opportunities" className="btn btn-primary" style={{ fontSize: 12, letterSpacing: "0.16em", textTransform: "uppercase" }}>Rapport gratuit</Link>
@@ -315,8 +299,8 @@ export default function HomeFrPage() {
         {/* 07 Couverture et prix */}
         <Section id="pricing" index="07 / Volets de couverture">
           <div className="grid gap-6 lg:grid-cols-[1fr_1fr] lg:items-end">
-            <h2 data-reveal style={{ fontSize: "clamp(28px, 3.2vw, 40px)", letterSpacing: "-0.03em", maxWidth: "20ch" }}>Trois volets de couverture. Partout au Canada et aux États-Unis.</h2>
-            <p data-reveal style={{ color: muted(76), lineHeight: 1.6 }}>Je ne vous vends pas une carte. La couverture est nationale, au Canada et aux États-Unis, dans chaque volet, et ce que vous choisissez est le type de contrat à surveiller: secteur public, défense, construction privée, ou une combinaison. Chaque volet est chiffré lors d'un court appel selon votre secteur et l'accès dont vous avez réellement besoin. Aucun frais par opportunité. J'en révise autant qu'il le faut.</p>
+            <h2 data-reveal style={{ fontSize: "clamp(28px, 3.2vw, 40px)", letterSpacing: "-0.03em", maxWidth: "20ch" }}>Une couverture nationale, partout au Canada et aux États-Unis.</h2>
+            <p data-reveal style={{ color: muted(76), lineHeight: 1.6 }}>Je ne vous vends pas une carte. La couverture est nationale, au Canada et aux États-Unis, dans chaque volet, et ce que vous choisissez est le type de contrat à surveiller: secteur public, défense, ou les deux. Chaque volet est chiffré lors d'un court appel selon votre secteur et l'accès dont vous avez réellement besoin. Aucun frais par opportunité. J'en révise autant qu'il le faut.</p>
           </div>
           {/* La garantie est l'offre. Aucun nombre publié: il est fixé par secteur. */}
           <div
@@ -355,7 +339,7 @@ export default function HomeFrPage() {
             </div>
           </div>
 
-          {/* Trois volets, pas des paliers géographiques: la couverture est nationale dans chacun. */}
+          {/* Volets, pas des paliers géographiques: la couverture est nationale dans chacun. */}
           <div className="mt-8 grid gap-5" style={{ gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 300px), 1fr))" }}>
             {STREAMS.map((stream) => (
               <div key={stream.name} data-reveal className="relative flex flex-col p-6" style={{ borderRadius: 4, border: stream.featured ? `1px solid ${accent}` : `1px solid ${accent20}`, background: stream.featured ? "color-mix(in srgb, var(--color-accent) 8%, transparent)" : "color-mix(in srgb, #161826 66%, transparent)", boxShadow: stream.featured ? "0 0 40px color-mix(in srgb, var(--color-accent) 14%, transparent)" : undefined }}>
@@ -378,7 +362,7 @@ export default function HomeFrPage() {
             ))}
           </div>
 
-          <p data-reveal className="mt-4 text-xs" style={{ color: muted(45) }}>Prenez un volet, deux, ou les trois. Chacun est cadré et chiffré séparément, et si vous en voulez plus d'un, vous payez pour plus d'un. Les termes sont annuels, jamais mensuels. Je ne publie pas de montants, parce que le bon chiffre pour un entrepreneur spécialisé et pour un fournisseur national ne sont pas comparables. Le nombre d'opportunités garanti est convenu avec vous au moment d'établir la couverture et inscrit à l'entente.</p>
+          <p data-reveal className="mt-4 text-xs" style={{ color: muted(45) }}>Prenez un volet ou les deux. Chacun est cadré et chiffré séparément, et si vous voulez les deux, vous payez pour les deux. Les termes sont annuels, jamais mensuels. Je ne publie pas de montants, parce que le bon chiffre pour un entrepreneur spécialisé et pour un fournisseur national ne sont pas comparables. Le nombre d'opportunités garanti est convenu avec vous au moment d'établir la couverture et inscrit à l'entente.</p>
         </Section>
 
         {/* 08 Fiche opérateur */}

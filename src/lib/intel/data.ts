@@ -104,10 +104,14 @@ export const SCREENING_TRADES: { key: ScreeningSample["trade"]; label: string; o
 ];
 
 /**
- * The three coverage streams. Deliberately NOT geographic tiers: coverage is
+ * The coverage streams. Deliberately NOT geographic tiers: coverage is
  * nationwide across Canada and the United States in every stream, and what
  * varies is the kind of contract, not the size of the map. A client takes one
- * stream, two, or all three. Each is quoted separately and paid for separately.
+ * stream or both. Each is quoted separately and paid for separately.
+ *
+ * Private construction was drafted as a third stream and pulled before launch:
+ * private plansroom data is licensed per seat, not public record, so reselling
+ * it is a different business with different terms. Revisit when that is solved.
  *
  * No figures anywhere. Coverage is quoted to the client's footprint on a call.
  */
@@ -154,20 +158,5 @@ export const STREAMS: Stream[] = [
       "Prime flow down and ITB driven work, not just direct awards",
     ],
     cta: { label: "Request a quote", href: "/book" },
-  },
-  {
-    name: "Private construction contracts",
-    scope: "Canada and the United States, private and ICI",
-    price: "By quote",
-    quote: true,
-    blurb:
-      "The private side of the same trade. Invitations to bid, plan rooms and subcontract packages, read and qualified the same way the public work is.",
-    features: [
-      "Invitations to bid from general contractors and construction managers, tracked in one place",
-      "Private and ICI bid boards and plan rooms watched alongside the public work",
-      "Subcontract packages read and scoped: drawings, specifications, addenda, closing dates",
-      "Fit qualified against your trade and capacity, exactly as on the public side",
-    ],
-    cta: { label: "Discuss coverage", href: "/book" },
   },
 ];
