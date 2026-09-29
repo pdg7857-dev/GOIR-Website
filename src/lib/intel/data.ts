@@ -113,14 +113,12 @@ export const SCREENING_TRADES: { key: ScreeningSample["trade"]; label: string; o
  * private plansroom data is licensed per seat, not public record, so reselling
  * it is a different business with different terms. Revisit when that is solved.
  *
- * No figures anywhere. Coverage is quoted to the client's footprint on a call.
+ * No figures and no price line at all, not even the words "by quote". Coverage is
+ * discussed on a call.
  */
 export type Stream = {
   name: string;
   scope: string;
-  price: string;
-  /** When true, no figure is shown; the stream is quoted individually. */
-  quote?: boolean;
   blurb: string;
   features: string[];
   featured?: boolean;
@@ -131,8 +129,6 @@ export const STREAMS: Stream[] = [
   {
     name: "Public sector contracts",
     scope: "Nationwide, Canada and the United States",
-    price: "By quote",
-    quote: true,
     blurb:
       "Federal, provincial, state, municipal and the broader public sector, watched as one market rather than one portal at a time.",
     features: [
@@ -147,8 +143,6 @@ export const STREAMS: Stream[] = [
   {
     name: "Defence contracts",
     scope: "Canada and the United States, by clearance and NAICS",
-    price: "By quote",
-    quote: true,
     blurb:
       "Defence is a different system, not another region: its own platforms, its own eligibility gates, and prime flow down work that never surfaces in a regional search.",
     features: [

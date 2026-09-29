@@ -421,10 +421,6 @@ export default function HomePage() {
                   )}
                   <p className="hud" style={{ color: featured ? "var(--color-accent-200)" : accent }}>{stream.name}</p>
                   <p className="mt-2 text-sm" style={{ color: muted(60) }}>{stream.scope}</p>
-                  <p className="mt-4 tabular-nums" style={{ fontSize: 30, letterSpacing: "-0.02em", color: "var(--color-text)" }}>
-                    {stream.price}{!stream.quote && <span style={{ fontSize: 14, color: muted(55) }}> / year</span>}
-                  </p>
-                  <p className="hud mt-1" style={{ fontSize: 9 }}>Scoped and quoted to your footprint. Billed annually.</p>
                   <p className="mt-4 text-sm" style={{ color: muted(76), lineHeight: 1.55 }}>{stream.blurb}</p>
                   <ul className="mt-5 flex-1 space-y-2 text-sm">
                     {stream.features.map((f) => (

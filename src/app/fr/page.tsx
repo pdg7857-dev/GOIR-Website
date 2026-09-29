@@ -74,9 +74,7 @@ const STREAMS = [
   {
     name: "Contrats du secteur public",
     scope: "National, Canada et États-Unis",
-    price: "Sur devis",
     featured: true,
-    quote: true,
     blurb:
       "Fédéral, provincial, État, municipal et le secteur parapublic, surveillés comme un seul marché plutôt qu'un portail à la fois.",
     features: [
@@ -90,9 +88,7 @@ const STREAMS = [
   {
     name: "Contrats de défense",
     scope: "Canada et États-Unis, selon habilitation et NAICS",
-    price: "Sur devis",
     featured: false,
-    quote: true,
     blurb:
       "La défense n'est pas une région de plus, c'est un autre système: ses propres plateformes, ses propres critères d'admissibilité, et le travail en cascade des maîtres d'oeuvre qui n'apparaît jamais dans une recherche régionale.",
     features: [
@@ -346,8 +342,6 @@ export default function HomeFrPage() {
                 {stream.featured && <span className="tag tag-accent" style={{ position: "absolute", top: 24, right: 24 }}>LE PLUS CHOISI</span>}
                 <p className="hud" style={{ color: stream.featured ? "var(--color-accent-200)" : accent }}>{stream.name}</p>
                 <p className="mt-2 text-sm" style={{ color: muted(60) }}>{stream.scope}</p>
-                <p className="mt-4 tabular-nums" style={{ fontSize: 28, letterSpacing: "-0.02em", color: "var(--color-text)" }}>{stream.price}{!stream.quote && <span style={{ fontSize: 14, color: muted(55) }}> / an</span>}</p>
-                <p className="hud mt-1" style={{ fontSize: 9 }}>Établi selon votre territoire. Facturé annuellement.</p>
                 <p className="mt-4 text-sm" style={{ color: muted(76), lineHeight: 1.55 }}>{stream.blurb}</p>
                 <ul className="mt-5 flex-1 space-y-2 text-sm">
                   {stream.features.map((f) => (

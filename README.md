@@ -30,6 +30,9 @@ see [`../docs/GOIR.md`](../docs/GOIR.md) for the engine design.
    - `NEXT_PUBLIC_SITE_URL` — this site's public URL (used in report emails).
    - `ANTHROPIC_API_KEY` — optional (AI narrative layer).
    - `RESEND_API_KEY` + `EMAIL_FROM` — optional (emails the report link).
+   - `TODOIST_API_TOKEN` + `TODOIST_LEADS_PROJECT_ID` — optional (urgent
+     Todoist task on every form submission; see `scripts/google-form-to-todoist.gs`
+     to wire a Google Form into the same list).
 4. Deploy. The `GoirReport` table is created by the Kingsway OS `/api/setup`
    endpoint — this app only reads/writes it and never runs migrations.
 

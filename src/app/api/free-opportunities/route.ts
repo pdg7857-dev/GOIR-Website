@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
 import { captureLead } from "@/lib/crm/capture";
 import { sendEmail } from "@/lib/integrations/email";
+import { createLeadTask } from "@/lib/integrations/todoist";
 import { SITE } from "@/lib/site/config";
 
 export const runtime = "nodejs";
@@ -167,12 +168,21 @@ export async function POST(req: NextRequest) {
     text: leadText,
   }).catch((e) => ({ ok: false, error: String(e?.message ?? e) }));
 
+  // Urgent task on my list so a lead is worked, not just filed in an inbox.
+  // Best effort: never blocks the response, never fails the submission.
+  const task = await createLeadTask({
+    content: `NEW LEAD: ${d.companyName}${isFr ? " [FR]" : ""} - ${sourceLabel}`,
+    description: `${leadText}\n\nSubmitted: ${new Date().toISOString()}`,
+    labels: ["lead", source === "contact" ? "contact-form" : "position-report"],
+  }).catch((e) => ({ ok: false, error: String(e?.message ?? e) }) as const);
+
   // Durable fallback: always emit the full lead to the server logs (visible in
-  // Vercel), so a lead is recoverable even if both the CRM write and the email
-  // fail. Never throws.
+  // Vercel), so a lead is recoverable even if the CRM write, the email and the
+  // task all fail. Never throws.
   console.log(
-    `[LEAD] ${new Date().toISOString()} source=${source} lang=${isFr ? "fr" : "en"} crm=${crm.ok} notify=${notify.ok}` +
-      `${"error" in notify && notify.error ? ` notifyError=${notify.error}` : ""} :: ${leadText.replace(/\s*\n\s*/g, " | ")}`,
+    `[LEAD] ${new Date().toISOString()} source=${source} lang=${isFr ? "fr" : "en"} crm=${crm.ok} notify=${notify.ok} task=${task.ok}` +
+      `${"error" in notify && notify.error ? ` notifyError=${notify.error}` : ""}` +
+      `${"error" in task && task.error ? ` taskError=${task.error}` : ""} :: ${leadText.replace(/\s*\n\s*/g, " | ")}`,
   );
 
   // Confirm to the prospect, in their language, and matched to the form they
