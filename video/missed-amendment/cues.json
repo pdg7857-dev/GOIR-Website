@@ -1,0 +1,32 @@
+{
+ "_note": "Sample narration lines; 'say' overrides pronunciation. Replace vo/<id>.wav with a recording and re-run node build.mjs.",
+ "voice": "am_michael",
+ "speed": 1.1,
+ "cues": [
+  {
+   "id": "01",
+   "text": "You found the right bid. You priced it. You're ready to submit."
+  },
+  {
+   "id": "02",
+   "text": "Then you see it. Addendum four moved the closing date."
+  },
+  {
+   "id": "03",
+   "text": "Addendum five added a mandatory site meeting. It was yesterday."
+  },
+  {
+   "id": "04",
+   "text": "Amendments quietly change the scope, and the dates, after the first notice. And nobody calls to tell you."
+  },
+  {
+   "id": "05",
+   "text": "I track every addendum on the opportunities I send you, so the change reaches you, not just the original posting."
+  },
+  {
+   "id": "06",
+   "text": "Every amendment, tracked. Book a call at phildave.com.",
+   "say": "Every amendment, tracked. Book a call, at phil dave dot com."
+  }
+ ]
+}

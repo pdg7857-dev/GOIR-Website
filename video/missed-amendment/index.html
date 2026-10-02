@@ -1,0 +1,327 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1920, height=1080" />
+    <title>The cost of a missed amendment</title>
+    <script src="shared/vendor/gsap.min.js"></script>
+    <script src="shared/kit.js"></script>
+    <link rel="stylesheet" href="shared/brand.css" />
+    <style>
+      html, body { width: 1920px; height: 1080px; }
+      .label { left: 140px; top: 96px; }
+      .headline { position: absolute; left: 140px; top: 140px; width: 1640px; font-size: 60px; }
+
+      /* s1 checklist + bid card */
+      .check { left: 140px; top: 300px; width: 820px; height: 480px; padding: 40px 48px; display: flex; flex-direction: column; justify-content: center; }
+      .crow { display: flex; align-items: center; gap: 26px; height: 128px; border-bottom: 1px solid var(--line); font: 700 42px "Inter", sans-serif; letter-spacing: -0.01em; }
+      .crow:last-child { border-bottom: 0; }
+      .crow .box { width: 52px; height: 52px; }
+
+      .bid { left: 1040px; top: 300px; width: 740px; height: 480px; padding: 44px 48px; }
+      .bid .doc { width: 54px; height: 66px; border-radius: 8px; border: 4px solid var(--gold); position: relative; }
+      .bid .doc::before, .bid .doc::after { content: ""; position: absolute; left: 9px; right: 9px; height: 4px; border-radius: 2px; background: var(--gold); }
+      .bid .doc::before { top: 16px; } .bid .doc::after { top: 30px; }
+      .bid .bt { font: 700 48px "Space Grotesk", sans-serif; letter-spacing: -0.02em; line-height: 1.08; margin-top: 22px; }
+      .bid .sks { margin-top: 26px; }
+      .bid .sk:nth-child(2) { width: 88%; } .bid .sk:nth-child(3) { width: 64%; }
+      .closes { position: absolute; left: 48px; right: 48px; bottom: 36px; height: 88px; display: flex; align-items: center; gap: 24px; border-top: 1px solid var(--line); padding-top: 14px; }
+      .closes .ck { font: 700 36px "Inter", sans-serif; color: var(--ink-2); }
+      .dslot { position: relative; width: 260px; height: 64px; overflow: hidden; }
+      .dslot .d { position: absolute; left: 0; top: 0; height: 64px; display: flex; align-items: center; font: 400 50px "JetBrains Mono", monospace; white-space: nowrap; }
+      .dslot .d-new { color: var(--red-ink); }
+      .rowflash { position: absolute; left: -16px; right: -16px; top: 6px; bottom: -8px; border-radius: 14px; background: rgba(229, 72, 77, 0.1); }
+      .bid-illus { left: 1040px; top: 806px; }
+
+      /* s2 notices */
+      .note { left: 140px; width: 820px; padding: 28px 34px; display: flex; align-items: flex-start; gap: 26px; }
+      #n1 { top: 300px; }
+      #n2 { top: 300px; }
+      .env { position: relative; flex: none; width: 64px; height: 46px; margin-top: 4px; border: 4px solid var(--blue); border-radius: 8px; overflow: hidden; }
+      .env::before { content: ""; position: absolute; left: 50%; top: -22px; width: 34px; height: 34px; margin-left: -17px; border-right: 4px solid var(--blue); border-bottom: 4px solid var(--blue); transform: rotate(45deg); }
+      .note .nb { flex: 1; }
+      .note .ns { font: 700 31px "Inter", sans-serif; line-height: 1.3; }
+      .note .sk { margin: 16px 0 0; width: 80%; }
+      .note .unread { flex: none; width: 16px; height: 16px; border-radius: 50%; background: var(--blue); margin-top: 14px; }
+      .em { position: relative; isolation: isolate; display: inline-block; padding: 0 6px; margin: 0 -6px; border-radius: 8px; }
+      .em .emb { position: absolute; inset: 0; border-radius: 8px; background: #ffe1e2; transform-origin: left center; }
+      .em .emt { position: relative; }
+      .miss { position: absolute; left: 1040px; top: 536px; width: 740px; display: flex; justify-content: center; }
+      .miss .stamp { position: relative; height: 100px; font-size: 52px; }
+      .ml { position: absolute; right: 140px; top: 800px; padding: 10px 24px; border-radius: 12px; background: #fff; color: var(--red-ink); font: 700 30px "Inter", sans-serif; box-shadow: 0 10px 24px rgba(0, 0, 0, 0.18); }
+
+      /* s3 / s4 timeline (same geometry in both scenes; dots sit on y = 440) */
+      .track { position: absolute; left: 200px; top: 438px; width: 1520px; height: 4px; border-radius: 2px; background: rgba(255, 255, 255, 0.28); transform-origin: left center; }
+      .node { position: absolute; top: 322px; width: 240px; height: 132px; margin-left: -120px; display: flex; flex-direction: column; align-items: center; text-align: center; }
+      .node .nm { font: 700 24px "Inter", sans-serif; white-space: nowrap; }
+      .node .lb { font: 400 21px "Inter", sans-serif; color: rgba(255, 255, 255, 0.78); margin-top: 6px; white-space: nowrap; }
+      .node .dot { margin-top: auto; width: 28px; height: 28px; border-radius: 50%; background: var(--gold-4); box-shadow: 0 0 0 7px rgba(220, 171, 76, 0.22); }
+      .node.orig .dot { background: #fff; box-shadow: 0 0 0 7px rgba(255, 255, 255, 0.18); }
+      .node.orig .nm { color: #fff; }
+      .node .nm .mono { font-size: 22px; }
+      .n0 { left: 270px; } .n1 { left: 560px; } .n2 { left: 830px; } .n3 { left: 1100px; } .n4 { left: 1370px; } .n5 { left: 1640px; }
+
+      .quiet { position: absolute; left: 140px; top: 620px; width: 1640px; height: 260px; display: flex; align-items: center; justify-content: center; gap: 64px; }
+      .phonewrap { position: relative; width: 130px; height: 220px; flex: none; }
+      .phone { position: absolute; inset: 0; border-radius: 26px; border: 6px solid #8592a8; background: rgba(255, 255, 255, 0.05); }
+      .phone::before { content: ""; position: absolute; left: 50%; top: 14px; width: 36px; height: 6px; margin-left: -18px; border-radius: 3px; background: #8592a8; }
+      .phone::after { content: ""; position: absolute; left: 50%; bottom: 12px; width: 22px; height: 22px; margin-left: -11px; border-radius: 50%; border: 4px solid #8592a8; }
+      .phone .scr { position: absolute; left: 12px; right: 12px; top: 32px; bottom: 44px; border-radius: 8px; background: rgba(133, 146, 168, 0.18); }
+      .slash { position: absolute; left: 50%; top: -20px; width: 10px; height: 260px; margin-left: -5px; border-radius: 5px; background: #c9d2e0; box-shadow: 0 0 0 6px #0b1b3a; transform: rotate(-38deg); transform-origin: center; }
+      .quiet .cap { font-size: 72px; }
+
+      /* s4 inbox */
+      .inbox { left: 140px; top: 560px; width: 1640px; height: 380px; }
+      .inbox .ih { position: absolute; left: 40px; top: 40px; width: 210px; }
+      .inbox .ih .env { width: 72px; height: 52px; }
+      .inbox .ih .it { font: 700 34px "Space Grotesk", sans-serif; letter-spacing: -0.02em; margin-top: 20px; line-height: 1.1; }
+      .ac { position: absolute; top: 630px; width: 240px; height: 240px; margin-left: -120px; padding: 24px 22px; border-radius: 18px; background: #f6f9ff; border: 2px solid var(--line); color: var(--navy); transform-origin: center top; }
+      .ac .an { font: 400 19px "JetBrains Mono", monospace; color: var(--gold-ink); letter-spacing: 0.02em; }
+      .ac .al { font: 700 27px "Inter", sans-serif; margin-top: 10px; line-height: 1.2; }
+      .ac .sent { position: absolute; left: 22px; right: 18px; bottom: 22px; display: flex; align-items: center; gap: 12px; font: 700 20px "Inter", sans-serif; color: var(--green-ink); white-space: nowrap; }
+      .ac .box { width: 34px; height: 34px; }
+      .ac.c1 { left: 560px; } .ac.c2 { left: 830px; } .ac.c3 { left: 1100px; } .ac.c4 { left: 1370px; } .ac.c5 { left: 1640px; }
+      .glow { position: absolute; left: 140px; top: 560px; width: 1640px; height: 380px; border-radius: 28px; box-shadow: 0 0 0 6px var(--gold-4), 0 0 60px rgba(220, 171, 76, 0.45); opacity: 0; }
+
+      /* s5 CTA */
+      #s5 .a { font-size: 110px; }
+      #s5 .b { font-size: 150px; margin-top: 4px; line-height: 1; }
+      #s5 .cta-url { margin-top: 44px; }
+      #s5 .btn { margin-top: 26px; }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="main" data-start="0" data-duration="39.818" data-width="1920" data-height="1080">
+      <div id="bg" class="scene clip" data-start="0" data-duration="39.818" data-track-index="0">
+        <div class="ground"></div><div class="grid"></div><div class="blob b1"></div><div class="blob b2"></div><div class="vignette"></div>
+      </div>
+
+      <div id="s1" class="scene clip" data-start="0" data-duration="5" data-track-index="1">
+        <div class="inner">
+          <div class="card check">
+            <div class="crow"><div class="box"><div class="tk"></div></div>Found the right bid</div>
+            <div class="crow"><div class="box"><div class="tk"></div></div>Priced it</div>
+            <div class="crow"><div class="box"><div class="tk"></div></div>Ready to submit</div>
+          </div>
+          <div class="card bid">
+            <div class="doc"></div>
+            <div class="bt">Facility Maintenance Services</div>
+            <div class="sks"><div class="sk"></div><div class="sk"></div><div class="sk"></div></div>
+            <div class="closes"><span class="ck">Closes</span><div class="dslot"><div class="d">Nov 14</div></div></div>
+          </div>
+          <div class="illus bid-illus">Illustrative example</div>
+        </div>
+      </div>
+
+      <div id="s2" class="scene clip" data-start="5" data-duration="9.753" data-track-index="1">
+        <div class="inner">
+          <div class="label"><span class="rule"></span>Then you see it</div>
+          <div class="card note" id="n1">
+            <div class="env"></div>
+            <div class="nb"><div class="ns">Addendum 4: Closing date changed</div><div class="sk"></div></div>
+            <div class="unread"></div>
+          </div>
+          <div class="card note" id="n2">
+            <div class="env"></div>
+            <div class="nb"><div class="ns">Addendum 5: <span class="em"><span class="emb"></span><span class="emt">Mandatory site meeting</span></span> added, October 28</div><div class="sk"></div></div>
+            <div class="unread"></div>
+          </div>
+          <div class="card bid">
+            <div class="doc"></div>
+            <div class="bt">Facility Maintenance Services</div>
+            <div class="sks"><div class="sk"></div><div class="sk"></div><div class="sk"></div></div>
+            <div class="closes">
+              <div class="rowflash"></div>
+              <span class="ck">Closes</span>
+              <div class="dslot"><div class="d d-old">Nov 14</div><div class="d d-new">Nov 12</div></div>
+            </div>
+          </div>
+          <div class="miss" data-layout-allow-overlap>
+            <div class="stamp" data-layout-allow-overlap>MISSED</div>
+          </div>
+          <div class="ml">That was yesterday.</div>
+          <div class="illus bid-illus">Illustrative example</div>
+        </div>
+      </div>
+
+      <div id="s3" class="scene clip" data-start="14.753" data-duration="8.343" data-track-index="1">
+        <div class="inner">
+          <div class="label"><span class="rule"></span>After the first notice</div>
+          <div class="display headline">Amendments change the bid <span class="serif gold">after the first notice.</span></div>
+          <div class="track"></div>
+          <div class="node orig n0"><div class="nm">Original notice</div><div class="lb">&nbsp;</div><div class="dot"></div></div>
+          <div class="node n1"><div class="nm">Addendum 1</div><div class="lb">Scope change</div><div class="dot"></div></div>
+          <div class="node n2"><div class="nm">Addendum 2</div><div class="lb">Q and A</div><div class="dot"></div></div>
+          <div class="node n3"><div class="nm">Addendum 3</div><div class="lb">Forms</div><div class="dot"></div></div>
+          <div class="node n4"><div class="nm">Addendum 4</div><div class="lb">Date change</div><div class="dot"></div></div>
+          <div class="node n5"><div class="nm">Addendum 5</div><div class="lb">Site meeting</div><div class="dot"></div></div>
+          <div class="quiet">
+            <div class="phonewrap"><div class="phone"><div class="scr"></div></div><div class="slash"></div></div>
+            <div class="display cap">Nobody calls to tell you.</div>
+          </div>
+          <div class="illus" style="left: 140px; top: 980px">Illustrative example</div>
+        </div>
+      </div>
+
+      <div id="s4" class="scene clip" data-start="23.096" data-duration="9.197" data-track-index="1">
+        <div class="inner">
+          <div class="label"><span class="rule"></span>So the change reaches you</div>
+          <div class="display headline">I track every addendum on the <span class="serif gold">opportunities I send you.</span></div>
+          <div class="track"></div>
+          <div class="node orig n0"><div class="nm">Original notice</div><div class="lb">&nbsp;</div><div class="dot"></div></div>
+          <div class="node n1"><div class="nm">Addendum 1</div><div class="lb">Scope change</div><div class="dot"></div></div>
+          <div class="node n2"><div class="nm">Addendum 2</div><div class="lb">Q and A</div><div class="dot"></div></div>
+          <div class="node n3"><div class="nm">Addendum 3</div><div class="lb">Forms</div><div class="dot"></div></div>
+          <div class="node n4"><div class="nm">Addendum 4</div><div class="lb">Date change</div><div class="dot"></div></div>
+          <div class="node n5"><div class="nm">Addendum 5</div><div class="lb">Site meeting</div><div class="dot"></div></div>
+          <div class="card inbox">
+            <div class="ih"><div class="env"></div><div class="it">Your inbox</div></div>
+          </div>
+          <div class="glow"></div>
+          <div class="ac c1"><div class="an">Addendum 1</div><div class="al">Scope change</div><div class="sent"><div class="box"><div class="tk"></div></div>Sent to you</div></div>
+          <div class="ac c2"><div class="an">Addendum 2</div><div class="al">Q and A</div><div class="sent"><div class="box"><div class="tk"></div></div>Sent to you</div></div>
+          <div class="ac c3"><div class="an">Addendum 3</div><div class="al">Forms</div><div class="sent"><div class="box"><div class="tk"></div></div>Sent to you</div></div>
+          <div class="ac c4"><div class="an">Addendum 4</div><div class="al">Date change</div><div class="sent"><div class="box"><div class="tk"></div></div>Sent to you</div></div>
+          <div class="ac c5"><div class="an">Addendum 5</div><div class="al">Site meeting</div><div class="sent"><div class="box"><div class="tk"></div></div>Sent to you</div></div>
+          <div class="illus" style="left: 140px; top: 980px">Illustrative example</div>
+        </div>
+      </div>
+
+      <div id="s5" class="scene clip" data-start="32.293" data-duration="7.525" data-track-index="1">
+        <div class="inner center">
+          <div class="display a">Every amendment,</div>
+          <div class="serif gold b">tracked.</div>
+          <div class="cta-url">phildave.com</div>
+          <div class="btn">Book a call</div>
+        </div>
+        <div class="disc">I find and qualify opportunities. I do not write or submit proposals, and I do not guarantee contract awards.</div>
+      </div>
+
+      <!-- AUDIO:BEGIN (generated by build.mjs; do not edit by hand) -->
+      <audio id="vo-01" src="vo/01.wav" data-start="0.5" data-duration="3.264" data-volume="1" data-track-index="9"></audio>
+      <audio id="vo-02" src="vo/02.wav" data-start="5.6" data-duration="3.179" data-volume="1" data-track-index="9"></audio>
+      <audio id="vo-03" src="vo/03.wav" data-start="9.129" data-duration="4.224" data-volume="1" data-track-index="9"></audio>
+      <audio id="vo-04" src="vo/04.wav" data-start="15.353" data-duration="6.443" data-volume="1" data-track-index="9"></audio>
+      <audio id="vo-05" src="vo/05.wav" data-start="23.896" data-duration="6.997" data-volume="1" data-track-index="9"></audio>
+      <audio id="vo-06" src="vo/06.wav" data-start="32.693" data-duration="3.925" data-volume="1" data-track-index="9"></audio>
+      <audio id="sfx-01-tick" src="shared/sfx/tick.wav" data-start="0.892" data-duration="0.09" data-volume="0.3" data-track-index="10"></audio>
+      <audio id="sfx-02-tick" src="shared/sfx/tick.wav" data-start="2.034" data-duration="0.09" data-volume="0.3" data-track-index="10"></audio>
+      <audio id="sfx-03-tick" src="shared/sfx/tick.wav" data-start="3.111" data-duration="0.09" data-volume="0.3" data-track-index="10"></audio>
+      <audio id="sfx-04-pop" src="shared/sfx/pop.wav" data-start="6.681" data-duration="0.17" data-volume="0.15" data-track-index="10"></audio>
+      <audio id="sfx-05-switch" src="shared/sfx/switch.wav" data-start="8.143" data-duration="0.14" data-volume="0.25" data-track-index="10"></audio>
+      <audio id="sfx-06-pop" src="shared/sfx/pop.wav" data-start="9.129" data-duration="0.17" data-volume="0.15" data-track-index="10"></audio>
+      <audio id="sfx-07-snap" src="shared/sfx/snap.wav" data-start="12.339" data-duration="0.16" data-volume="0.4" data-track-index="10"></audio>
+      <audio id="sfx-08-pop" src="shared/sfx/pop.wav" data-start="16.642" data-duration="0.17" data-volume="0.12" data-track-index="10"></audio>
+      <audio id="sfx-09-pop" src="shared/sfx/pop.wav" data-start="17.286" data-duration="0.17" data-volume="0.12" data-track-index="10"></audio>
+      <audio id="sfx-10-pop" src="shared/sfx/pop.wav" data-start="17.93" data-duration="0.17" data-volume="0.12" data-track-index="10"></audio>
+      <audio id="sfx-11-pop" src="shared/sfx/pop.wav" data-start="18.574" data-duration="0.17" data-volume="0.12" data-track-index="10"></audio>
+      <audio id="sfx-12-pop" src="shared/sfx/pop.wav" data-start="19.219" data-duration="0.17" data-volume="0.12" data-track-index="10"></audio>
+      <audio id="sfx-13-switch" src="shared/sfx/switch.wav" data-start="21.151" data-duration="0.14" data-volume="0.15" data-track-index="10"></audio>
+      <audio id="sfx-14-pop" src="shared/sfx/pop.wav" data-start="24.596" data-duration="0.17" data-volume="0.1" data-track-index="10"></audio>
+      <audio id="sfx-15-pop" src="shared/sfx/pop.wav" data-start="25.225" data-duration="0.17" data-volume="0.1" data-track-index="10"></audio>
+      <audio id="sfx-16-tick" src="shared/sfx/tick.wav" data-start="25.346" data-duration="0.09" data-volume="0.22" data-track-index="11"></audio>
+      <audio id="sfx-17-pop" src="shared/sfx/pop.wav" data-start="25.855" data-duration="0.17" data-volume="0.1" data-track-index="10"></audio>
+      <audio id="sfx-18-tick" src="shared/sfx/tick.wav" data-start="25.975" data-duration="0.09" data-volume="0.22" data-track-index="11"></audio>
+      <audio id="sfx-19-pop" src="shared/sfx/pop.wav" data-start="26.485" data-duration="0.17" data-volume="0.1" data-track-index="10"></audio>
+      <audio id="sfx-20-tick" src="shared/sfx/tick.wav" data-start="26.605" data-duration="0.09" data-volume="0.22" data-track-index="11"></audio>
+      <audio id="sfx-21-pop" src="shared/sfx/pop.wav" data-start="27.115" data-duration="0.17" data-volume="0.1" data-track-index="10"></audio>
+      <audio id="sfx-22-tick" src="shared/sfx/tick.wav" data-start="27.235" data-duration="0.09" data-volume="0.22" data-track-index="11"></audio>
+      <audio id="sfx-23-tick" src="shared/sfx/tick.wav" data-start="27.865" data-duration="0.09" data-volume="0.22" data-track-index="10"></audio>
+      <audio id="sfx-24-chime" src="shared/sfx/chime.wav" data-start="35.284" data-duration="0.95" data-volume="0.3" data-track-index="10"></audio>
+      <audio id="sfx-25-pop" src="shared/sfx/pop.wav" data-start="35.684" data-duration="0.17" data-volume="0.22" data-track-index="11"></audio>
+      <!-- AUDIO:END -->
+    </div>
+
+    <!-- TIMING:BEGIN (generated by build.mjs) -->
+    <script id="timing" type="application/json">{"total":39.818,"scenes":{"s1":{"start":0,"dur":5,"ev":{"p0":0.892,"p1":2.034,"p2":3.111}},"s2":{"start":5,"dur":9.753,"ev":{"n1":1.681,"flip":3.143,"n2":4.129,"hl":5.903,"stamp":7.339}},"s3":{"start":14.753,"dur":8.343,"ev":{"orig":0.858,"d0":1.889,"d1":2.533,"d2":3.177,"d3":3.821,"d4":4.466,"phone":5.11,"mute":6.398}},"s4":{"start":23.096,"dur":9.197,"ev":{"c0":1.5,"c1":2.129,"c2":2.759,"c3":3.389,"c4":4.019,"reach":5.138,"orig":6.678}},"s5":{"start":32.293,"dur":7.525,"ev":{"a":0.3,"b":1.578,"url":2.991}}}}</script>
+    <!-- TIMING:END -->
+    <script>
+      const T = K.init();
+      const { $, $$ } = K;
+
+      { // s1 ready to submit
+        const S = K.scene("s1"), E = S.ev;
+        K.rise(0.2, "#s1 .check", { y: 50 });
+        K.rise(0.4, "#s1 .bid", { y: 50 });
+        K.rise(0.9, "#s1 .illus", { y: 6, d: 0.5 });
+        const ticks = $$("#s1 .crow .tk");
+        K.hide(ticks);
+        ticks.forEach((t, i) => K.tick(E[`p${i}`], t));
+        K.tl().fromTo("#s1 .bid", { scale: 1 }, { scale: 1.02, duration: 0.4, yoyo: true, repeat: 1, ease: "sine.inOut", immediateRender: false }, E.p2 + 0.1);
+        K.out(S.dur - 0.5, "#s1 .inner", 0.45);
+      }
+
+      { // s2 the addenda arrive
+        const S = K.scene("s2"), E = S.ev;
+        K.label(0.2, "#s2");
+        K.rise(0.2, "#s2 .bid", { y: 30, d: 0.5 });
+        K.rise(0.5, "#s2 .illus", { y: 6, d: 0.5 });
+        K.hide(["#n1", "#n2", "#s2 .d-new", "#s2 .rowflash", "#s2 .miss .stamp", "#s2 .ml"]);
+        K.slideIn(E.n1, "#n1", { x: -80, d: 0.55, ir: false });
+        // date flip: Nov 14 slides up and out, Nov 12 (red) comes up into the same slot
+        K.tl().to("#s2 .d-old", { y: -40, opacity: 0, duration: 0.3, ease: "power2.in" }, E.flip);
+        K.tl().fromTo("#s2 .d-new", { y: 40, opacity: 0 }, { y: 0, opacity: 1, duration: 0.4, ease: "back.out(2)", immediateRender: false }, E.flip + 0.2);
+        K.tl().fromTo("#s2 .rowflash", { opacity: 0 }, { opacity: 1, duration: 0.3, immediateRender: false }, E.flip + 0.1);
+        K.shake(E.flip + 0.6, "#s2 .dslot");
+        // newest notice lands on top, the older one moves down
+        K.tl().to("#n1", { y: 196, duration: 0.5, ease: "power3.out" }, E.n2);
+        K.tl().to("#n1 .unread", { opacity: 0, duration: 0.3 }, E.n2);
+        K.slideIn(E.n2, "#n2", { x: -80, d: 0.55, ir: false });
+        K.tl().fromTo("#n2 .emb", { scaleX: 0 }, { scaleX: 1, duration: 0.5, ease: "power3.out" }, E.hl);
+        K.stamp(E.stamp, "#s2 .miss .stamp", -10);
+        K.shake(E.stamp + 0.3, "#s2 .bid");
+        K.tl().fromTo("#s2 .ml", { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 0.4, ease: "power3.out", immediateRender: false }, E.stamp + 0.4);
+        K.out(S.dur - 0.5, "#s2 .inner", 0.45);
+      }
+
+      { // s3 the posting keeps changing
+        const S = K.scene("s3"), E = S.ev;
+        K.label(0.2, "#s3");
+        K.rise(0.3, "#s3 .headline");
+        K.draw(0.5, "#s3 .track", 1.2);
+        K.hide("#s3 .node");
+        K.pop(E.orig, "#s3 .n0", { from: 0.7, ir: false });
+        for (let i = 1; i <= 5; i++) K.pop(E[`d${i - 1}`], `#s3 .n${i}`, { from: 0.6, ir: false });
+        K.hide(["#s3 .phonewrap", "#s3 .cap"]);
+        K.pop(E.phone, "#s3 .phonewrap", { from: 0.7, ir: false });
+        K.tl().fromTo("#s3 .slash", { scaleY: 0 }, { scaleY: 1, duration: 0.4, ease: "power3.out", immediateRender: false }, E.mute);
+        K.tl().set("#s3 .slash", { scaleY: 0 }, 0);
+        K.tl().fromTo("#s3 .cap", { opacity: 0, x: -30 }, { opacity: 1, x: 0, duration: 0.6, ease: "power3.out", immediateRender: false }, E.phone + 0.25);
+        K.out(S.dur - 0.5, "#s3 .inner", 0.45);
+      }
+
+      { // s4 every addendum reaches you
+        const S = K.scene("s4"), E = S.ev;
+        K.label(0.2, "#s4");
+        K.rise(0.3, "#s4 .headline");
+        K.draw(0.4, "#s4 .track", 0.9);
+        K.pop(0.5, "#s4 .node", { from: 0.7, s: 0.08, d: 0.4 });
+        K.rise(0.7, "#s4 .inbox", { y: 40 });
+        K.rise(1.0, "#s4 .illus", { y: 6, d: 0.5 });
+        const cards = $$("#s4 .ac"), ticks = $$("#s4 .ac .tk"), sent = $$("#s4 .ac .sent");
+        K.hide([...cards, ...ticks, ...sent]);
+        cards.forEach((c, i) => {
+          const t = E[`c${i}`];
+          K.tl().fromTo(`#s4 .n${i + 1} .dot`, { scale: 1 }, { scale: 1.7, duration: 0.18, yoyo: true, repeat: 1, ease: "power2.out", immediateRender: false }, t);
+          K.tl().fromTo(c, { opacity: 0, y: -200, scale: 0.2 }, { opacity: 1, y: 0, scale: 1, duration: 0.7, ease: "power2.inOut", immediateRender: false }, t);
+          K.tl().fromTo(sent[i], { opacity: 0 }, { opacity: 1, duration: 0.3, immediateRender: false }, t + 0.6);
+          K.tick(t + 0.75, ticks[i]);
+        });
+        K.tl().fromTo("#s4 .glow", { opacity: 0 }, { opacity: 1, duration: 0.35, yoyo: true, repeat: 1, ease: "sine.inOut", immediateRender: false }, E.reach);
+        K.tl().fromTo("#s4 .n0 .dot", { scale: 1 }, { scale: 1.6, duration: 0.25, yoyo: true, repeat: 1, ease: "power2.out", immediateRender: false }, E.orig);
+        K.out(S.dur - 0.5, "#s4 .inner", 0.45);
+      }
+
+      { // s5 CTA
+        const S = K.scene("s5"), E = S.ev;
+        K.rise(E.a, "#s5 .a", { d: 0.7 });
+        K.serifIn(E.b, "#s5 .b");
+        K.rise(E.url, "#s5 .cta-url", { y: 20 });
+        K.pop(E.url + 0.4, "#s5 .btn", { from: 0.7, b: 2 });
+        K.rise(E.url + 1.4, "#s5 .disc", { y: 8, d: 0.6 });
+      }
+
+      window.__timelines["main"] = K.done();
+    </script>
+  </body>
+</html>
