@@ -19,6 +19,13 @@ const nextConfig = {
         ],
       },
       {
+        // Campaign video assets carry a version in the filename (bid-match-v1-*),
+        // so they never change in place and can be cached hard. Scoped to the
+        // asset names so the /watch page itself is never cached this way.
+        source: "/watch/:file(bid-match-v[0-9]+-.+)",
+        headers: [{ key: "Cache-Control", value: "public, max-age=31536000, immutable" }],
+      },
+      {
         // Vendored console runtime is immutable, cache it hard.
         source: "/intel/:path*",
         headers: [{ key: "Cache-Control", value: "public, max-age=31536000, immutable" }],

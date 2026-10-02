@@ -6,6 +6,7 @@ import { SiteFooter } from "@/components/site/footer";
 import { SITE } from "@/lib/site/config";
 import { JsonLd, organizationJsonLd } from "@/lib/site/seo";
 import { SiteAnalytics } from "@/components/site/analytics";
+import { ChromeGate } from "@/components/site/chrome-gate";
 
 export const viewport: Viewport = {
   width: "device-width",
@@ -32,9 +33,13 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="en">
       <body className="flex min-h-dvh flex-col">
         <JsonLd data={organizationJsonLd()} />
-        <SiteHeader />
+        <ChromeGate>
+          <SiteHeader />
+        </ChromeGate>
         <main className="flex-1">{children}</main>
-        <SiteFooter />
+        <ChromeGate>
+          <SiteFooter />
+        </ChromeGate>
         <SiteAnalytics />
       </body>
     </html>
