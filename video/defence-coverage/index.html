@@ -1,0 +1,390 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1920, height=1080" />
+    <title>Defence contracting coverage</title>
+    <script src="shared/vendor/gsap.min.js"></script>
+    <script src="shared/kit.js"></script>
+    <link rel="stylesheet" href="shared/brand.css" />
+    <style>
+      html, body { width: 1920px; height: 1080px; }
+      .label { left: 140px; top: 96px; }
+      .headline { position: absolute; left: 140px; top: 140px; width: 1640px; font-size: 60px; }
+
+      /* s1 */
+      #s1 .a { font-size: 120px; }
+      #s1 .b { font-size: 112px; margin-top: 14px; }
+
+      /* s2 three columns */
+      .col { top: 230px; width: 520px; height: 480px; padding: 40px 40px; }
+      .col .ch { font: 700 40px "Space Grotesk", sans-serif; letter-spacing: -0.02em; line-height: 1.1; }
+      #c1 { left: 140px; } #c2 { left: 700px; } #c3 { left: 1260px; }
+      .plats { margin-top: 44px; display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+      .plat { height: 70px; border-radius: 14px; background: rgba(255, 255, 255, 0.1); display: flex; align-items: center; gap: 12px; padding: 0 18px; font: 700 22px "Inter", sans-serif; }
+      .plat i { width: 10px; height: 10px; border-radius: 50%; background: var(--gold-4); flex: none; }
+      .gate { position: relative; width: 340px; height: 230px; margin: 64px auto 0; }
+      .gate .post { position: absolute; top: 0; width: 22px; height: 230px; border-radius: 6px; background: var(--gold-4); transform-origin: bottom center; }
+      .gate .post.l { left: 0; } .gate .post.r { right: 0; }
+      .gate .post::before { content: ""; position: absolute; left: -6px; top: -10px; width: 34px; height: 18px; border-radius: 6px; background: var(--gold-4); }
+      .gate .bar { position: absolute; left: 22px; right: 22px; height: 24px; border-radius: 4px; background: repeating-linear-gradient(45deg, #ffffff 0 22px, var(--gold) 22px 44px); transform-origin: left center; }
+      .gate .bar:nth-of-type(3) { top: 40px; } .gate .bar:nth-of-type(4) { top: 103px; } .gate .bar:nth-of-type(5) { top: 166px; }
+      .flowd { position: relative; width: 440px; height: 300px; margin-top: 40px; }
+      .flowd svg { position: absolute; inset: 0; }
+      .flowd path { fill: none; stroke: rgba(255, 255, 255, 0.55); stroke-width: 3; stroke-dasharray: 1; stroke-dashoffset: 1; }
+      .node { position: absolute; display: flex; align-items: center; justify-content: center; border-radius: 14px; font: 700 22px "Inter", sans-serif; }
+      .node.prime { left: 130px; top: 0; width: 180px; height: 68px; background: var(--gold); color: var(--navy-9); font: 700 28px "Space Grotesk", sans-serif; }
+      .node.sup { top: 216px; width: 136px; height: 58px; background: #fff; color: var(--navy); }
+      .node.n1 { left: 2px; } .node.n2 { left: 152px; } .node.n3 { left: 302px; }
+      .caption { position: absolute; left: 140px; top: 790px; width: 1640px; text-align: center; font-size: 56px; }
+
+      /* s3 profile and eligibility lane */
+      .profile { left: 140px; top: 300px; width: 640px; padding: 40px 44px; }
+      .profile .pt { font: 700 18px "Inter", sans-serif; letter-spacing: 0.2em; color: var(--gold-ink); text-transform: uppercase; }
+      .prow { display: flex; align-items: center; gap: 20px; height: 96px; border-bottom: 1px solid var(--line); font: 700 32px "Inter", sans-serif; }
+      .prow:last-child { border-bottom: 0; }
+      .prow .pv { margin-left: auto; width: 150px; height: 14px; border-radius: 7px; background: var(--blue-1); transform-origin: left center; }
+      .lane { left: 860px; top: 300px; width: 920px; height: 600px; overflow: hidden; }
+      .gl { position: absolute; top: 22px; width: 220px; margin-left: -110px; text-align: center; font: 700 20px "Inter", sans-serif; color: #fff; }
+      .gp { position: absolute; top: 70px; width: 8px; height: 510px; margin-left: -4px; border-radius: 4px; background: var(--gold-4); box-shadow: 0 0 18px rgba(220, 171, 76, 0.55); transform-origin: top center; }
+      .sol { position: absolute; left: 0; width: 120px; height: 64px; border-radius: 10px; background: #fff; border: 3px solid #fff; padding: 12px 12px; }
+      .sol .sk { height: 9px; border-radius: 5px; margin-bottom: 10px; }
+      .sol .sk + .sk { width: 64%; background: var(--blue-1); }
+      .bdg { position: absolute; right: -14px; top: -14px; width: 34px; height: 34px; border-radius: 50%; }
+
+      /* s4 solicitation */
+      .sol-card { left: 260px; top: 290px; width: 1400px; padding: 44px 54px 40px; }
+      .sol-card .stt { font: 700 54px "Space Grotesk", sans-serif; letter-spacing: -0.02em; margin-top: 22px; }
+      .sol-card .sks { margin: 26px 0 18px; }
+      .sol-card .sk:nth-child(1) { width: 84%; } .sol-card .sk:nth-child(2) { width: 62%; }
+      .vrow { display: flex; align-items: center; gap: 22px; padding: 22px 0; border-top: 1px solid var(--line); }
+      .vrow .k { width: 170px; font: 700 18px "Inter", sans-serif; letter-spacing: 0.16em; text-transform: uppercase; color: var(--slate); }
+      .vrow .v { font: 700 30px "Inter", sans-serif; color: var(--navy); }
+      .vrow .box { margin-left: auto; }
+      .src { position: relative; display: inline-flex; align-items: center; gap: 14px; font: 700 30px "Inter", sans-serif; color: var(--blue); }
+      .src svg { width: 30px; height: 30px; }
+      .src .ul { position: absolute; left: 0; right: 44px; bottom: -6px; height: 3px; background: var(--blue); transform-origin: left center; }
+
+      /* s5 coverage options */
+      .opt { top: 290px; width: 800px; height: 400px; padding: 46px 50px; }
+      #o1 { left: 140px; } #o2 { left: 980px; }
+      .opt .ot { font: 700 18px "Inter", sans-serif; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold-ink); }
+      .opt .on { font: 700 60px "Space Grotesk", sans-serif; letter-spacing: -0.02em; line-height: 1.08; margin-top: 18px; width: 520px; }
+      .opt .pill { position: absolute; right: 40px; top: 40px; height: 44px; padding: 0 22px; border-radius: 22px; font-size: 18px; }
+      .opt .chs { position: absolute; left: 50px; right: 50px; bottom: 44px; display: flex; flex-wrap: wrap; gap: 12px; }
+      .opt .chp { height: 50px; padding: 0 20px; border-radius: 25px; background: var(--muted); display: flex; align-items: center; font: 700 21px "Inter", sans-serif; color: var(--navy); }
+      .opt .chp.us { background: var(--blue-1); }
+      .oline { position: absolute; left: 140px; top: 770px; width: 1640px; text-align: center; font-size: 60px; }
+      .oline > span { display: inline-block; }
+
+      /* s6 kinetic */
+      #s6 .r1 { display: flex; gap: 70px; }
+      #s6 .r1 .display { font-size: 104px; }
+      #s6 .r2 { font-size: 72px; margin-top: 56px; }
+      #s6 .r3 { font-size: 144px; line-height: 1.05; margin-top: 14px; }
+      #s6 .r4 { font: 400 44px "Inter", sans-serif; color: rgba(255, 255, 255, 0.88); margin-top: 30px; }
+
+      /* s7 CTA */
+      #s7 .a { font-size: 104px; }
+      #s7 .cta-url { margin-top: 52px; }
+      #s7 .btn { margin-top: 28px; }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="main" data-start="0" data-duration="61.439" data-width="1920" data-height="1080">
+      <div id="bg" class="scene clip" data-start="0" data-duration="61.439" data-track-index="0">
+        <div class="ground"></div><div class="grid"></div><div class="blob b1"></div><div class="blob b2"></div><div class="vignette"></div>
+      </div>
+
+      <div id="s1" class="scene clip" data-start="0" data-duration="4.877" data-track-index="1">
+        <div class="inner center">
+          <div class="display a">Defence isn't just another region.</div>
+          <div class="serif gold b">It's a different system.</div>
+        </div>
+      </div>
+
+      <div id="s2" class="scene clip" data-start="4.877" data-duration="9.145" data-track-index="1">
+        <div class="inner">
+          <div class="label"><span class="rule"></span>Defence contracting</div>
+          <div class="glass col" id="c1">
+            <div class="ch">Its own platforms</div>
+            <div class="plats">
+              <div class="plat"><i></i>PSPC</div><div class="plat"><i></i>CanadaBuys</div>
+              <div class="plat"><i></i>DND</div><div class="plat"><i></i>SAM.gov</div>
+              <div class="plat"><i></i>DIBBS</div><div class="plat"><i></i>GSA eBuy</div>
+            </div>
+          </div>
+          <div class="glass col" id="c2">
+            <div class="ch">Its own eligibility gates</div>
+            <div class="gate">
+              <div class="post l"></div><div class="post r"></div>
+              <div class="bar"></div><div class="bar"></div><div class="bar"></div>
+            </div>
+          </div>
+          <div class="glass col" id="c3">
+            <div class="ch">Prime flow-down work</div>
+            <div class="flowd">
+              <svg viewBox="0 0 440 300" width="440" height="300">
+                <path pathLength="1" d="M220 68 V142 H70 V216" />
+                <path pathLength="1" d="M220 68 V216" />
+                <path pathLength="1" d="M220 68 V142 H370 V216" />
+              </svg>
+              <div class="node prime">Prime</div>
+              <div class="node sup n1">Supplier</div><div class="node sup n2">Supplier</div><div class="node sup n3">Supplier</div>
+            </div>
+          </div>
+          <div class="display caption">Never shows up in a <span class="serif gold">regional search.</span></div>
+        </div>
+      </div>
+
+      <div id="s3" class="scene clip" data-start="14.022" data-duration="16.006" data-track-index="1">
+        <div class="inner">
+          <div class="label"><span class="rule"></span>Eligibility</div>
+          <div class="display headline">Eligibility screened <span class="serif gold">before it reaches you.</span></div>
+          <div class="card profile">
+            <div class="pt">Your defence profile</div>
+            <div class="prow"><div class="box"><div class="tk"></div></div>NAICS codes<span class="pv"></span></div>
+            <div class="prow"><div class="box"><div class="tk"></div></div>Clearance level<span class="pv"></span></div>
+            <div class="prow"><div class="box"><div class="tk"></div></div>Capability<span class="pv"></span></div>
+          </div>
+          <div class="glass lane">
+            <div class="gl" style="left: 250px">Controlled Goods</div>
+            <div class="gl" style="left: 500px">Clearance</div>
+            <div class="gl" style="left: 750px">Set-asides</div>
+            <div class="gp" style="left: 250px"></div>
+            <div class="gp" style="left: 500px"></div>
+            <div class="gp" style="left: 750px"></div>
+            <div class="sol" style="top: 112px"><div class="sk"></div><div class="sk"></div><div class="bdg"><div class="xk"></div></div></div>
+            <div class="sol" style="top: 206px"><div class="sk"></div><div class="sk"></div><div class="bdg"><div class="tk"></div></div></div>
+            <div class="sol" style="top: 300px"><div class="sk"></div><div class="sk"></div><div class="bdg"><div class="xk"></div></div></div>
+            <div class="sol" style="top: 394px"><div class="sk"></div><div class="sk"></div><div class="bdg"><div class="tk"></div></div></div>
+            <div class="sol" style="top: 488px"><div class="sk"></div><div class="sk"></div><div class="bdg"><div class="xk"></div></div></div>
+          </div>
+        </div>
+      </div>
+
+      <div id="s4" class="scene clip" data-start="30.028" data-duration="6" data-track-index="1">
+        <div class="inner">
+          <div class="label"><span class="rule"></span>What reaches you</div>
+          <div class="display headline">Each one comes with <span class="serif gold">a verdict.</span></div>
+          <div class="card sol-card">
+            <span class="pill">ELIGIBLE</span>
+            <div class="stt">Ruggedized Field Shelters, Supply and Delivery</div>
+            <div class="sks"><div class="sk"></div><div class="sk"></div></div>
+            <div class="vrow" id="vrow"><div class="k">Verdict</div><div class="v">Matches your codes, clearance and capability</div><div class="box"><div class="tk"></div></div></div>
+            <div class="vrow" id="lrow">
+              <div class="k">Source</div>
+              <div class="src">View the source solicitation
+                <svg viewBox="0 0 24 24" fill="none" stroke="#1d63d8" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h13M13 6l6 6-6 6" /></svg>
+                <span class="ul"></span>
+              </div>
+            </div>
+          </div>
+          <div class="illus" style="left: 260px; top: 780px">Illustrative example</div>
+        </div>
+      </div>
+
+      <div id="s5" class="scene clip" data-start="36.028" data-duration="8.399" data-track-index="1">
+        <div class="inner">
+          <div class="label"><span class="rule"></span>Coverage</div>
+          <div class="card opt" id="o1">
+            <div class="ot">Coverage</div>
+            <div class="on">Canada</div>
+            <span class="pill gold">By quote</span>
+            <div class="chs"><div class="chp">PSPC</div><div class="chp">CanadaBuys</div><div class="chp">DND</div></div>
+          </div>
+          <div class="card opt" id="o2">
+            <div class="ot">Coverage</div>
+            <div class="on">Canada and the United States</div>
+            <span class="pill gold">By quote</span>
+            <div class="chs">
+              <div class="chp">PSPC</div><div class="chp">CanadaBuys</div><div class="chp">DND</div>
+              <div class="chp us">SAM.gov</div><div class="chp us">DIBBS</div><div class="chp us">GSA eBuy</div>
+            </div>
+          </div>
+          <div class="display oline"><span class="l0">On its own,</span> <span class="l1">or added to your <span class="serif gold">regional coverage.</span></span></div>
+        </div>
+      </div>
+
+      <div id="s6" class="scene clip" data-start="44.427" data-duration="10.425" data-track-index="1">
+        <div class="inner center">
+          <div class="r1"><div class="display x0">Low volume.</div><div class="display gold x1">High value.</div></div>
+          <div class="display r2">I don't promise a count.</div>
+          <div class="serif gold r3">I promise completeness.</div>
+          <div class="r4">Every matching solicitation, reviewed.</div>
+        </div>
+      </div>
+
+      <div id="s7" class="scene clip" data-start="54.852" data-duration="6.587" data-track-index="1">
+        <div class="inner center">
+          <div class="display a">Request a defence quote</div>
+          <div class="cta-url">phildave.com</div>
+          <div class="btn">Request a quote</div>
+        </div>
+        <div class="disc">I find and qualify opportunities. I do not write or submit proposals, and I do not guarantee contract awards.</div>
+      </div>
+
+      <!-- AUDIO:BEGIN (generated by build.mjs; do not edit by hand) -->
+      <audio id="vo-01" src="vo/01.wav" data-start="0.4" data-duration="3.477" data-volume="1" data-track-index="9"></audio>
+      <audio id="vo-02" src="vo/02.wav" data-start="5.377" data-duration="7.445" data-volume="1" data-track-index="9"></audio>
+      <audio id="vo-03" src="vo/03.wav" data-start="14.622" data-duration="6.613" data-volume="1" data-track-index="9"></audio>
+      <audio id="vo-04" src="vo/04.wav" data-start="21.635" data-duration="5.419" data-volume="1" data-track-index="9"></audio>
+      <audio id="vo-05" src="vo/05.wav" data-start="30.528" data-duration="3.989" data-volume="1" data-track-index="9"></audio>
+      <audio id="vo-06" src="vo/06.wav" data-start="36.428" data-duration="6.699" data-volume="1" data-track-index="9"></audio>
+      <audio id="vo-07" src="vo/07.wav" data-start="44.827" data-duration="8.725" data-volume="1" data-track-index="9"></audio>
+      <audio id="vo-08" src="vo/08.wav" data-start="55.252" data-duration="2.987" data-volume="1" data-track-index="9"></audio>
+      <audio id="sfx-01-pop" src="shared/sfx/pop.wav" data-start="5.277" data-duration="0.17" data-volume="0.2" data-track-index="10"></audio>
+      <audio id="sfx-02-pop" src="shared/sfx/pop.wav" data-start="6.866" data-duration="0.17" data-volume="0.2" data-track-index="10"></audio>
+      <audio id="sfx-03-pop" src="shared/sfx/pop.wav" data-start="8.727" data-duration="0.17" data-volume="0.2" data-track-index="10"></audio>
+      <audio id="sfx-04-tick" src="shared/sfx/tick.wav" data-start="17.929" data-duration="0.09" data-volume="0.3" data-track-index="10"></audio>
+      <audio id="sfx-05-tick" src="shared/sfx/tick.wav" data-start="18.855" data-duration="0.09" data-volume="0.3" data-track-index="10"></audio>
+      <audio id="sfx-06-tick" src="shared/sfx/tick.wav" data-start="20.442" data-duration="0.09" data-volume="0.3" data-track-index="10"></audio>
+      <audio id="sfx-07-pop" src="shared/sfx/pop.wav" data-start="24.778" data-duration="0.17" data-volume="0.18" data-track-index="10"></audio>
+      <audio id="sfx-08-snap" src="shared/sfx/snap.wav" data-start="25.485" data-duration="0.16" data-volume="0.2" data-track-index="10"></audio>
+      <audio id="sfx-09-pop" src="shared/sfx/pop.wav" data-start="25.808" data-duration="0.17" data-volume="0.18" data-track-index="10"></audio>
+      <audio id="sfx-10-pop" src="shared/sfx/pop.wav" data-start="26.512" data-duration="0.17" data-volume="0.18" data-track-index="10"></audio>
+      <audio id="sfx-11-snap" src="shared/sfx/snap.wav" data-start="26.818" data-duration="0.16" data-volume="0.2" data-track-index="10"></audio>
+      <audio id="sfx-12-tick" src="shared/sfx/tick.wav" data-start="27.928" data-duration="0.09" data-volume="0.22" data-track-index="10"></audio>
+      <audio id="sfx-13-snap" src="shared/sfx/snap.wav" data-start="28.151" data-duration="0.16" data-volume="0.2" data-track-index="10"></audio>
+      <audio id="sfx-14-tick" src="shared/sfx/tick.wav" data-start="28.428" data-duration="0.09" data-volume="0.22" data-track-index="10"></audio>
+      <audio id="sfx-15-tick" src="shared/sfx/tick.wav" data-start="32.044" data-duration="0.09" data-volume="0.3" data-track-index="10"></audio>
+      <audio id="sfx-16-pop" src="shared/sfx/pop.wav" data-start="33.321" data-duration="0.17" data-volume="0.2" data-track-index="10"></audio>
+      <audio id="sfx-17-pop" src="shared/sfx/pop.wav" data-start="37.098" data-duration="0.17" data-volume="0.2" data-track-index="10"></audio>
+      <audio id="sfx-18-pop" src="shared/sfx/pop.wav" data-start="38.438" data-duration="0.17" data-volume="0.2" data-track-index="10"></audio>
+      <audio id="sfx-19-switch" src="shared/sfx/switch.wav" data-start="41.117" data-duration="0.14" data-volume="0.16" data-track-index="10"></audio>
+      <audio id="sfx-20-pop" src="shared/sfx/pop.wav" data-start="45.7" data-duration="0.17" data-volume="0.15" data-track-index="10"></audio>
+      <audio id="sfx-21-pop" src="shared/sfx/pop.wav" data-start="47.096" data-duration="0.17" data-volume="0.15" data-track-index="10"></audio>
+      <audio id="sfx-22-switch" src="shared/sfx/switch.wav" data-start="49.8" data-duration="0.14" data-volume="0.18" data-track-index="10"></audio>
+      <audio id="sfx-23-chime" src="shared/sfx/chime.wav" data-start="57.044" data-duration="0.95" data-volume="0.3" data-track-index="10"></audio>
+      <audio id="sfx-24-pop" src="shared/sfx/pop.wav" data-start="57.444" data-duration="0.17" data-volume="0.22" data-track-index="11"></audio>
+      <!-- AUDIO:END -->
+    </div>
+
+    <!-- TIMING:BEGIN (generated by build.mjs) -->
+    <script id="timing" type="application/json">{"total":61.439,"scenes":{"s1":{"start":0,"dur":4.877,"ev":{"a":0.3,"b":2.208}},"s2":{"start":4.877,"dur":9.145,"ev":{"c0":0.4,"c1":1.989,"c2":3.85,"cap":5.563}},"s3":{"start":14.022,"dur":16.006,"ev":{"r0":3.907,"r1":4.833,"r2":6.42,"shift":7.313,"head":7.613,"g0":10.756,"g1":11.786,"g2":12.49,"m0":10.856,"a0":11.463,"m1":11.106,"a1":13.906,"m2":11.356,"a2":12.796,"m3":11.606,"a3":14.406,"m4":11.856,"a4":14.129}},"s4":{"start":30.028,"dur":6,"ev":{"ver":2.016,"link":3.293}},"s5":{"start":36.028,"dur":8.399,"ev":{"k0":1.07,"k1":2.41,"l0":4.084,"l1":5.089}},"s6":{"start":44.427,"dur":10.425,"ev":{"b0":1.273,"b1":2.669,"b2":3.628,"b3":5.373,"b4":7.031}},"s7":{"start":54.852,"dur":6.587,"ev":{"a":0.3,"url":2.192}}}}</script>
+    <!-- TIMING:END -->
+    <script>
+      const T = K.init();
+      const { $, $$ } = K;
+
+      { // s1 hook
+        const S = K.scene("s1"), E = S.ev;
+        K.rise(E.a, "#s1 .a", { d: 0.7 });
+        K.serifIn(E.b, "#s1 .b");
+        K.out(S.dur - 0.5, "#s1 .inner", 0.45);
+      }
+
+      { // s2 a different system
+        const S = K.scene("s2"), E = S.ev;
+        K.label(0.2, "#s2");
+        K.rise(E.c0, "#c1", { y: 50 });
+        K.pop(E.c0 + 0.4, "#c1 .plat", { s: 0.12, from: 0.8, d: 0.4 });
+        K.rise(E.c1, "#c2", { y: 50 });
+        K.tl().fromTo("#c2 .post", { scaleY: 0 }, { scaleY: 1, duration: 0.5, ease: "power3.out", stagger: 0.1 }, E.c1 + 0.3);
+        K.tl().fromTo("#c2 .bar", { scaleX: 0 }, { scaleX: 1, duration: 0.45, ease: "power3.out", stagger: 0.22 }, E.c1 + 0.7);
+        K.rise(E.c2, "#c3", { y: 50 });
+        K.pop(E.c2 + 0.35, "#c3 .prime", { from: 0.7 });
+        K.tl().fromTo("#c3 path", { strokeDashoffset: 1 }, { strokeDashoffset: 0, duration: 0.7, ease: "power2.inOut", stagger: 0.12 }, E.c2 + 0.65);
+        K.pop(E.c2 + 1.2, "#c3 .sup", { s: 0.12, from: 0.7 });
+        K.rise(E.cap, "#s2 .caption", { y: 24 });
+        K.out(S.dur - 0.5, "#s2 .inner", 0.45);
+      }
+
+      { // s3 profile, then eligibility gates
+        const S = K.scene("s3"), E = S.ev;
+        K.label(0.2, "#s3");
+        K.rise(0.4, "#s3 .profile", { y: 50 });
+        K.set(0, "#s3 .profile", { x: 500 });
+        K.rise(0.8, "#s3 .prow", { y: 16, s: 0.15, d: 0.45 });
+        const ticks = $$("#s3 .prow .tk"), pvs = $$("#s3 .prow .pv");
+        K.hide(ticks);
+        ticks.forEach((t, i) => {
+          K.tick(E[`r${i}`], t);
+          K.tl().fromTo(pvs[i], { scaleX: 0 }, { scaleX: 1, duration: 0.5, ease: "power3.out" }, E[`r${i}`]);
+        });
+        // shift the card left, open the lane
+        K.tl().to("#s3 .profile", { x: 0, duration: 0.8, ease: "power3.inOut" }, E.shift);
+        K.rise(E.head, "#s3 .headline");
+        K.rise(E.head + 0.3, "#s3 .lane", { y: 30 });
+        const sols = $$("#s3 .sol");
+        K.slideIn(E.head + 0.7, sols, { x: -60, s: 0.12, d: 0.5 });
+        [0, 1, 2].forEach((g) => {
+          K.tl().fromTo(`#s3 .gl:nth-of-type(${g + 1})`, { opacity: 0, y: -12 }, { opacity: 1, y: 0, duration: 0.4, ease: "power3.out" }, E[`g${g}`]);
+          K.tl().fromTo(`#s3 .gp:nth-of-type(${g + 4})`, { scaleY: 0 }, { scaleY: 1, duration: 0.5, ease: "power3.out" }, E[`g${g}`]);
+        });
+        // solicitations travel the lane; geometry matches build.mjs
+        const GATES = [250, 500, 750], X0 = 30, CW = 120, XEND = 770, PLAN = [0, -1, 1, -1, 2];
+        K.set(0, sols, { x: X0 });
+        K.hide($$("#s3 .bdg"));
+        sols.forEach((el, i) => {
+          const g = PLAN[i], m = E[`m${i}`], a = E[`a${i}`];
+          const stopX = g < 0 ? XEND : GATES[g] - 8 - CW;
+          K.tl().fromTo(el, { x: X0 }, { x: stopX, duration: a - m, ease: g < 0 ? "power1.inOut" : "power2.out", immediateRender: false }, m);
+          const b = el.querySelector(".bdg");
+          K.tick(a, b);
+          if (g < 0) {
+            K.tl().to(el, { borderColor: "#1f9d5a", duration: 0.25 }, a);
+          } else {
+            K.tl().to(el, { borderColor: "#e5484d", duration: 0.2 }, a);
+            K.tl().fromTo(el, { rotation: 0 }, { rotation: 4, duration: 0.06, yoyo: true, repeat: 3, ease: "none", immediateRender: false }, a);
+            K.tl().to(el.querySelectorAll(".sk"), { opacity: 0.4, duration: 0.5 }, a + 0.4);
+          }
+        });
+        K.out(S.dur - 0.5, "#s3 .inner", 0.45);
+      }
+
+      { // s4 the verdict
+        const S = K.scene("s4"), E = S.ev;
+        K.label(0.2, "#s4");
+        K.rise(0.3, "#s4 .headline");
+        K.rise(0.5, "#s4 .sol-card", { y: 50 });
+        K.pop(0.9, "#s4 .sol-card .pill", { from: 0.7 });
+        K.rise(1.0, "#s4 .stt", { y: 16, d: 0.5 });
+        K.tl().fromTo("#s4 .sks .sk", { scaleX: 0, transformOrigin: "left center" }, { scaleX: 1, duration: 0.6, ease: "power3.out", stagger: 0.15 }, 1.2);
+        K.rise(E.ver - 0.2, "#vrow", { y: 16, d: 0.45 });
+        K.hide("#vrow .tk");
+        K.tick(E.ver + 0.3, "#vrow .tk");
+        K.rise(E.link - 0.2, "#lrow", { y: 16, d: 0.45 });
+        K.draw(E.link + 0.3, "#lrow .ul", 0.6);
+        K.rise(1.4, "#s4 .illus", { y: 6, d: 0.5 });
+        K.out(S.dur - 0.5, "#s4 .inner", 0.45);
+      }
+
+      { // s5 coverage options
+        const S = K.scene("s5"), E = S.ev;
+        K.label(0.2, "#s5");
+        K.rise(E.k0, "#o1", { y: 50 });
+        K.pop(E.k0 + 0.5, "#o1 .pill", { from: 0.7 });
+        K.pop(E.k0 + 0.7, "#o1 .chp", { s: 0.1, from: 0.8, d: 0.4 });
+        K.rise(E.k1, "#o2", { y: 50 });
+        K.pop(E.k1 + 0.5, "#o2 .pill", { from: 0.7 });
+        K.pop(E.k1 + 0.7, "#o2 .chp", { s: 0.1, from: 0.8, d: 0.4 });
+        K.rise(E.l0, "#s5 .l0", { y: 24 });
+        K.rise(E.l1, "#s5 .l1", { y: 24 });
+        K.out(S.dur - 0.5, "#s5 .inner", 0.45);
+      }
+
+      { // s6 kinetic beats
+        const S = K.scene("s6"), E = S.ev;
+        K.rise(E.b0, "#s6 .x0", { y: 30, d: 0.5 });
+        K.rise(E.b1, "#s6 .x1", { y: 30, d: 0.5 });
+        K.rise(E.b2, "#s6 .r2", { y: 24, d: 0.55 });
+        K.tl().to("#s6 .r1", { opacity: 0.35, duration: 0.5 }, E.b2);
+        K.serifIn(E.b3, "#s6 .r3");
+        K.tl().to("#s6 .r2", { opacity: 0.35, duration: 0.5 }, E.b3 + 0.2);
+        K.rise(E.b4, "#s6 .r4", { y: 20, d: 0.6 });
+        K.out(S.dur - 0.5, "#s6 .inner", 0.45);
+      }
+
+      { // s7 CTA
+        const S = K.scene("s7"), E = S.ev;
+        K.rise(E.a, "#s7 .a", { d: 0.7 });
+        K.rise(E.url, "#s7 .cta-url", { y: 20 });
+        K.pop(E.url + 0.4, "#s7 .btn", { from: 0.7, b: 2 });
+        K.rise(E.url + 1.4, "#s7 .disc", { y: 8, d: 0.6 });
+      }
+
+      window.__timelines["main"] = K.done();
+    </script>
+  </body>
+</html>

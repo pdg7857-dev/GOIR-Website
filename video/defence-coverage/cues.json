@@ -1,0 +1,41 @@
+{
+ "_note": "Sample narration lines; 'say' overrides pronunciation. Replace vo/<id>.wav with a recording and re-run node build.mjs.",
+ "voice": "am_michael",
+ "speed": 1.1,
+ "cues": [
+  {
+   "id": "01",
+   "text": "Defence isn't just another region. It's a different system."
+  },
+  {
+   "id": "02",
+   "text": "Its own platforms. Its own eligibility gates. And prime flow-down work that never shows up in a regional search."
+  },
+  {
+   "id": "03",
+   "text": "I review every open solicitation that matches your NAICS codes, your clearance level, and your capability.",
+   "say": "I review every open solicitation that matches your nakes codes, your clearance level, and your capability."
+  },
+  {
+   "id": "04",
+   "text": "Eligibility is screened before it reaches you. Controlled Goods, clearance, set-asides."
+  },
+  {
+   "id": "05",
+   "text": "Each one comes with a verdict, and a link to the source solicitation."
+  },
+  {
+   "id": "06",
+   "text": "Coverage for Canada, or Canada and the United States. On its own, or added to your regional coverage."
+  },
+  {
+   "id": "07",
+   "text": "Defence volume is low, and the value is high. So I don't promise a count. I promise completeness. Every matching solicitation, reviewed."
+  },
+  {
+   "id": "08",
+   "text": "Request a defence quote at phildave.com.",
+   "say": "Request a defence quote, at phil dave dot com."
+  }
+ ]
+}
