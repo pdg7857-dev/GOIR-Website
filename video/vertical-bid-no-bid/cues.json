@@ -1,0 +1,40 @@
+{
+ "_note": "Sample narration lines; 'say' overrides pronunciation. Replace vo/<id>.wav with a recording and re-run node build.mjs.",
+ "voice": "am_michael",
+ "speed": 1.1,
+ "cues": [
+  {
+   "id": "01",
+   "text": "Bid, or no bid? Five questions to ask first."
+  },
+  {
+   "id": "02",
+   "text": "One. Is it really your trade? Read the scope, not the title."
+  },
+  {
+   "id": "03",
+   "text": "Two. Can you deliver at this size, on this schedule?"
+  },
+  {
+   "id": "04",
+   "text": "Three. Is it somewhere you actually serve?"
+  },
+  {
+   "id": "05",
+   "text": "Four. Can you make every date, including a mandatory site meeting?"
+  },
+  {
+   "id": "06",
+   "text": "Five. Can you meet every mandatory requirement? Bonding, insurance, registrations."
+  },
+  {
+   "id": "07",
+   "text": "One no, and it's a pass."
+  },
+  {
+   "id": "08",
+   "text": "I ask these on every opportunity, so you only see the ones that pass. Phildave.com.",
+   "say": "I ask these on every opportunity, so you only see the ones that pass. Phil dave dot com."
+  }
+ ]
+}
