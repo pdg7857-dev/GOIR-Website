@@ -1,0 +1,52 @@
+{
+ "_note": "Reuses the bid-match-explainer narration (vo is a symlink to it).",
+ "voice": "am_michael",
+ "speed": 1.1,
+ "cues": [
+  {
+   "id": "01a",
+   "text": "How many bids did you open this week, just to find out they weren't a match?",
+   "src": "vo/01a.wav"
+  },
+  {
+   "id": "03e",
+   "text": "Not a match.",
+   "src": "vo/03e.wav"
+  },
+  {
+   "id": "03h",
+   "text": "Not a match.",
+   "src": "vo/03h.wav"
+  },
+  {
+   "id": "03k",
+   "text": "Not a match.",
+   "src": "vo/03k.wav"
+  },
+  {
+   "id": "05a",
+   "text": "You focus on winning contracts.",
+   "src": "vo/05a.wav"
+  },
+  {
+   "id": "05b",
+   "text": "I focus on finding them.",
+   "src": "vo/05b.wav"
+  },
+  {
+   "id": "09a",
+   "text": "Stop searching.",
+   "src": "vo/09a.wav"
+  },
+  {
+   "id": "09b",
+   "text": "Start bidding.",
+   "src": "vo/09b.wav"
+  },
+  {
+   "id": "09c",
+   "text": "Book a discovery call at phildave.com.",
+   "src": "vo/09c.wav"
+  }
+ ]
+}

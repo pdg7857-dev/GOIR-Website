@@ -1,0 +1,198 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1080, height=1920" />
+    <title>Not a match (vertical)</title>
+    <script src="shared/vendor/gsap.min.js"></script>
+    <script src="shared/kit.js"></script>
+    <link rel="stylesheet" href="shared/brand.css" />
+    <style>
+      html, body { width: 1080px; height: 1920px; }
+      /* social safe zone: x 100-980, y 220-1560 */
+      .safe { position: absolute; left: 100px; top: 220px; width: 880px; height: 1340px; }
+      .safe.center { display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; }
+      .ln1 { display: block; }
+
+      /* s1 hook */
+      #s1 .a { font-size: 112px; }
+      #s1 .b { font-size: 96px; line-height: 1.1; margin-top: 36px; }
+
+      /* s2 doc pile */
+      .doc { position: absolute; width: 800px; height: 390px; background: #fff; border-radius: 26px; color: var(--navy); box-shadow: 0 30px 60px rgba(0, 0, 0, 0.5); }
+      .doc .dhead { height: 96px; display: flex; align-items: center; gap: 20px; padding: 0 30px; border-bottom: 1px solid var(--line); }
+      .doc .ficon { width: 40px; height: 50px; border-radius: 6px; background: #c42b31; color: #fff; font: 700 13px "Inter", sans-serif; display: flex; align-items: flex-end; justify-content: center; padding-bottom: 6px; flex: none; }
+      .doc .dtitle { font: 700 40px "Inter", sans-serif; letter-spacing: -0.01em; white-space: nowrap; }
+      .doc .dbody { position: absolute; top: 96px; left: 0; right: 0; bottom: 0; background: var(--paper); border-radius: 0 0 26px 26px; overflow: hidden; padding: 22px 30px 0; }
+      .doc .hl { padding: 18px 24px; border-radius: 12px; background: #fff3c4; border-left: 8px solid var(--gold); font: 700 40px "Inter", sans-serif; line-height: 1.2; color: var(--navy); box-shadow: 0 10px 24px rgba(11, 27, 58, 0.14); }
+      .doc .lns { margin-top: 26px; }
+      .doc .ln { height: 16px; border-radius: 8px; background: #d9e1ee; margin-bottom: 18px; transform-origin: left center; }
+      .doc .stamp { left: auto; top: auto; right: 40px; bottom: 40px; z-index: 2; height: 100px; padding: 0 30px; border-width: 7px; font-size: 54px; }
+      #d1 { left: 120px; top: 255px; }
+      #d2 { left: 160px; top: 665px; }
+      #d3 { left: 132px; top: 1075px; }
+      #s2 .illus { left: 120px; top: 1500px; font-size: 24px; color: rgba(255, 255, 255, 0.72); }
+
+      /* s3 */
+      #s3 .a { font-size: 84px; }
+      #s3 .b { font-size: 140px; line-height: 1; margin-top: 40px; }
+      #s3 .mark { margin-top: 90px; gap: 20px; }
+      #s3 .mark .nm { font-size: 54px; }
+      #s3 .mark .rl { width: 420px; }
+      #s3 .mark .tg { font-size: 36px; letter-spacing: 0.16em; line-height: 1.4; max-width: 760px; color: rgba(255, 255, 255, 0.8); }
+
+      /* s4 CTA */
+      #s4 .a { font-size: 104px; }
+      #s4 .b { font-size: 136px; line-height: 1; margin-top: 10px; }
+      #s4 .cta-url { font-size: 76px; margin-top: 80px; }
+      #s4 .btn { height: 112px; padding: 0 58px; border-radius: 56px; font-size: 44px; margin-top: 40px; }
+      #s4 .disc { position: static; padding: 0; margin-top: 80px; max-width: 860px; font-size: 34px; line-height: 1.4; color: rgba(255, 255, 255, 0.72); }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="main" data-start="0" data-duration="28.028" data-width="1080" data-height="1920">
+      <div id="bg" class="scene clip" data-start="0" data-duration="28.028" data-track-index="0">
+        <div class="ground"></div><div class="grid"></div><div class="blob b1"></div><div class="blob b2"></div><div class="vignette"></div>
+      </div>
+
+      <div id="s1" class="scene clip" data-start="0" data-duration="5.46" data-track-index="1">
+        <div class="inner">
+          <div class="safe center">
+            <div class="display a"><span class="ln1 g0">How many bids</span><span class="ln1 g1">did you open</span><span class="ln1 g2">this week</span></div>
+            <div class="serif gold b"><span class="ln1 g3">just to find out</span><span class="ln1 g4">they weren't a match?</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div id="s2" class="scene clip" data-start="5.46" data-duration="7.808" data-track-index="1">
+        <div class="inner">
+          <div class="doc" id="d1">
+            <div class="dhead"><div class="ficon">PDF</div><div class="dtitle">RFP · Facility Maintenance</div></div>
+            <div class="dbody">
+              <div class="hl">Mandatory site visit already held</div>
+              <div class="lns"><div class="ln" style="width: 92%"></div><div class="ln" style="width: 64%"></div></div>
+            </div>
+            <div class="stamp">NOT A MATCH</div>
+          </div>
+          <div class="doc" id="d2">
+            <div class="dhead"><div class="ficon">PDF</div><div class="dtitle">Tender · Road Resurfacing</div></div>
+            <div class="dbody">
+              <div class="hl">Bonding beyond your limit</div>
+              <div class="lns"><div class="ln" style="width: 88%"></div><div class="ln" style="width: 72%"></div><div class="ln" style="width: 52%"></div><div class="ln" style="width: 80%"></div></div>
+            </div>
+            <div class="stamp">NOT A MATCH</div>
+          </div>
+          <div class="doc" id="d3">
+            <div class="dhead"><div class="ficon">PDF</div><div class="dtitle">RFQ · HVAC Retrofit</div></div>
+            <div class="dbody">
+              <div class="hl">Outside your region</div>
+              <div class="lns"><div class="ln" style="width: 90%"></div><div class="ln" style="width: 60%"></div><div class="ln" style="width: 78%"></div><div class="ln" style="width: 46%"></div></div>
+            </div>
+            <div class="stamp">NOT A MATCH</div>
+          </div>
+          <div class="illus">Illustrative example</div>
+        </div>
+      </div>
+
+      <div id="s3" class="scene clip" data-start="13.268" data-duration="5.933" data-track-index="1">
+        <div class="inner">
+          <div class="safe center">
+            <div class="display a"><span class="ln1">You focus on</span><span class="ln1">winning contracts.</span></div>
+            <div class="serif gold b"><span class="ln1">I focus on</span><span class="ln1">finding them.</span></div>
+            <div class="wordmark mark">
+              <div class="nm">PHIL DAVE</div>
+              <span class="rl"></span>
+              <div class="tg">Government Opportunity Intelligence</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="s4" class="scene clip" data-start="19.201" data-duration="8.827" data-track-index="1">
+        <div class="inner">
+          <div class="safe center">
+            <div class="display a">Stop searching.</div>
+            <div class="serif gold b">Start bidding.</div>
+            <div class="cta-url">phildave.com</div>
+            <div class="btn">Book a discovery call</div>
+            <div class="disc">I find and qualify opportunities. I do not write or submit proposals, and I do not guarantee contract awards.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- AUDIO:BEGIN (generated by build.mjs; do not edit by hand) -->
+      <audio id="vo-01a" src="vo/01a.wav" data-start="0.4" data-duration="4.16" data-volume="1" data-track-index="9"></audio>
+      <audio id="vo-03e" src="vo/03e.wav" data-start="6.76" data-duration="1.003" data-volume="1" data-track-index="9"></audio>
+      <audio id="vo-03h" src="vo/03h.wav" data-start="8.963" data-duration="1.003" data-volume="1" data-track-index="9"></audio>
+      <audio id="vo-03k" src="vo/03k.wav" data-start="11.165" data-duration="1.003" data-volume="1" data-track-index="9"></audio>
+      <audio id="vo-05a" src="vo/05a.wav" data-start="13.668" data-duration="1.963" data-volume="1" data-track-index="9"></audio>
+      <audio id="vo-05b" src="vo/05b.wav" data-start="15.931" data-duration="1.771" data-volume="1" data-track-index="9"></audio>
+      <audio id="vo-09a" src="vo/09a.wav" data-start="19.501" data-duration="1.195" data-volume="1" data-track-index="9"></audio>
+      <audio id="vo-09b" src="vo/09b.wav" data-start="20.896" data-duration="1.088" data-volume="1" data-track-index="9"></audio>
+      <audio id="vo-09c" src="vo/09c.wav" data-start="22.284" data-duration="2.944" data-volume="1" data-track-index="9"></audio>
+      <audio id="sfx-01-pop" src="shared/sfx/pop.wav" data-start="5.76" data-duration="0.17" data-volume="0.14" data-track-index="10"></audio>
+      <audio id="sfx-02-snap" src="shared/sfx/snap.wav" data-start="6.8" data-duration="0.16" data-volume="0.35" data-track-index="10"></audio>
+      <audio id="sfx-03-pop" src="shared/sfx/pop.wav" data-start="7.963" data-duration="0.17" data-volume="0.14" data-track-index="10"></audio>
+      <audio id="sfx-04-snap" src="shared/sfx/snap.wav" data-start="9.003" data-duration="0.16" data-volume="0.35" data-track-index="10"></audio>
+      <audio id="sfx-05-pop" src="shared/sfx/pop.wav" data-start="10.165" data-duration="0.17" data-volume="0.14" data-track-index="10"></audio>
+      <audio id="sfx-06-snap" src="shared/sfx/snap.wav" data-start="11.205" data-duration="0.16" data-volume="0.35" data-track-index="10"></audio>
+      <audio id="sfx-07-switch" src="shared/sfx/switch.wav" data-start="15.931" data-duration="0.14" data-volume="0.16" data-track-index="10"></audio>
+      <audio id="sfx-08-pop" src="shared/sfx/pop.wav" data-start="22.384" data-duration="0.17" data-volume="0.15" data-track-index="10"></audio>
+      <audio id="sfx-09-chime" src="shared/sfx/chime.wav" data-start="23.667" data-duration="0.95" data-volume="0.3" data-track-index="10"></audio>
+      <!-- AUDIO:END -->
+    </div>
+
+    <!-- TIMING:BEGIN (generated by build.mjs) -->
+    <script id="timing" type="application/json">{"total":28.028,"scenes":{"s1":{"start":0,"dur":5.46,"ev":{"g0":0.4,"g1":1.523,"g2":1.898,"g3":2.771,"g4":3.603}},"s2":{"start":5.46,"dur":7.808,"ev":{"c0":0.2,"h0":0.7,"x0":1.34,"c1":2.403,"h1":2.903,"x1":3.543,"c2":4.605,"h2":5.105,"x2":5.745,"illus":0.8}},"s3":{"start":13.268,"dur":5.933,"ev":{"a":0.3,"b":2.613,"mark":3.991}},"s4":{"start":19.201,"dur":8.827,"ev":{"a":0.25,"b":1.645,"btn":3.133,"url":4.466,"disc":5.466}}}}</script>
+    <!-- TIMING:END -->
+    <script>
+      const T = K.init();
+      const { $, $$ } = K;
+
+      { // s1 hook: word groups rise on the words
+        const S = K.scene("s1"), E = S.ev;
+        ["g0", "g1", "g2"].forEach((g) => K.rise(E[g], `#s1 .${g}`, { y: 50, d: 0.6 }));
+        ["g3", "g4"].forEach((g) => K.serifIn(E[g], `#s1 .${g}`, 0.8));
+        K.out(S.dur - 0.5, "#s1 .inner", 0.45);
+      }
+
+      { // s2 the pile of documents that were never a match
+        const S = K.scene("s2"), E = S.ev;
+        const rots = [-3, 2, -1.5];
+        K.hide(["#d1", "#d2", "#d3", "#s2 .hl", "#s2 .stamp"]);
+        K.rise(E.illus, "#s2 .illus", { y: 8, d: 0.5 });
+        [1, 2, 3].forEach((n, i) => {
+          const d = `#d${n}`;
+          K.tl().fromTo(d, { opacity: 0, x: i % 2 ? 260 : -260, y: 40, rotation: rots[i] + (i % 2 ? 8 : -8), scale: 1.04 },
+            { opacity: 1, x: 0, y: 0, rotation: rots[i], scale: 1, duration: 0.6, ease: "power3.out", immediateRender: false }, E[`c${i}`]);
+          K.tl().fromTo(`${d} .ln`, { scaleX: 0 }, { scaleX: 1, duration: 0.45, ease: "power3.out", stagger: 0.08 }, E[`c${i}`] + 0.3);
+          K.tl().fromTo(`${d} .hl`, { opacity: 0, scale: 0.9 }, { opacity: 1, scale: 1, duration: 0.4, ease: "back.out(1.6)", immediateRender: false }, E[`h${i}`]);
+          K.stamp(E[`x${i}`], `${d} .stamp`, [-5, -7, -7][i]);
+          K.shake(E[`x${i}`] + 0.26, d);
+        });
+        K.out(S.dur - 0.5, "#s2 .inner", 0.45);
+      }
+
+      { // s3 you win, I find
+        const S = K.scene("s3"), E = S.ev;
+        K.rise(E.a, "#s3 .a", { d: 0.7 });
+        K.serifIn(E.b, "#s3 .b");
+        K.rise(E.mark, "#s3 .mark .nm", { y: 16, d: 0.6 });
+        K.draw(E.mark + 0.2, "#s3 .mark .rl", 0.7);
+        K.rise(E.mark + 0.45, "#s3 .mark .tg", { y: 12, d: 0.6 });
+        K.out(S.dur - 0.5, "#s3 .inner", 0.45);
+      }
+
+      { // s4 CTA
+        const S = K.scene("s4"), E = S.ev;
+        K.rise(E.a, "#s4 .a", { d: 0.7 });
+        K.serifIn(E.b, "#s4 .b");
+        K.pop(E.btn, "#s4 .btn", { from: 0.7, b: 2 });
+        K.rise(E.url, "#s4 .cta-url", { y: 20 });
+        K.rise(E.disc, "#s4 .disc", { y: 8, d: 0.6 });
+      }
+
+      window.__timelines["main"] = K.done();
+    </script>
+  </body>
+</html>
