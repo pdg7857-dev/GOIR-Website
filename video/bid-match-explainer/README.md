@@ -1,13 +1,16 @@
 # Bid-match explainer video
 
-A 1:58, 1920x1080, 30 fps animated explainer for phildave.com. It shows a
+A 2:09, 1920x1080, 30 fps narrated explainer for phildave.com. It shows a
 government contractor's week lost to searching portals, opening bids and finding
 out they were never a match, then shows the service that does the finding and
 qualifying instead. Built with [HyperFrames](https://hyperframes.heygen.com)
 (HTML + GSAP rendered to MP4), following the Motion Graphics with Claude Code
 starter kit (fonts and sound effects come from that kit).
 
-## Story (seconds)
+## Story
+
+Scene times now come from the narration (see Timing below); the table shows the original silent cut.
+
 
 | Time | Scene | Beat |
 |---|---|---|
@@ -33,8 +36,14 @@ postings. The closing disclaimer is the footer disclaimer from POSITIONING.md.
 - Copy and timing: `index.html`. Each scene is a `<div class="scene clip">` with
   `data-start` / `data-duration`; the animation for each scene is in the matching
   block of the script at the bottom.
-- Sound effects: edit `sfx-cues.json`, then run `node build-sfx.mjs` to regenerate
-  the `<audio>` tags.
+- Timing: `build-timing.mjs` reads the length of every `vo/<id>.wav`, lays the
+  narration out scene by scene, names the visual beats each line drives, and
+  writes the timing JSON, clip times, narration and sound-effect `<audio>` tags
+  into `index.html`. Sound effects are defined there too. Run
+  `node build-timing.mjs` after changing any narration file.
+- Narration: `vo-cues.json` holds the lines. `gen-vo.py` made the sample voice
+  with Kokoro-82M (Apache-2.0) running locally; see `VOICEOVER.md` for swapping
+  in a real recording.
 - GSAP is vendored in `vendor/` so renders work offline.
 
 ```bash

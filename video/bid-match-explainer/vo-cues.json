@@ -1,0 +1,170 @@
+{
+ "_note": "Sample narration lines. 'say' overrides the spoken text for pronunciation. Timing comes from build-timing.mjs, which reads each vo/<id>.wav length, so recordings that replace these files re-sync the video.",
+ "voice": "am_michael",
+ "speed": 1.1,
+ "cues": [
+  {
+   "id": "01a",
+   "text": "How many bids did you open this week, just to find out they weren't a match?"
+  },
+  {
+   "id": "02a",
+   "text": "Government opportunities are scattered across more than eighteen platforms."
+  },
+  {
+   "id": "02b",
+   "text": "Federal, provincial, municipal, agencies, health and education."
+  },
+  {
+   "id": "02c",
+   "text": "And the alerts never stop."
+  },
+  {
+   "id": "02d",
+   "text": "Every one of them looks like it could be the one."
+  },
+  {
+   "id": "03a",
+   "text": "So you open it."
+  },
+  {
+   "id": "03b",
+   "text": "You log in."
+  },
+  {
+   "id": "03c",
+   "text": "You download the documents."
+  },
+  {
+   "id": "03d",
+   "text": "You read page after page, until page forty-seven tells you the site visit was last week."
+  },
+  {
+   "id": "03e",
+   "text": "Not a match."
+  },
+  {
+   "id": "03f",
+   "text": "Next one."
+  },
+  {
+   "id": "03g",
+   "text": "The bond is more than you can carry."
+  },
+  {
+   "id": "03h",
+   "text": "Not a match."
+  },
+  {
+   "id": "03i",
+   "text": "Next one."
+  },
+  {
+   "id": "03j",
+   "text": "It's outside your region."
+  },
+  {
+   "id": "03k",
+   "text": "Not a match."
+  },
+  {
+   "id": "03l",
+   "text": "By Friday afternoon, the whole week is gone."
+  },
+  {
+   "id": "03m",
+   "text": "Open."
+  },
+  {
+   "id": "03n",
+   "text": "Download."
+  },
+  {
+   "id": "03o",
+   "text": "Read."
+  },
+  {
+   "id": "03p",
+   "text": "Not a match."
+  },
+  {
+   "id": "04a",
+   "text": "A full week of searching."
+  },
+  {
+   "id": "04b",
+   "text": "Not one bid worth writing."
+  },
+  {
+   "id": "04c",
+   "text": "Every hour on the wrong bid is an hour taken from one you could win."
+  },
+  {
+   "id": "04d",
+   "text": "And seventy-eight percent of construction firms say estimating roles are hard to fill."
+  },
+  {
+   "id": "05a",
+   "text": "You focus on winning contracts."
+  },
+  {
+   "id": "05b",
+   "text": "I focus on finding them."
+  },
+  {
+   "id": "06a",
+   "text": "I monitor the platforms for you. I read the documents."
+  },
+  {
+   "id": "06b",
+   "text": "And I qualify every opportunity against your trades, your capacity, your coverage area, the deadlines, and the mandatory requirements."
+  },
+  {
+   "id": "06c",
+   "text": "I track every amendment."
+  },
+  {
+   "id": "06d",
+   "text": "You only see what fits."
+  },
+  {
+   "id": "07a",
+   "text": "Each one reaches you already read."
+  },
+  {
+   "id": "07b",
+   "text": "A plain-language summary, a link to the source, and what you need to make the call."
+  },
+  {
+   "id": "07c",
+   "text": "Bid, or pass."
+  },
+  {
+   "id": "08a",
+   "text": "I spent three years inside the eprocurement industry,",
+   "say": "I spent three years inside the e-procurement industry,"
+  },
+  {
+   "id": "08b",
+   "text": "handling more than seventeen thousand five hundred contractor accounts across Canada and the US.",
+   "say": "handling more than seventeen thousand, five hundred contractor accounts, across Canada and the U.S."
+  },
+  {
+   "id": "08c",
+   "text": "I saw where contractors lose bids. Not at the proposal. At the search."
+  },
+  {
+   "id": "09a",
+   "text": "Stop searching."
+  },
+  {
+   "id": "09b",
+   "text": "Start bidding."
+  },
+  {
+   "id": "09c",
+   "text": "Book a discovery call at phildave.com.",
+   "say": "Book a discovery call, at phil dave dot com."
+  }
+ ]
+}
