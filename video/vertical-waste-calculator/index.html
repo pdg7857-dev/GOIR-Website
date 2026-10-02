@@ -1,0 +1,219 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1080, height=1920" />
+    <title>Opportunity Waste Calculator</title>
+    <script src="shared/vendor/gsap.min.js"></script>
+    <script src="shared/kit.js"></script>
+    <link rel="stylesheet" href="shared/brand.css" />
+    <style>
+      html, body { width: 1080px; height: 1920px; }
+      /* social safe zone: x 100-980, y 220-1560 */
+      .safe { position: absolute; left: 100px; top: 220px; width: 880px; height: 1340px; }
+      .safe.center { display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; }
+
+      /* s1 */
+      #s1 .a { font-size: 118px; text-wrap: balance; }
+      #s1 .b { font-size: 130px; line-height: 1.02; margin-top: 18px; }
+
+      /* calculator card (s2 + s3) */
+      .calc { left: 100px; top: 400px; width: 880px; height: 960px; padding: 40px; overflow: hidden; }
+      .calc .pill { height: 56px; padding: 0 24px; border-radius: 28px; font-size: 30px; }
+      .calc .ttl { font: 700 66px "Space Grotesk", sans-serif; letter-spacing: -0.03em; line-height: 1.04; margin-top: 18px; }
+      .rows { margin-top: 20px; height: 648px; overflow: hidden; }
+      .row { position: relative; height: 224px; padding: 24px 28px 0; border-radius: 22px; margin-bottom: 12px; border: 2px solid var(--line); }
+      .row.one { height: 176px; margin-bottom: 0; }
+      .row .rl { font: 700 40px "Inter", sans-serif; line-height: 1.18; color: var(--navy); }
+      .row .ctl { position: absolute; left: 28px; right: 28px; bottom: 24px; height: 64px; display: flex; align-items: center; justify-content: space-between; }
+      .track { position: relative; width: 470px; height: 16px; border-radius: 8px; background: var(--muted); }
+      .track .fill { position: absolute; inset: 0; border-radius: 8px; background: var(--gold); transform-origin: left center; transform: scaleX(0); }
+      .track .knob { position: absolute; left: -22px; top: -14px; width: 44px; height: 44px; border-radius: 50%; background: #fff; border: 7px solid var(--gold); box-shadow: 0 4px 10px rgba(11, 27, 58, 0.25); }
+      .val { font: 400 56px "JetBrains Mono", monospace; font-variant-numeric: tabular-nums; color: var(--navy); white-space: nowrap; }
+
+      /* s3 result */
+      .sumwrap { height: 0; overflow: hidden; display: flex; align-items: flex-end; }
+      .sum { height: 64px; display: flex; align-items: center; gap: 22px; font: 700 40px "Inter", sans-serif; color: var(--navy); white-space: nowrap; }
+      .sum i { width: 12px; height: 12px; border-radius: 50%; background: var(--gold); flex: none; }
+      .result { margin-top: 24px; background: var(--navy); color: #fff; border-radius: 24px; padding: 34px 40px 36px; }
+      .result .rlab { font: 700 40px "Inter", sans-serif; line-height: 1.2; color: var(--gold-4); }
+      .result .num { font: 400 156px "JetBrains Mono", monospace; font-variant-numeric: tabular-nums; letter-spacing: -0.04em; line-height: 1.12; margin-top: 8px; color: #fff; }
+      .result .nrule { display: block; width: 470px; height: 6px; border-radius: 3px; background: var(--gold-4); transform-origin: left center; margin-top: 14px; }
+      .result .sub { font: 400 40px "Inter", sans-serif; line-height: 1.3; margin-top: 20px; color: #fff; }
+      .note { margin-top: 24px; font: 400 30px "Inter", sans-serif; line-height: 1.38; color: var(--ink-2); }
+
+      /* s4 CTA */
+      #s4 .a { font-size: 120px; }
+      #s4 .cta-url { font-size: 104px; margin-top: 90px; color: var(--gold-4); }
+      #s4 .nm { font: 700 48px "Inter", sans-serif; margin-top: 14px; color: #fff; }
+      #s4 .btn { margin-top: 60px; height: 120px; padding: 0 64px; border-radius: 60px; font-size: 48px; }
+      #s4 .disc { top: 1330px; bottom: auto; left: 100px; right: auto; width: 880px; padding: 0; font-size: 32px; line-height: 1.4; color: rgba(255, 255, 255, 0.72); }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="main" data-start="0" data-duration="34.321" data-width="1080" data-height="1920">
+      <div id="bg" class="scene clip" data-start="0" data-duration="34.321" data-track-index="0">
+        <div class="ground"></div><div class="grid"></div><div class="blob b1"></div><div class="blob b2"></div><div class="vignette"></div>
+      </div>
+
+      <div id="s1" class="scene clip" data-start="0" data-duration="4.067" data-track-index="1">
+        <div class="inner">
+          <div class="safe center">
+            <div class="display a">What is searching for bids</div>
+            <div class="serif gold b">actually costing you?</div>
+          </div>
+        </div>
+      </div>
+
+      <div id="s2" class="scene clip" data-start="4.067" data-duration="12.275" data-track-index="1">
+        <div class="inner">
+          <div class="card calc">
+            <span class="pill gold">EXAMPLE INPUTS</span>
+            <div class="ttl">Opportunity Waste Calculator</div>
+            <div class="rows">
+              <div class="row" id="w0">
+                <div class="rl">Estimator hourly rate (fully loaded)</div>
+                <div class="ctl"><div class="track"><span class="fill"></span><span class="knob"></span></div><div class="val">$0/hr</div></div>
+              </div>
+              <div class="row" id="w1">
+                <div class="rl">Hours per week reviewing and monitoring bids</div>
+                <div class="ctl"><div class="track"><span class="fill"></span><span class="knob"></span></div><div class="val">0 hrs/wk</div></div>
+              </div>
+              <div class="row one" id="w2">
+                <div class="rl">Jurisdictions monitored</div>
+                <div class="ctl"><div class="track"><span class="fill"></span><span class="knob"></span></div><div class="val">1</div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="s3" class="scene clip" data-start="16.342" data-duration="9.523" data-track-index="1">
+        <div class="inner">
+          <div class="card calc">
+            <span class="pill gold">EXAMPLE INPUTS</span>
+            <div class="ttl">Opportunity Waste Calculator</div>
+            <div class="rows">
+              <div class="row">
+                <div class="rl">Estimator hourly rate (fully loaded)</div>
+                <div class="ctl"><div class="track"><span class="fill" style="transform: scaleX(0.458)"></span><span class="knob" style="transform: translateX(215px)"></span></div><div class="val">$55/hr</div></div>
+              </div>
+              <div class="row">
+                <div class="rl">Hours per week reviewing and monitoring bids</div>
+                <div class="ctl"><div class="track"><span class="fill" style="transform: scaleX(0.2)"></span><span class="knob" style="transform: translateX(94px)"></span></div><div class="val">8 hrs/wk</div></div>
+              </div>
+              <div class="row one">
+                <div class="rl">Jurisdictions monitored</div>
+                <div class="ctl"><div class="track"><span class="fill" style="transform: scaleX(0.222)"></span><span class="knob" style="transform: translateX(104px)"></span></div><div class="val">3</div></div>
+              </div>
+            </div>
+            <div class="sumwrap"><div class="sum"><span>$55/hr</span><i></i><span>8 hrs/wk</span><i></i><span>3 jurisdictions</span></div></div>
+            <div class="result">
+              <div class="rlab">Estimated monthly cost</div>
+              <div class="num" id="num">$0</div>
+              <span class="nrule"></span>
+              <div class="sub"><span class="sp1">in estimator time alone,</span> <span class="sp2">before a single bid is written</span></div>
+            </div>
+            <div class="note">This is an estimate based on the numbers you enter. Your actual time and cost will vary.</div>
+          </div>
+        </div>
+      </div>
+
+      <div id="s4" class="scene clip" data-start="25.865" data-duration="8.456" data-track-index="1">
+        <div class="inner">
+          <div class="safe center" style="height: 1080px">
+            <div class="display a">Run your own numbers.</div>
+            <div class="cta-url">phildave.com</div>
+            <div class="nm">Opportunity Waste Calculator</div>
+            <div class="btn">Try the calculator</div>
+          </div>
+        </div>
+        <div class="disc">I find and qualify opportunities. I do not write or submit proposals, and I do not guarantee contract awards.</div>
+      </div>
+
+      <!-- AUDIO:BEGIN (generated by build.mjs; do not edit by hand) -->
+      <audio id="vo-01" src="vo/01.wav" data-start="0.4" data-duration="2.667" data-volume="1" data-track-index="9"></audio>
+      <audio id="vo-02" src="vo/02.wav" data-start="4.767" data-duration="4.843" data-volume="1" data-track-index="9"></audio>
+      <audio id="vo-03" src="vo/03.wav" data-start="9.86" data-duration="3.776" data-volume="1" data-track-index="9"></audio>
+      <audio id="vo-04" src="vo/04.wav" data-start="13.836" data-duration="1.707" data-volume="1" data-track-index="9"></audio>
+      <audio id="vo-05" src="vo/05.wav" data-start="16.842" data-duration="7.723" data-volume="1" data-track-index="9"></audio>
+      <audio id="vo-06" src="vo/06.wav" data-start="26.265" data-duration="5.056" data-volume="1" data-track-index="9"></audio>
+      <audio id="sfx-01-switch" src="shared/sfx/switch.wav" data-start="1.68" data-duration="0.14" data-volume="0.16" data-track-index="10"></audio>
+      <audio id="sfx-02-pop" src="shared/sfx/pop.wav" data-start="4.417" data-duration="0.17" data-volume="0.14" data-track-index="10"></audio>
+      <audio id="sfx-03-fill" src="shared/sfx/fill.wav" data-start="7.963" data-duration="1.4" data-volume="0.18" data-track-index="10"></audio>
+      <audio id="sfx-04-fill" src="shared/sfx/fill.wav" data-start="12.88" data-duration="1.4" data-volume="0.18" data-track-index="10"></audio>
+      <audio id="sfx-05-fill" src="shared/sfx/fill.wav" data-start="14.552" data-duration="1.4" data-volume="0.18" data-track-index="10"></audio>
+      <audio id="sfx-06-counter" src="shared/sfx/counter.wav" data-start="17.614" data-duration="1.05" data-volume="0.22" data-track-index="10"></audio>
+      <audio id="sfx-07-pop" src="shared/sfx/pop.wav" data-start="19.814" data-duration="0.17" data-volume="0.14" data-track-index="10"></audio>
+      <audio id="sfx-08-chime" src="shared/sfx/chime.wav" data-start="30.209" data-duration="0.95" data-volume="0.3" data-track-index="10"></audio>
+      <audio id="sfx-09-pop" src="shared/sfx/pop.wav" data-start="30.609" data-duration="0.17" data-volume="0.2" data-track-index="11"></audio>
+      <!-- AUDIO:END -->
+    </div>
+
+    <!-- TIMING:BEGIN (generated by build.mjs) -->
+    <script id="timing" type="application/json">{"total":34.321,"scenes":{"s1":{"start":0,"dur":4.067,"ev":{"a":0.3,"b":1.68}},"s2":{"start":4.067,"dur":12.275,"ev":{"card":0.2,"r0":1.765,"f0":3.896,"r1":5.793,"f1":8.813,"r2":9.769,"f2":10.485,"clear":11.825}},"s3":{"start":16.342,"dur":9.523,"ev":{"fold":0.1,"res":0.55,"num":1.272,"rule":3.472,"sub1":4.825,"sub2":6.215}},"s4":{"start":25.865,"dur":8.456,"ev":{"a":0.3,"name":2.22,"url":4.344}}}}</script>
+    <!-- TIMING:END -->
+    <script>
+      const T = K.init();
+      const { $, $$ } = K;
+      // example inputs: $55/hr, 8 hrs/wk, 3 jurisdictions. Slider fill fraction and knob travel (track is 470px).
+      const SL = [
+        { f: 0.458, from: 0, to: 55, fmt: (v) => `$${Math.round(v)}/hr` },
+        { f: 0.2, from: 0, to: 8, fmt: (v) => `${Math.round(v)} hrs/wk` },
+        { f: 0.222, from: 1, to: 3, fmt: (v) => `${Math.round(v)}` },
+      ];
+      const ON = { backgroundColor: "#fbf3df", borderColor: "#c8932f" };
+      const OFF = { backgroundColor: "rgba(251,243,223,0)", borderColor: "#e2e8f2" };
+
+      { // s1 hook
+        const S = K.scene("s1"), E = S.ev;
+        K.rise(E.a, "#s1 .a", { d: 0.7 });
+        K.serifIn(E.b, "#s1 .b");
+        K.out(S.dur - 0.5, "#s1 .inner", 0.45);
+      }
+
+      { // s2 calculator inputs
+        const S = K.scene("s2"), E = S.ev;
+        K.rise(E.card, "#s2 .calc", { y: 60 });
+        K.pop(E.card + 0.4, "#s2 .pill", { from: 0.7 });
+        K.rise(E.card + 0.5, "#s2 .row", { y: 24, s: 0.12, d: 0.5 });
+        SL.forEach((sl, i) => {
+          const row = `#w${i}`;
+          K.tl().fromTo(row, OFF, { ...ON, duration: 0.3, immediateRender: false }, E[`r${i}`]);
+          if (i > 0) K.tl().to(`#w${i - 1}`, { ...OFF, duration: 0.3 }, E[`r${i}`]);
+          K.tl().fromTo(`${row} .fill`, { scaleX: 0 }, { scaleX: sl.f, duration: 1.0, ease: "power2.out" }, E[`f${i}`]);
+          K.tl().fromTo(`${row} .knob`, { x: 0 }, { x: 470 * sl.f, duration: 1.0, ease: "power2.out" }, E[`f${i}`]);
+          K.pop(E[`f${i}`], `${row} .val`, { from: 0.8, d: 0.35 });
+          K.count(E[`f${i}`], `${row} .val`, sl.from, sl.to, 1.0, sl.fmt);
+        });
+        K.tl().to("#w2", { ...OFF, duration: 0.3 }, E.clear);
+        // no fade out: s3 opens on this exact card and builds the result on it
+      }
+
+      { // s3 result on the same card
+        const S = K.scene("s3"), E = S.ev;
+        K.tl().fromTo("#s3 .rows", { height: 648, opacity: 1 }, { height: 0, opacity: 0, duration: 0.6, ease: "power3.inOut" }, E.fold);
+        K.tl().fromTo("#s3 .sumwrap", { height: 0 }, { height: 84, duration: 0.6, ease: "power3.inOut" }, E.fold);
+        K.rise(E.fold + 0.3, "#s3 .sum > *", { y: 14, s: 0.06, d: 0.45 });
+        K.rise(E.res, "#s3 .result", { y: 40 });
+        K.rise(E.res + 0.15, "#s3 .note", { y: 16, d: 0.6 });
+        K.count(E.num, "#num", 0, 2362, 2.2, (v) => "$" + Math.round(v).toLocaleString("en-US"));
+        K.draw(E.rule, "#s3 .nrule", 0.6);
+        K.rise(E.sub1, "#s3 .sp1", { y: 14, d: 0.5 });
+        K.rise(E.sub2, "#s3 .sp2", { y: 14, d: 0.5 });
+        K.out(S.dur - 0.5, "#s3 .inner", 0.45);
+      }
+
+      { // s4 CTA
+        const S = K.scene("s4"), E = S.ev;
+        K.rise(E.a, "#s4 .a", { d: 0.7 });
+        K.rise(E.name, "#s4 .nm", { y: 20 });
+        K.rise(E.url, "#s4 .cta-url", { y: 20 });
+        K.pop(E.url + 0.4, "#s4 .btn", { from: 0.7, b: 2 });
+        K.rise(E.url + 1.2, "#s4 .disc", { y: 8, d: 0.6 });
+      }
+
+      window.__timelines["main"] = K.done();
+    </script>
+  </body>
+</html>

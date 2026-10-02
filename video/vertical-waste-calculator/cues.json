@@ -1,0 +1,32 @@
+{
+ "_note": "Sample narration lines; 'say' overrides pronunciation. Replace vo/<id>.wav with a recording and re-run node build.mjs.",
+ "voice": "am_michael",
+ "speed": 1.1,
+ "cues": [
+  {
+   "id": "01",
+   "text": "What is searching for bids actually costing you?"
+  },
+  {
+   "id": "02",
+   "text": "Start with your estimator's hourly rate, fully loaded. Say fifty-five dollars."
+  },
+  {
+   "id": "03",
+   "text": "Hours a week spent reviewing and monitoring bids. Say eight."
+  },
+  {
+   "id": "04",
+   "text": "Across three jurisdictions."
+  },
+  {
+   "id": "05",
+   "text": "That's about two thousand, three hundred and sixty dollars a month, in estimator time alone, before a single bid is written."
+  },
+  {
+   "id": "06",
+   "text": "Run your own numbers. The Opportunity Waste Calculator is at phildave.com.",
+   "say": "Run your own numbers. The opportunity waste calculator is at phil dave dot com."
+  }
+ ]
+}
