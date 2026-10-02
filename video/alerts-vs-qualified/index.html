@@ -1,0 +1,398 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1920, height=1080" />
+    <title>Why not just use bid alerts?</title>
+    <script src="shared/vendor/gsap.min.js"></script>
+    <script src="shared/kit.js"></script>
+    <link rel="stylesheet" href="shared/brand.css" />
+    <style>
+      html, body { width: 1920px; height: 1080px; }
+      .label { left: 140px; top: 96px; }
+      .headline { position: absolute; left: 140px; top: 140px; width: 1640px; font-size: 60px; }
+      .bell { flex: none; width: 56px; height: 56px; border-radius: 16px; background: var(--gold-1); display: flex; align-items: center; justify-content: center; }
+      .bell svg { width: 30px; height: 30px; }
+      .m { background: linear-gradient(#ffe48a, #ffe48a) no-repeat; background-size: 0% 100%; border-radius: 6px; padding: 0 4px; margin: 0 -4px; }
+
+      /* s1 hook */
+      .s1l { position: absolute; left: 140px; top: 0; bottom: 0; width: 860px; display: flex; flex-direction: column; justify-content: center; }
+      #s1 .a { font-size: 104px; }
+      #s1 .b { font-size: 92px; margin-top: 26px; line-height: 1.05; }
+      .pile { position: absolute; left: 1060px; top: 210px; width: 720px; height: 660px; }
+      .note { position: absolute; left: 0; top: 0; width: 720px; height: 112px; background: #fff; color: var(--navy); border-radius: 22px; box-shadow: 0 20px 44px rgba(0, 0, 0, 0.4); display: flex; align-items: center; gap: 22px; padding: 0 28px; }
+      .note .nb { flex: 1; min-width: 0; }
+      .nk { font: 700 15px "Inter", sans-serif; letter-spacing: 0.18em; color: var(--slate); }
+      .nt { font: 700 28px "Inter", sans-serif; margin-top: 6px; white-space: nowrap; }
+      .note .nw { font: 400 18px "Inter", sans-serif; color: var(--slate); align-self: flex-start; margin-top: 22px; }
+
+      /* s2 automated */
+      .kw { left: 140px; top: 300px; width: 760px; height: 200px; padding: 34px 40px; }
+      .kw .kt { font: 700 18px "Inter", sans-serif; letter-spacing: 0.2em; color: rgba(255, 255, 255, 0.85); }
+      .kwrap { position: relative; display: inline-block; margin-top: 24px; }
+      .kchip { position: relative; display: inline-flex; align-items: center; height: 76px; padding: 0 38px; border-radius: 38px; background: var(--gold); color: var(--navy-9); font: 400 36px "JetBrains Mono", monospace; }
+      .ping { position: absolute; inset: 0; border-radius: 38px; border: 3px solid var(--gold-4); opacity: 0; }
+      .cap { position: absolute; left: 140px; top: 570px; width: 780px; }
+      .cap .c1 { font-size: 60px; }
+      .cap .c2 { font-size: 80px; margin-top: 18px; }
+      .alerts { position: absolute; left: 1000px; top: 290px; width: 780px; height: 600px; }
+      .al { position: absolute; left: 0; width: 780px; height: 124px; background: #fff; color: var(--navy); border-radius: 22px; box-shadow: 0 20px 44px rgba(0, 0, 0, 0.4); padding: 20px 30px; overflow: hidden; }
+      .al .ah { display: flex; align-items: center; gap: 12px; height: 30px; }
+      .al .ah .bell { width: 30px; height: 30px; border-radius: 9px; }
+      .al .ah .bell svg { width: 18px; height: 18px; }
+      .al .at { font: 700 30px "Inter", sans-serif; margin-top: 12px; white-space: nowrap; }
+      .al .ahsk { position: absolute; left: 30px; top: 29px; width: 180px; height: 14px; border-radius: 7px; background: #d9e1ee; opacity: 0; }
+      .al .blank { position: absolute; left: 30px; right: 30px; top: 136px; opacity: 1; }
+      .al .blank .sk { height: 16px; margin-bottom: 26px; }
+
+      /* s3 hidden facts */
+      .row { left: 140px; width: 1640px; height: 160px; display: flex; align-items: center; gap: 36px; padding: 0 52px; }
+      #r0 { top: 300px; } #r1 { top: 500px; } #r2 { top: 700px; }
+      .row .box { width: 64px; height: 64px; }
+      .row .rt { position: relative; font: 700 50px "Space Grotesk", sans-serif; letter-spacing: -0.02em; }
+      .row .redact { position: absolute; left: -10px; right: -10px; top: 4px; bottom: 4px; border-radius: 10px; background: #c9d3e3; transform-origin: right center; }
+      .row .rn { margin-left: auto; font: 400 30px "JetBrains Mono", monospace; color: var(--slate); }
+
+      /* s4 titled differently */
+      .search { left: 140px; top: 280px; width: 1640px; height: 400px; padding: 30px 40px; }
+      .sbar { display: flex; align-items: center; gap: 20px; height: 84px; border: 2px solid var(--line); border-radius: 42px; padding: 0 32px; background: var(--paper); }
+      .sbar svg { width: 34px; height: 34px; flex: none; }
+      #typed { font: 400 34px "JetBrains Mono", monospace; color: var(--navy); }
+      .caret { width: 3px; height: 42px; background: var(--gold); margin-left: -16px; }
+      .res { display: flex; align-items: center; gap: 22px; height: 82px; border-bottom: 1px solid var(--line); font: 700 30px "Inter", sans-serif; padding: 0 12px; }
+      .res:last-child { border-bottom: 0; }
+      .res .pill { margin-left: auto; }
+      .post { left: 140px; top: 720px; width: 980px; height: 180px; padding: 30px 40px; }
+      .post .ptitle { font: 700 40px "Space Grotesk", sans-serif; letter-spacing: -0.02em; margin-top: 18px; }
+      .pill.grey { background: var(--muted); color: var(--slate); }
+      .post .ring { position: absolute; inset: -10px; border-radius: 36px; border: 6px solid var(--gold-4); opacity: 0; box-shadow: 0 0 40px rgba(220, 171, 76, 0.45); }
+      .s4note { position: absolute; left: 1200px; top: 712px; width: 600px; }
+      .s4note .n1 { font-size: 58px; }
+      .s4note .n2 { font-size: 76px; margin-top: 8px; }
+
+      /* s5 I read the documents */
+      .doc { left: 140px; top: 280px; width: 820px; height: 680px; padding: 46px 52px; overflow: hidden; }
+      .doc .dt { height: 22px; width: 52%; border-radius: 11px; background: #b9c5d8; margin-bottom: 34px; }
+      .doc .sk { height: 13px; margin-bottom: 15px; }
+      .dh { height: 58px; display: flex; align-items: center; padding: 0 22px; border-radius: 10px; background: #fff3c4; border-left: 8px solid var(--gold); font: 700 26px "Inter", sans-serif; color: var(--navy); margin: 6px 0 22px; }
+      .scan { position: absolute; left: 0; right: 0; top: 0; height: 90px; background: linear-gradient(rgba(220, 171, 76, 0), rgba(220, 171, 76, 0.32), rgba(220, 171, 76, 0)); opacity: 0; }
+      .scan i { position: absolute; left: 0; right: 0; top: 44px; height: 3px; background: var(--gold); }
+      .vcard { left: 1040px; top: 300px; width: 740px; padding: 40px 44px; }
+      .vcard .vq { display: flex; align-items: center; gap: 22px; margin-top: 26px; font: 700 50px "Space Grotesk", sans-serif; letter-spacing: -0.02em; }
+      .vcard .vq .yes { color: var(--green-ink); }
+      .vcard .box { width: 56px; height: 56px; }
+      .s5serif { position: absolute; left: 1040px; top: 620px; width: 760px; font-size: 88px; line-height: 1.02; }
+
+      /* s6 exists vs fits */
+      .cmp { left: 240px; top: 290px; width: 1440px; height: 500px; display: grid; grid-template-columns: 1fr 1fr; overflow: hidden; padding: 0; }
+      .half { padding: 64px 70px; }
+      .half + .half { background: var(--navy-7); color: #fff; }
+      .half .hh { font: 700 24px "Inter", sans-serif; letter-spacing: 0.22em; text-transform: uppercase; color: var(--slate); }
+      .half + .half .hh { color: var(--gold-4); }
+      .half .big { font-size: 112px; margin-top: 90px; color: var(--slate); }
+      .half + .half .big { color: var(--gold-4); display: flex; align-items: center; gap: 34px; }
+      .half .box { width: 84px; height: 84px; }
+
+      /* s7 CTA */
+      #s7 .a { font-size: 104px; }
+      #s7 .cta-url { margin-top: 56px; }
+      #s7 .btn { margin-top: 26px; }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="main" data-start="0" data-duration="51.734" data-width="1920" data-height="1080">
+      <div id="bg" class="scene clip" data-start="0" data-duration="51.734" data-track-index="0">
+        <div class="ground"></div><div class="grid"></div><div class="blob b1"></div><div class="blob b2"></div><div class="vignette"></div>
+      </div>
+
+      <div id="s1" class="scene clip" data-start="0" data-duration="5" data-track-index="1">
+        <div class="inner">
+          <div class="s1l">
+            <div class="display a">You already get bid alerts.</div>
+            <div class="serif gold b">So why would you<br />need me?</div>
+          </div>
+          <div class="pile">
+            <div class="note"><div class="bell"></div><div class="nb"><div class="nk">BID ALERT</div><div class="nt">New bid: Roofing Services</div></div><div class="nw">now</div></div>
+            <div class="note"><div class="bell"></div><div class="nb"><div class="nk">BID ALERT</div><div class="nt">New bid: Roof Repairs, Library</div></div><div class="nw">now</div></div>
+            <div class="note"><div class="bell"></div><div class="nb"><div class="nk">BID ALERT</div><div class="nt">New bid: Roofing Supply</div></div><div class="nw">now</div></div>
+            <div class="note"><div class="bell"></div><div class="nb"><div class="nk">BID ALERT</div><div class="nt">Amendment 2: Roofing RFQ</div></div><div class="nw">now</div></div>
+            <div class="note"><div class="bell"></div><div class="nb"><div class="nk">BID ALERT</div><div class="nt">New bid: Roof Replacement, Arena</div></div><div class="nw">now</div></div>
+          </div>
+          <div class="illus" style="left: 1060px; top: 960px">Illustrative example</div>
+        </div>
+      </div>
+
+      <div id="s2" class="scene clip" data-start="5" data-duration="8.295" data-track-index="1">
+        <div class="inner">
+          <div class="label"><span class="rule"></span>How an alert works</div>
+          <div class="display headline">An alert is automated. <span class="serif gold">It fires on keywords.</span></div>
+          <div class="glass kw">
+            <div class="kt">KEYWORD</div>
+            <div class="kwrap"><div class="ping"></div><div class="kchip">roofing</div></div>
+          </div>
+          <div class="cap">
+            <div class="display c1">It tells you something exists.</div>
+            <div class="serif gold c2">And it stops there.</div>
+          </div>
+          <div class="alerts">
+            <div class="al" id="al0" style="top: 0px"><div class="ah"><div class="bell"></div><span class="nk">BID ALERT</span></div><div class="at">New bid: <span class="m">Roofing</span> Services</div></div>
+            <div class="al" id="al1" style="top: 150px">
+              <div class="ah"><div class="bell"></div><span class="nk">BID ALERT</span></div><div class="ahsk"></div>
+              <div class="at">New bid: <span class="m">Roof</span> Repairs, Library</div>
+              <div class="blank" data-layout-allow-overflow>
+                <div class="sk" style="width: 92%"></div><div class="sk" style="width: 78%"></div><div class="sk" style="width: 86%"></div>
+                <div class="sk" style="width: 60%"></div><div class="sk" style="width: 90%"></div><div class="sk" style="width: 70%"></div>
+                <div class="sk" style="width: 82%"></div><div class="sk" style="width: 48%"></div>
+              </div>
+            </div>
+            <div class="al" id="al2" style="top: 300px"><div class="ah"><div class="bell"></div><span class="nk">BID ALERT</span></div><div class="at">New bid: <span class="m">Roofing</span> Supply</div></div>
+            <div class="al" id="al3" style="top: 450px"><div class="ah"><div class="bell"></div><span class="nk">BID ALERT</span></div><div class="at">Amendment 2: <span class="m">Roofing</span> RFQ</div></div>
+          </div>
+        </div>
+      </div>
+
+      <div id="s3" class="scene clip" data-start="13.295" data-duration="10.395" data-track-index="1">
+        <div class="inner">
+          <div class="label"><span class="rule"></span>Inside the documents</div>
+          <div class="display headline">What an alert <span class="serif gold">can't tell you</span></div>
+          <div class="card row" id="r0"><div class="box"><div class="xk"></div></div><div class="rt">Mandatory site meeting<div class="redact"></div></div><div class="rn">01</div></div>
+          <div class="card row" id="r1"><div class="box"><div class="xk"></div></div><div class="rt">Bonding beyond your limit<div class="redact"></div></div><div class="rn">02</div></div>
+          <div class="card row" id="r2"><div class="box"><div class="xk"></div></div><div class="rt">Addendum moved the closing date<div class="redact"></div></div><div class="rn">03</div></div>
+        </div>
+      </div>
+
+      <div id="s4" class="scene clip" data-start="23.69" data-duration="6.5" data-track-index="1">
+        <div class="inner">
+          <div class="label"><span class="rule"></span>What a keyword misses</div>
+          <div class="display headline">Titled in a way <span class="serif gold">you'd never search.</span></div>
+          <div class="card search">
+            <div class="sbar">
+              <svg viewBox="0 0 24 24" fill="none" stroke="#5b6b85" stroke-width="2.5" stroke-linecap="round"><circle cx="10.5" cy="10.5" r="6.5" /><path d="M15.5 15.5l5 5" /></svg>
+              <span id="typed"></span><span class="caret"></span>
+            </div>
+            <div class="res"><span>New bid: <span class="m">Roofing</span> Services</span><span class="pill">MATCHED</span></div>
+            <div class="res"><span>New bid: <span class="m">Roof</span> Repairs, Library</span><span class="pill">MATCHED</span></div>
+            <div class="res"><span>New bid: <span class="m">Roofing</span> Supply</span><span class="pill">MATCHED</span></div>
+          </div>
+          <div class="card post">
+            <div class="ring"></div>
+            <span class="pill grey">NOT MATCHED</span>
+            <div class="ptitle">Building Envelope Rehabilitation</div>
+          </div>
+          <div class="s4note">
+            <div class="display n1">It's roofing work.</div>
+            <div class="serif gold n2">Titled differently.</div>
+          </div>
+          <div class="illus" style="left: 140px; top: 945px">Illustrative example</div>
+        </div>
+      </div>
+
+      <div id="s5" class="scene clip" data-start="30.19" data-duration="9.5" data-track-index="1">
+        <div class="inner">
+          <div class="label"><span class="rule"></span>I read the documents</div>
+          <div class="display headline">A person who reads the documents.</div>
+          <div class="card doc">
+            <div class="dt"></div>
+            <div class="sk" style="width: 94%"></div><div class="sk" style="width: 88%"></div><div class="sk" style="width: 72%"></div>
+            <div class="dh">Site meeting</div>
+            <div class="sk" style="width: 90%"></div><div class="sk" style="width: 84%"></div><div class="sk" style="width: 58%"></div>
+            <div class="dh">Bonding</div>
+            <div class="sk" style="width: 92%"></div><div class="sk" style="width: 76%"></div><div class="sk" style="width: 86%"></div>
+            <div class="dh">Addendum</div>
+            <div class="sk" style="width: 88%"></div><div class="sk" style="width: 64%"></div>
+            <div class="scan"><i></i></div>
+          </div>
+          <div class="card vcard">
+            <span class="pill">WORTH YOUR TIME</span>
+            <div class="vq"><span>Worth your time:</span><span class="yes">yes</span><div class="box"><div class="tk"></div></div></div>
+          </div>
+          <div class="serif gold s5serif">The part software<br />can't do.</div>
+        </div>
+      </div>
+
+      <div id="s6" class="scene clip" data-start="39.69" data-duration="5.5" data-track-index="1">
+        <div class="inner">
+          <div class="card cmp">
+            <div class="half"><div class="hh">Alerts</div><div class="display big">It exists.</div></div>
+            <div class="half"><div class="hh">Me</div><div class="display big"><span>It fits.</span><div class="box"><div class="tk"></div></div></div></div>
+          </div>
+        </div>
+      </div>
+
+      <div id="s7" class="scene clip" data-start="45.19" data-duration="6.544" data-track-index="1">
+        <div class="inner center">
+          <div class="display a">Book a discovery call</div>
+          <div class="cta-url">phildave.com</div>
+          <div class="btn">Book a call</div>
+        </div>
+        <div class="disc">I find and qualify opportunities. I do not write or submit proposals, and I do not guarantee contract awards.</div>
+      </div>
+
+      <!-- AUDIO:BEGIN (generated by build.mjs; do not edit by hand) -->
+      <audio id="vo-01" src="vo/01.wav" data-start="0.4" data-duration="3.115" data-volume="1" data-track-index="9"></audio>
+      <audio id="vo-02" src="vo/02.wav" data-start="5.5" data-duration="3.2" data-volume="1" data-track-index="9"></audio>
+      <audio id="vo-03" src="vo/03.wav" data-start="9.1" data-duration="2.795" data-volume="1" data-track-index="9"></audio>
+      <audio id="vo-04" src="vo/04.wav" data-start="13.995" data-duration="2.944" data-volume="1" data-track-index="9"></audio>
+      <audio id="vo-05" src="vo/05.wav" data-start="17.289" data-duration="1.941" data-volume="1" data-track-index="9"></audio>
+      <audio id="vo-06" src="vo/06.wav" data-start="19.58" data-duration="2.709" data-volume="1" data-track-index="9"></audio>
+      <audio id="vo-07" src="vo/07.wav" data-start="24.59" data-duration="3.755" data-volume="1" data-track-index="9"></audio>
+      <audio id="vo-08" src="vo/08.wav" data-start="30.69" data-duration="7.061" data-volume="1" data-track-index="9"></audio>
+      <audio id="vo-09" src="vo/09.wav" data-start="40.19" data-duration="3.221" data-volume="1" data-track-index="9"></audio>
+      <audio id="vo-10" src="vo/10.wav" data-start="45.59" data-duration="2.944" data-volume="1" data-track-index="9"></audio>
+      <audio id="sfx-01-pop" src="shared/sfx/pop.wav" data-start="0.5" data-duration="0.17" data-volume="0.14" data-track-index="10"></audio>
+      <audio id="sfx-02-pop" src="shared/sfx/pop.wav" data-start="1" data-duration="0.17" data-volume="0.14" data-track-index="10"></audio>
+      <audio id="sfx-03-pop" src="shared/sfx/pop.wav" data-start="1.5" data-duration="0.17" data-volume="0.14" data-track-index="10"></audio>
+      <audio id="sfx-04-pop" src="shared/sfx/pop.wav" data-start="1.95" data-duration="0.17" data-volume="0.14" data-track-index="10"></audio>
+      <audio id="sfx-05-pop" src="shared/sfx/pop.wav" data-start="2.4" data-duration="0.17" data-volume="0.14" data-track-index="10"></audio>
+      <audio id="sfx-06-pop" src="shared/sfx/pop.wav" data-start="7.1" data-duration="0.17" data-volume="0.18" data-track-index="10"></audio>
+      <audio id="sfx-07-tick" src="shared/sfx/tick.wav" data-start="7.612" data-duration="0.09" data-volume="0.18" data-track-index="10"></audio>
+      <audio id="sfx-08-tick" src="shared/sfx/tick.wav" data-start="7.772" data-duration="0.09" data-volume="0.18" data-track-index="10"></audio>
+      <audio id="sfx-09-tick" src="shared/sfx/tick.wav" data-start="7.932" data-duration="0.09" data-volume="0.18" data-track-index="10"></audio>
+      <audio id="sfx-10-tick" src="shared/sfx/tick.wav" data-start="8.092" data-duration="0.09" data-volume="0.18" data-track-index="10"></audio>
+      <audio id="sfx-11-switch" src="shared/sfx/switch.wav" data-start="8.95" data-duration="0.14" data-volume="0.2" data-track-index="10"></audio>
+      <audio id="sfx-12-snap" src="shared/sfx/snap.wav" data-start="15.82" data-duration="0.16" data-volume="0.25" data-track-index="10"></audio>
+      <audio id="sfx-13-snap" src="shared/sfx/snap.wav" data-start="18.357" data-duration="0.16" data-volume="0.25" data-track-index="10"></audio>
+      <audio id="sfx-14-snap" src="shared/sfx/snap.wav" data-start="21.26" data-duration="0.16" data-volume="0.25" data-track-index="10"></audio>
+      <audio id="sfx-15-pop" src="shared/sfx/pop.wav" data-start="24.94" data-duration="0.17" data-volume="0.1" data-track-index="10"></audio>
+      <audio id="sfx-16-pop" src="shared/sfx/pop.wav" data-start="25.09" data-duration="0.17" data-volume="0.1" data-track-index="11"></audio>
+      <audio id="sfx-17-pop" src="shared/sfx/pop.wav" data-start="25.24" data-duration="0.17" data-volume="0.1" data-track-index="10"></audio>
+      <audio id="sfx-18-success" src="shared/sfx/success.wav" data-start="27.594" data-duration="0.75" data-volume="0.2" data-track-index="10"></audio>
+      <audio id="sfx-19-pop" src="shared/sfx/pop.wav" data-start="34.079" data-duration="0.17" data-volume="0.18" data-track-index="10"></audio>
+      <audio id="sfx-20-tick" src="shared/sfx/tick.wav" data-start="34.715" data-duration="0.09" data-volume="0.3" data-track-index="10"></audio>
+      <audio id="sfx-21-tick" src="shared/sfx/tick.wav" data-start="42.165" data-duration="0.09" data-volume="0.3" data-track-index="10"></audio>
+      <audio id="sfx-22-chime" src="shared/sfx/chime.wav" data-start="47.356" data-duration="0.95" data-volume="0.3" data-track-index="10"></audio>
+      <audio id="sfx-23-pop" src="shared/sfx/pop.wav" data-start="47.756" data-duration="0.17" data-volume="0.22" data-track-index="11"></audio>
+      <!-- AUDIO:END -->
+    </div>
+
+    <!-- TIMING:BEGIN (generated by build.mjs) -->
+    <script id="timing" type="application/json">{"total":51.734,"scenes":{"s1":{"start":0,"dur":5,"ev":{"a":0.3,"b":1.957,"n0":0.5,"n1":1,"n2":1.5,"n3":1.95,"n4":2.4}},"s2":{"start":5,"dur":8.295,"ev":{"kw":2.1,"h0":2.612,"h1":2.772,"h2":2.932,"h3":3.092,"focus":3.95,"cap1":4.24,"blank":4.938,"cap2":5.777}},"s3":{"start":13.295,"dur":10.395,"ev":{"r0":0.6,"x0":2.525,"r1":3.844,"x1":5.062,"r2":6.135,"x2":7.965}},"s4":{"start":23.69,"dur":6.5,"ev":{"type":0.5,"res":1.25,"miss":2.402,"gold":3.904,"note":4.254}},"s5":{"start":30.19,"dur":9.5,"ev":{"scan0":1.065,"scan1":3.748,"verdict":3.889,"yes":4.525,"serif":5.302}},"s6":{"start":39.69,"dur":5.5,"ev":{"l":0.629,"r":2.175}},"s7":{"start":45.19,"dur":6.544,"ev":{"a":0.3,"url":2.166}}}}</script>
+    <!-- TIMING:END -->
+    <script>
+      const T = K.init();
+      const { $, $$ } = K;
+      const BELL = '<svg viewBox="0 0 24 24" fill="none" stroke="#85601a" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/></svg>';
+      $$(".bell").forEach((b) => (b.innerHTML = BELL));
+      const mark = (t, sel, d = 0.35) =>
+        K.tl().fromTo(sel, { backgroundSize: "0% 100%" }, { backgroundSize: "100% 100%", duration: d, ease: "power2.out", immediateRender: false }, t);
+
+      { // s1 hook: alerts pile up
+        const S = K.scene("s1"), E = S.ev;
+        K.rise(E.a, "#s1 .a", { d: 0.7 });
+        K.serifIn(E.b, "#s1 .b");
+        const notes = $$("#s1 .note"), step = 132;
+        K.hide(notes);
+        notes.forEach((n, i) => {
+          K.tl().fromTo(n, { opacity: 0, y: -36, scale: 0.94 }, { opacity: 1, y: 0, scale: 1, duration: 0.35, ease: "power3.out", immediateRender: false }, E[`n${i}`]);
+          for (let k = i + 1; k < notes.length; k++)
+            K.tl().fromTo(n, { y: (k - 1 - i) * step }, { y: (k - i) * step, duration: 0.35, ease: "power3.out", immediateRender: false }, E[`n${k}`]);
+        });
+        K.rise(E.n4 + 0.4, "#s1 .illus", { y: 6, d: 0.5 });
+        K.out(S.dur - 0.5, "#s1 .inner", 0.45);
+      }
+
+      { // s2 automated, fires on keywords, stops there
+        const S = K.scene("s2"), E = S.ev;
+        K.label(0.2, "#s2");
+        K.rise(0.3, "#s2 .headline");
+        K.rise(0.5, "#s2 .kw", { y: 30 });
+        K.rise(0.6, "#s2 .al", { y: 30, s: 0.12, d: 0.55 });
+        K.pop(E.kw, "#s2 .kchip", { from: 0.7, b: 2.2 });
+        [0, 1, 2, 3].forEach((i) => {
+          mark(E[`h${i}`], `#al${i} .m`);
+          K.tl().fromTo("#s2 .ping", { opacity: 0.9, scale: 1 }, { opacity: 0, scale: 1.35, duration: 0.45, ease: "power2.out", immediateRender: false }, E[`h${i}`]);
+        });
+        K.hide("#al1 .blank .sk");
+        // focus: one alert enlarges, the rest leave
+        K.tl().to(["#al0", "#al2", "#al3"], { opacity: 0, x: 60, duration: 0.45, ease: "power2.in", stagger: 0.05 }, E.focus);
+        K.tl().fromTo("#al1", { y: 0, height: 124 }, { y: -150, height: 600, duration: 0.8, ease: "power3.inOut", immediateRender: false }, E.focus + 0.15);
+        K.tl().to("#al1 .ah", { opacity: 0, duration: 0.4 }, E.blank);
+        K.tl().to("#al1 .ahsk", { opacity: 1, duration: 0.4 }, E.blank);
+        K.tl().fromTo("#al1 .blank .sk", { opacity: 0, scaleX: 0.4, transformOrigin: "left center" }, { opacity: 1, scaleX: 1, duration: 0.4, stagger: 0.07, ease: "power2.out", immediateRender: false }, E.blank);
+        K.rise(E.cap1, "#s2 .cap .c1", { y: 24 });
+        K.serifIn(E.cap2, "#s2 .cap .c2");
+        K.tl().to("#s2 .kw", { opacity: 0.6, duration: 0.5 }, E.cap1);
+        K.out(S.dur - 0.5, "#s2 .inner", 0.45);
+      }
+
+      { // s3 what an alert can't tell you
+        const S = K.scene("s3"), E = S.ev;
+        K.label(0.2, "#s3");
+        K.rise(0.3, "#s3 .headline");
+        [0, 1, 2].forEach((i) => {
+          K.rise(E[`r${i}`], `#r${i}`, { y: 40, d: 0.55 });
+          K.hide(`#r${i} .xk`);
+          K.tl().fromTo(`#r${i} .redact`, { scaleX: 1 }, { scaleX: 0, duration: 0.45, ease: "power3.inOut", immediateRender: false }, E[`x${i}`]);
+          K.tick(E[`x${i}`] + 0.15, `#r${i} .xk`);
+          K.shake(E[`x${i}`] + 0.2, `#r${i}`);
+        });
+        K.out(S.dur - 0.5, "#s3 .inner", 0.45);
+      }
+
+      { // s4 titled differently
+        const S = K.scene("s4"), E = S.ev;
+        K.label(0.2, "#s4");
+        K.rise(0.3, "#s4 .headline");
+        K.rise(0.2, "#s4 .search", { y: 40 });
+        const word = "roofing", typed = $("#typed"), st = { v: 0 };
+        K.tl().fromTo(st, { v: 0 }, { v: word.length, duration: 0.7, ease: "none", immediateRender: false, onUpdate: () => (typed.textContent = word.slice(0, Math.round(st.v))) }, E.type);
+        K.tl().fromTo("#s4 .caret", { opacity: 1 }, { opacity: 0, duration: 0.3, repeat: 9, yoyo: true, ease: "steps(1)" }, 0.2);
+        K.rise(E.res, "#s4 .res", { y: 16, s: 0.15, d: 0.45 });
+        $$("#s4 .res .m").forEach((m, i) => mark(E.res + 0.3 + i * 0.15, m));
+        K.tl().fromTo("#s4 .post", { opacity: 0, y: 30, filter: "grayscale(1) blur(6px)" }, { opacity: 0.55, y: 0, filter: "grayscale(1) blur(0px)", duration: 0.6, ease: "power3.out" }, E.miss);
+        K.tl().to("#s4 .post", { opacity: 1, filter: "grayscale(0) blur(0px)", duration: 0.4 }, E.gold);
+        K.tl().fromTo("#s4 .ring", { opacity: 0, scale: 1.06 }, { opacity: 1, scale: 1, duration: 0.45, ease: "back.out(2)", immediateRender: false }, E.gold);
+        K.rise(E.note, "#s4 .s4note .n1", { y: 24 });
+        K.serifIn(E.note + 0.4, "#s4 .s4note .n2");
+        K.rise(E.note + 0.6, "#s4 .illus", { y: 6, d: 0.5 });
+        K.out(S.dur - 0.5, "#s4 .inner", 0.45);
+      }
+
+      { // s5 I read the documents
+        const S = K.scene("s5"), E = S.ev;
+        K.label(0.2, "#s5");
+        K.rise(0.3, "#s5 .headline");
+        K.rise(0.4, "#s5 .doc", { y: 50 });
+        K.rise(0.8, "#s5 .doc .sk, #s5 .doc .dt", { y: 8, s: 0.03, d: 0.35 });
+        const doc = $("#s5 .doc"), H = 680, y0 = 20, y1 = H - 110;
+        const sweep = E.scan1 - E.scan0;
+        K.tl().fromTo("#s5 .scan", { opacity: 0 }, { opacity: 1, duration: 0.25 }, E.scan0);
+        K.tl().fromTo("#s5 .scan", { y: y0 }, { y: y1, duration: sweep, ease: "none" }, E.scan0);
+        K.tl().to("#s5 .scan", { opacity: 0, duration: 0.3 }, E.scan1);
+        K.hide("#s5 .dh");
+        $$("#s5 .dh").forEach((h) => {
+          const f = Math.min(1, Math.max(0, (h.offsetTop - 44 - y0) / (y1 - y0)));
+          K.slideIn(E.scan0 + f * sweep, h, { x: -24, d: 0.35, ir: false });
+          K.tl().fromTo(h, { scale: 1 }, { scale: 1.03, duration: 0.15, yoyo: true, repeat: 1, immediateRender: false }, E.scan0 + f * sweep + 0.1);
+        });
+        K.rise(E.verdict, "#s5 .vcard", { y: 40 });
+        K.hide(["#s5 .vq .yes", "#s5 .vq .tk"]);
+        K.slam(E.yes, "#s5 .vq .yes");
+        K.tick(E.yes + 0.1, "#s5 .vq .tk");
+        K.serifIn(E.serif, "#s5 .s5serif");
+        K.out(S.dur - 0.5, "#s5 .inner", 0.45);
+      }
+
+      { // s6 exists vs fits
+        const S = K.scene("s6"), E = S.ev;
+        K.rise(0.25, "#s6 .cmp", { y: 50 });
+        K.rise(0.35, "#s6 .hh", { y: 12, s: 0.1, d: 0.45 });
+        K.rise(E.l, "#s6 .half:first-child .big", { y: 30 });
+        K.serifIn(E.r, "#s6 .half + .half .big span", 0.8);
+        K.hide("#s6 .tk");
+        K.tick(E.r + 0.3, "#s6 .tk");
+        K.out(S.dur - 0.5, "#s6 .inner", 0.45);
+      }
+
+      { // s7 CTA
+        const S = K.scene("s7"), E = S.ev;
+        K.rise(E.a, "#s7 .a", { d: 0.7 });
+        K.rise(E.url, "#s7 .cta-url", { y: 20 });
+        K.pop(E.url + 0.4, "#s7 .btn", { from: 0.7, b: 2 });
+        K.rise(E.url + 1.4, "#s7 .disc", { y: 8, d: 0.6 });
+      }
+
+      window.__timelines["main"] = K.done();
+    </script>
+  </body>
+</html>

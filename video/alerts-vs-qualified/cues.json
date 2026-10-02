@@ -1,0 +1,48 @@
+{
+ "_note": "Sample narration lines; 'say' overrides pronunciation. Replace vo/<id>.wav with a recording and re-run node build.mjs.",
+ "voice": "am_michael",
+ "speed": 1.1,
+ "cues": [
+  {
+   "id": "01",
+   "text": "You already get bid alerts. So why would you need me?"
+  },
+  {
+   "id": "02",
+   "text": "An alert is automated. It fires on keywords."
+  },
+  {
+   "id": "03",
+   "text": "It tells you something exists, and it stops there."
+  },
+  {
+   "id": "04",
+   "text": "It can't tell you the site meeting is mandatory."
+  },
+  {
+   "id": "05",
+   "text": "Or that the bonding is beyond you."
+  },
+  {
+   "id": "06",
+   "text": "Or that an addendum just moved the closing date."
+  },
+  {
+   "id": "07",
+   "text": "And it misses the work that was titled in a way you'd never search."
+  },
+  {
+   "id": "08",
+   "text": "I'm a person who reads the documents, and tells you whether it's worth your time. That's the part software can't do."
+  },
+  {
+   "id": "09",
+   "text": "Alerts tell you it exists. I tell you if it fits."
+  },
+  {
+   "id": "10",
+   "text": "Book a discovery call at phildave.com.",
+   "say": "Book a discovery call, at phil dave dot com."
+  }
+ ]
+}
