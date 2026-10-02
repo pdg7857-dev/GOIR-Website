@@ -1,0 +1,74 @@
+/* phildave.com video brand. Shared by every project in video/ through its `shared` symlink. */
+@font-face { font-family: "Inter"; src: url("fonts/Inter-400.woff2") format("woff2"); font-weight: 400; }
+@font-face { font-family: "Inter"; src: url("fonts/Inter-700.woff2") format("woff2"); font-weight: 700; }
+@font-face { font-family: "Space Grotesk"; src: url("fonts/SpaceGrotesk-500.woff2") format("woff2"); font-weight: 500; }
+@font-face { font-family: "Space Grotesk"; src: url("fonts/SpaceGrotesk-700.woff2") format("woff2"); font-weight: 700; }
+@font-face { font-family: "Instrument Serif"; src: url("fonts/InstrumentSerif-400.woff2") format("woff2"); font-weight: 400; font-style: normal; }
+@font-face { font-family: "Instrument Serif"; src: url("fonts/InstrumentSerif-400-italic.woff2") format("woff2"); font-weight: 400; font-style: italic; }
+@font-face { font-family: "JetBrains Mono"; src: url("fonts/JetBrainsMono-400.woff2") format("woff2"); font-weight: 400; }
+
+:root {
+  --navy: #0b1b3a; --navy-9: #081530; --navy-7: #13294f;
+  --blue: #1d63d8; --blue-4: #5a7ef8; --blue-1: #dbe6ff;
+  --gold: #c8932f; --gold-4: #dcab4c; --gold-1: #f4e6c4; --gold-ink: #85601a;
+  --paper: #f7f9fc; --muted: #eef2f8; --line: #e2e8f2; --slate: #5b6b85; --ink-2: #3d4a61;
+  --red: #e5484d; --red-ink: #c42b31; --green: #1f9d5a; --green-ink: #136b3d;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html, body { margin: 0; overflow: hidden; background: var(--navy-9); }
+#root { width: 100%; height: 100%; position: relative; font-family: "Inter", sans-serif; color: #fff; background: var(--navy-9); }
+
+.scene { position: absolute; inset: 0; width: 100%; height: 100%; }
+.inner { position: absolute; inset: 0; }
+.center { display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; }
+.display { font-family: "Space Grotesk", sans-serif; font-weight: 700; letter-spacing: -0.03em; line-height: 1.05; }
+.serif { font-family: "Instrument Serif", serif; font-style: italic; font-weight: 400; letter-spacing: -0.01em; }
+.mono { font-family: "JetBrains Mono", monospace; }
+.gold { color: var(--gold-4); }
+.red { color: var(--red); }
+.green { color: #4cc488; }
+.w { display: inline-block; }
+
+/* background */
+#bg .ground { position: absolute; inset: 0; background: radial-gradient(1400px 900px at 30% 20%, #13294f 0%, #0b1b3a 45%, #081530 100%); }
+#bg .grid { position: absolute; inset: 0; opacity: 0.07; background-image: linear-gradient(#ffffff 1px, transparent 1px), linear-gradient(90deg, #ffffff 1px, transparent 1px); background-size: 80px 80px; }
+#bg .blob { position: absolute; border-radius: 50%; filter: blur(120px); }
+#bg .b1 { width: 760px; height: 760px; left: -160px; top: -240px; background: rgba(29, 99, 216, 0.55); }
+#bg .b2 { width: 680px; height: 680px; right: -200px; bottom: -260px; background: rgba(200, 147, 47, 0.30); }
+#bg .vignette { position: absolute; inset: 0; background: radial-gradient(ellipse at center, transparent 55%, rgba(0, 0, 0, 0.45) 100%); }
+
+/* section label */
+.label { position: absolute; display: flex; align-items: center; gap: 16px; font: 700 20px "Inter", sans-serif; letter-spacing: 0.22em; text-transform: uppercase; color: var(--gold-4); }
+.label .rule { display: block; width: 56px; height: 2px; background: var(--gold-4); transform-origin: left center; }
+
+/* surfaces */
+.card { position: absolute; background: #fff; color: var(--navy); border-radius: 28px; box-shadow: 0 30px 60px rgba(0, 0, 0, 0.45); }
+.glass { position: absolute; border-radius: 24px; background: rgba(255, 255, 255, 0.08); border: 1px solid rgba(255, 255, 255, 0.18); }
+.pill { display: inline-flex; align-items: center; gap: 8px; height: 32px; padding: 0 16px; border-radius: 16px; background: rgba(31, 157, 90, 0.12); color: var(--green-ink); font: 700 15px "Inter", sans-serif; letter-spacing: 0.14em; }
+.pill.gold { background: rgba(200, 147, 47, 0.16); color: var(--gold-ink); }
+.pill.red { background: rgba(229, 72, 77, 0.12); color: var(--red-ink); }
+.kv { display: grid; grid-template-columns: 200px 1fr; gap: 20px; padding: 16px 0; border-top: 1px solid var(--line); font: 400 25px "Inter", sans-serif; }
+.kv .k { font: 700 16px "Inter", sans-serif; letter-spacing: 0.16em; text-transform: uppercase; color: var(--slate); padding-top: 5px; }
+.kv .v.link { color: var(--blue); font-weight: 700; }
+.hl { padding: 18px 24px; border-radius: 12px; background: #fff3c4; border-left: 8px solid var(--gold); font: 700 30px "Inter", sans-serif; color: var(--navy); }
+.hl small { display: block; font: 700 15px "Inter", sans-serif; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gold-ink); margin-bottom: 6px; }
+.stamp { position: absolute; display: flex; align-items: center; justify-content: center; padding: 0 34px; height: 110px; border: 8px solid var(--red); border-radius: 18px; color: var(--red); background: rgba(255, 255, 255, 0.9); font: 700 56px "Space Grotesk", sans-serif; letter-spacing: 0.04em; white-space: nowrap; }
+.sk { height: 12px; border-radius: 6px; background: #d9e1ee; margin-bottom: 16px; }
+
+/* ticks: put <div class="box"><div class="tk"></div></div>; kit.js fills the check mark */
+.box { position: relative; width: 40px; height: 40px; border-radius: 50%; border: 3px solid rgba(255, 255, 255, 0.35); flex: none; }
+.card .box { border-color: var(--line); }
+.tk { position: absolute; inset: -3px; border-radius: 50%; background: var(--green); display: flex; align-items: center; justify-content: center; }
+.tk svg { width: 55%; height: 55%; }
+.xk { position: absolute; inset: -3px; border-radius: 50%; background: var(--red); display: flex; align-items: center; justify-content: center; }
+.xk svg { width: 50%; height: 50%; }
+
+/* CTA */
+.cta-url { font: 700 52px "Space Grotesk", sans-serif; letter-spacing: -0.01em; }
+.btn { height: 84px; padding: 0 44px; border-radius: 42px; background: var(--gold); color: var(--navy-9); font: 700 32px "Inter", sans-serif; display: inline-flex; align-items: center; gap: 14px; }
+.disc { position: absolute; left: 0; right: 0; bottom: 48px; text-align: center; font: 400 19px "Inter", sans-serif; color: rgba(255, 255, 255, 0.6); padding: 0 80px; }
+.wordmark { display: flex; flex-direction: column; align-items: center; gap: 14px; }
+.wordmark .nm { font: 700 34px "Space Grotesk", sans-serif; letter-spacing: 0.32em; }
+.wordmark .rl { display: block; width: 360px; height: 2px; background: var(--gold-4); transform-origin: center; }
+.wordmark .tg { font: 400 22px "Inter", sans-serif; letter-spacing: 0.22em; text-transform: uppercase; color: rgba(255, 255, 255, 0.75); }
+.illus { position: absolute; font: 700 14px "Inter", sans-serif; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(255, 255, 255, 0.6); }

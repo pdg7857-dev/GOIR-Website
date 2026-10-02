@@ -1,0 +1,358 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1920, height=1080" />
+    <title>What happens after you sign</title>
+    <script src="shared/vendor/gsap.min.js"></script>
+    <script src="shared/kit.js"></script>
+    <link rel="stylesheet" href="shared/brand.css" />
+    <style>
+      html, body { width: 1920px; height: 1080px; }
+      .label { left: 140px; top: 96px; }
+      .headline { position: absolute; left: 140px; top: 140px; width: 1640px; font-size: 60px; }
+
+      /* s1 */
+      #s1 .a { font-size: 130px; }
+      #s1 .b { font-size: 104px; margin-top: 10px; }
+
+      /* s2 onboarding */
+      .profile { left: 140px; top: 270px; width: 820px; padding: 40px 46px; }
+      .profile .pt { font: 700 18px "Inter", sans-serif; letter-spacing: 0.2em; color: var(--gold-ink); }
+      .prow { display: flex; align-items: center; gap: 20px; height: 84px; border-bottom: 1px solid var(--line); font: 700 30px "Inter", sans-serif; }
+      .prow:last-child { border-bottom: 0; }
+      .prow .pv { margin-left: auto; font: 400 24px "Inter", sans-serif; color: var(--slate); }
+      .cadence { left: 1040px; top: 270px; width: 740px; padding: 36px 40px; }
+      .cadence .ct { font: 700 18px "Inter", sans-serif; letter-spacing: 0.2em; color: rgba(255, 255, 255, 0.85); }
+      .chips { display: flex; gap: 16px; margin-top: 22px; }
+      .chip { flex: 1; height: 76px; border-radius: 38px; border: 2px solid rgba(255, 255, 255, 0.3); display: flex; align-items: center; justify-content: center; font: 700 24px "Inter", sans-serif; }
+      .chip.on { background: var(--gold); border-color: var(--gold); color: var(--navy-9); }
+      .term { left: 1040px; top: 560px; width: 740px; height: 330px; padding: 40px 44px; }
+      .term .tt { font: 700 18px "Inter", sans-serif; letter-spacing: 0.2em; color: var(--gold-ink); }
+      .term .tb { font: 700 38px "Space Grotesk", sans-serif; letter-spacing: -0.02em; margin-top: 16px; line-height: 1.15; }
+      .term .ts { font: 400 22px "Inter", sans-serif; color: var(--slate); margin-top: 14px; }
+      .seal { position: absolute; right: 36px; bottom: 30px; width: 170px; height: 170px; border-radius: 50%; border: 6px solid var(--gold); color: var(--gold-ink); display: flex; align-items: center; justify-content: center; text-align: center; font: 700 22px "Space Grotesk", sans-serif; letter-spacing: 0.06em; line-height: 1.15; background: #fffaf0; }
+
+      /* s3 I go to work */
+      .col { top: 280px; width: 520px; height: 640px; padding: 36px 36px; }
+      .col .cn { font: 700 64px "Space Grotesk", sans-serif; color: var(--gold-4); line-height: 1; }
+      .col .ch { font: 700 40px "Space Grotesk", sans-serif; margin-top: 14px; letter-spacing: -0.02em; }
+      .col .cs { font: 400 22px "Inter", sans-serif; color: rgba(255, 255, 255, 0.8); margin-top: 10px; line-height: 1.4; }
+      #c1 { left: 140px; } #c2 { left: 700px; } #c3 { left: 1260px; }
+      .plats { margin-top: 26px; display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+      .plat { height: 52px; border-radius: 12px; background: rgba(255, 255, 255, 0.1); display: flex; align-items: center; gap: 10px; padding: 0 16px; font: 400 20px "Inter", sans-serif; }
+      .plat i { width: 10px; height: 10px; border-radius: 50%; background: #4cc488; flex: none; }
+      .reads { margin-top: 24px; display: flex; flex-direction: column; gap: 12px; }
+      .read { height: 54px; border-radius: 12px; background: #fff3c4; color: var(--navy); display: flex; align-items: center; padding: 0 18px; font: 700 22px "Inter", sans-serif; border-left: 6px solid var(--gold); }
+      .verdict { margin-top: 26px; background: #fff; color: var(--navy); border-radius: 18px; padding: 24px; }
+      .verdict .vt { font: 700 24px "Inter", sans-serif; margin-top: 12px; }
+      .verdict .vr { font: 400 20px "Inter", sans-serif; color: var(--slate); margin-top: 8px; line-height: 1.4; }
+      .meter { margin-top: 18px; height: 14px; border-radius: 7px; background: var(--muted); overflow: hidden; }
+      .meter span { display: block; width: 100%; height: 100%; background: var(--green); transform-origin: left center; }
+
+      /* s4 short list */
+      .inbox { left: 140px; top: 270px; width: 900px; height: 680px; padding: 0; overflow: hidden; }
+      .inbox .ih { height: 86px; display: flex; align-items: center; justify-content: space-between; padding: 0 34px; border-bottom: 1px solid var(--line); font: 700 28px "Inter", sans-serif; }
+      .item { padding: 22px 34px; border-bottom: 1px solid var(--line); }
+      .item .it { font: 700 28px "Inter", sans-serif; margin-top: 10px; }
+      .item .im { font: 400 21px "Inter", sans-serif; color: var(--slate); margin-top: 6px; }
+      .item.open { background: #f6f9ff; }
+      .item .sum { font: 400 23px "Inter", sans-serif; color: var(--ink-2); margin-top: 14px; line-height: 1.45; }
+      .item .src { font: 700 23px "Inter", sans-serif; color: var(--blue); margin-top: 12px; }
+      .s4side { position: absolute; left: 1120px; top: 300px; width: 660px; }
+      .s4side .big { font-size: 64px; }
+      .s4side .pt2 { display: flex; align-items: center; gap: 18px; margin-top: 30px; font: 700 32px "Inter", sans-serif; }
+
+      /* s5 you decide */
+      .split { left: 140px; top: 270px; width: 1640px; height: 520px; display: grid; grid-template-columns: 1fr 1fr; overflow: hidden; padding: 0; }
+      .half { padding: 44px 54px; }
+      .half + .half { background: var(--navy-7); color: #fff; }
+      .half .hh { font: 700 20px "Inter", sans-serif; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold-ink); }
+      .half + .half .hh { color: var(--gold-4); }
+      .li { display: flex; align-items: center; gap: 16px; font: 700 30px "Inter", sans-serif; margin-top: 22px; }
+      .li i { width: 12px; height: 12px; border-radius: 50%; background: var(--gold); flex: none; }
+      .tune { position: absolute; left: 140px; top: 840px; width: 1640px; display: flex; align-items: center; gap: 28px; }
+      .tune .tl { font: 700 26px "Inter", sans-serif; white-space: nowrap; }
+      .tune .tr { position: relative; flex: 1; height: 12px; border-radius: 6px; background: rgba(255, 255, 255, 0.15); }
+      .tune .knob { position: absolute; left: 0; top: -14px; width: 40px; height: 40px; border-radius: 50%; background: var(--gold-4); box-shadow: 0 0 0 8px rgba(220, 171, 76, 0.25); }
+
+      /* s6 / s7 */
+      #s6 .a { font-size: 88px; max-width: 1600px; }
+      #s6 .b { font-size: 140px; margin-top: 10px; line-height: 1; }
+      #s7 .a { font-size: 96px; }
+      #s7 .b { font-size: 44px; margin-top: 24px; color: rgba(255, 255, 255, 0.85); font-family: "Inter", sans-serif; font-weight: 400; letter-spacing: 0; }
+      #s7 .cta-url { margin-top: 48px; }
+      #s7 .btn { margin-top: 26px; }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="main" data-start="0" data-duration="75.804" data-width="1920" data-height="1080">
+      <div id="bg" class="scene clip" data-start="0" data-duration="75.804" data-track-index="0">
+        <div class="ground"></div><div class="grid"></div><div class="blob b1"></div><div class="blob b2"></div><div class="vignette"></div>
+      </div>
+
+      <div id="s1" class="scene clip" data-start="0" data-duration="4.5" data-track-index="1">
+        <div class="inner center">
+          <div class="display a">You said yes.</div>
+          <div class="serif gold b">Here's exactly what happens next.</div>
+        </div>
+      </div>
+
+      <div id="s2" class="scene clip" data-start="4.5" data-duration="21.073" data-track-index="1">
+        <div class="inner">
+          <div class="label"><span class="rule"></span>Step 1 · Onboarding</div>
+          <div class="display headline">A short call to learn your <span class="serif gold">sweet spot.</span></div>
+          <div class="card profile">
+            <div class="pt">YOUR PROFILE</div>
+            <div class="prow"><div class="box"><div class="tk"></div></div>Your trades<span class="pv">what you do</span></div>
+            <div class="prow"><div class="box"><div class="tk"></div></div>Sweet-spot project size<span class="pv">what you can deliver</span></div>
+            <div class="prow"><div class="box"><div class="tk"></div></div>Your geography<span class="pv">where you serve</span></div>
+            <div class="prow"><div class="box"><div class="tk"></div></div>The work you want more of<span class="pv">where you grow</span></div>
+          </div>
+          <div class="glass cadence">
+            <div class="ct">COVERAGE AND CADENCE</div>
+            <div class="chips"><div class="chip" id="ch1">Running feed</div><div class="chip" id="ch2">Regular digest</div><div class="chip" id="ch3">Both</div></div>
+          </div>
+          <div class="card term">
+            <div class="tt">YOUR TERM</div>
+            <div class="tb">Guaranteed number of qualified opportunities</div>
+            <div class="ts">Agreed with you at scoping.</div>
+            <div class="seal">WRITTEN<br />INTO YOUR<br />TERM</div>
+          </div>
+        </div>
+      </div>
+
+      <div id="s3" class="scene clip" data-start="25.573" data-duration="18.969" data-track-index="1">
+        <div class="inner">
+          <div class="label"><span class="rule"></span>Step 2 · I go to work</div>
+          <div class="display headline">The front half of bidding, <span class="serif gold">off your plate.</span></div>
+          <div class="glass col" id="c1">
+            <div class="cn">01</div><div class="ch">I monitor</div><div class="cs">Every platform that serves your jurisdictions.</div>
+            <div class="plats">
+              <div class="plat"><i></i>Federal</div><div class="plat"><i></i>Provincial</div>
+              <div class="plat"><i></i>Municipal</div><div class="plat"><i></i>Agencies</div>
+              <div class="plat"><i></i>Health</div><div class="plat"><i></i>Education</div>
+              <div class="plat"><i></i>Utilities</div><div class="plat"><i></i>US public</div>
+            </div>
+          </div>
+          <div class="glass col" id="c2">
+            <div class="cn">02</div><div class="ch">I read</div><div class="cs">I open the documents.</div>
+            <div class="reads">
+              <div class="read">Scope</div><div class="read">Requirements</div><div class="read">Site meetings</div>
+              <div class="read">Bonding and insurance</div><div class="read">Every addendum</div>
+            </div>
+          </div>
+          <div class="glass col" id="c3">
+            <div class="cn">03</div><div class="ch">I qualify</div><div class="cs">Against your shop.</div>
+            <div class="verdict">
+              <span class="pill">FITS</span>
+              <div class="vt">Why it fits</div>
+              <div class="vr">Your trade, your capacity, your region. Site meeting is optional.</div>
+              <div class="meter"><span id="meter"></span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="s4" class="scene clip" data-start="44.542" data-duration="9.711" data-track-index="1">
+        <div class="inner">
+          <div class="label"><span class="rule"></span>Step 3 · What reaches you</div>
+          <div class="card inbox">
+            <div class="ih">Your short list<span class="pill">3 QUALIFIED</span></div>
+            <div class="item open" id="it1">
+              <span class="pill">QUALIFIED</span>
+              <div class="it">Janitorial Services, Regional Offices</div>
+              <div class="sum">Nightly cleaning of 3 buildings on a 3-year term. Liability insurance and safety clearance required. Site meeting optional.</div>
+              <div class="src">View the source posting</div>
+            </div>
+            <div class="item" id="it2"><span class="pill">QUALIFIED</span><div class="it">Parking Lot Repaving, 2 Sites</div><div class="im">Matches trade, capacity and region</div></div>
+            <div class="item" id="it3"><span class="pill">QUALIFIED</span><div class="it">Grounds Maintenance, 3 Parks</div><div class="im">Matches trade, capacity and region</div></div>
+          </div>
+          <div class="s4side">
+            <div class="display big">A short list. <span class="serif gold">Not a firehose.</span></div>
+            <div class="pt2"><div class="box"><div class="tk"></div></div>Plain-language summary</div>
+            <div class="pt2"><div class="box"><div class="tk"></div></div>Scan it in under a minute</div>
+            <div class="pt2"><div class="box"><div class="tk"></div></div>Direct link to the source</div>
+          </div>
+          <div class="illus" style="left: 140px; top: 970px">Illustrative example</div>
+        </div>
+      </div>
+
+      <div id="s5" class="scene clip" data-start="54.253" data-duration="7.384" data-track-index="1">
+        <div class="inner">
+          <div class="label"><span class="rule"></span>Step 4 · You decide</div>
+          <div class="display headline">You don't hand over control. <span class="serif gold">Just the searching.</span></div>
+          <div class="card split">
+            <div class="half">
+              <div class="hh">I handle</div>
+              <div class="li"><i></i>Monitoring every platform</div>
+              <div class="li"><i></i>Reading the documents</div>
+              <div class="li"><i></i>Fit qualification</div>
+              <div class="li"><i></i>Plain-language summaries</div>
+            </div>
+            <div class="half">
+              <div class="hh">You handle</div>
+              <div class="li"><i></i>Bid or no-bid</div>
+              <div class="li"><i></i>Pricing and estimating</div>
+              <div class="li"><i></i>The proposal and submission</div>
+              <div class="li"><i></i>Winning the work</div>
+            </div>
+          </div>
+          <div class="tune"><div class="tl">Tuned as we go</div><div class="tr"><div class="knob"></div></div></div>
+        </div>
+      </div>
+
+      <div id="s6" class="scene clip" data-start="61.637" data-duration="4.999" data-track-index="1">
+        <div class="inner center">
+          <div class="display a">You keep the part that wins the job.</div>
+          <div class="serif gold b">I take the searching.</div>
+        </div>
+      </div>
+
+      <div id="s7" class="scene clip" data-start="66.636" data-duration="9.168" data-track-index="1">
+        <div class="inner center">
+          <div class="display a">Questions before you sign?</div>
+          <div class="b">Reply to my email, or book a call.</div>
+          <div class="cta-url">phildave.com</div>
+          <div class="btn">Book a call</div>
+        </div>
+        <div class="disc">I find and qualify opportunities. I do not write or submit proposals, and I do not guarantee contract awards.</div>
+      </div>
+
+      <!-- AUDIO:BEGIN (generated by build.mjs; do not edit by hand) -->
+      <audio id="vo-01" src="vo/01.wav" data-start="0.4" data-duration="2.987" data-volume="1" data-track-index="9"></audio>
+      <audio id="vo-02" src="vo/02.wav" data-start="5" data-duration="7.637" data-volume="1" data-track-index="9"></audio>
+      <audio id="vo-03" src="vo/03.wav" data-start="12.937" data-duration="5.525" data-volume="1" data-track-index="9"></audio>
+      <audio id="vo-04" src="vo/04.wav" data-start="18.763" data-duration="5.611" data-volume="1" data-track-index="9"></audio>
+      <audio id="vo-05" src="vo/05.wav" data-start="26.073" data-duration="4.608" data-volume="1" data-track-index="9"></audio>
+      <audio id="vo-06" src="vo/06.wav" data-start="30.981" data-duration="7.317" data-volume="1" data-track-index="9"></audio>
+      <audio id="vo-07" src="vo/07.wav" data-start="38.598" data-duration="4.544" data-volume="1" data-track-index="9"></audio>
+      <audio id="vo-08" src="vo/08.wav" data-start="45.442" data-duration="7.211" data-volume="1" data-track-index="9"></audio>
+      <audio id="vo-09" src="vo/09.wav" data-start="54.853" data-duration="5.184" data-volume="1" data-track-index="9"></audio>
+      <audio id="vo-10" src="vo/10.wav" data-start="61.937" data-duration="3.499" data-volume="1" data-track-index="9"></audio>
+      <audio id="vo-11" src="vo/11.wav" data-start="67.036" data-duration="5.568" data-volume="1" data-track-index="9"></audio>
+      <audio id="sfx-01-tick" src="shared/sfx/tick.wav" data-start="8.055" data-duration="0.09" data-volume="0.3" data-track-index="10"></audio>
+      <audio id="sfx-02-tick" src="shared/sfx/tick.wav" data-start="9.43" data-duration="0.09" data-volume="0.3" data-track-index="10"></audio>
+      <audio id="sfx-03-tick" src="shared/sfx/tick.wav" data-start="10.804" data-duration="0.09" data-volume="0.3" data-track-index="10"></audio>
+      <audio id="sfx-04-tick" src="shared/sfx/tick.wav" data-start="11.721" data-duration="0.09" data-volume="0.3" data-track-index="10"></audio>
+      <audio id="sfx-05-switch" src="shared/sfx/switch.wav" data-start="15.7" data-duration="0.14" data-volume="0.2" data-track-index="10"></audio>
+      <audio id="sfx-06-switch" src="shared/sfx/switch.wav" data-start="16.916" data-duration="0.14" data-volume="0.2" data-track-index="10"></audio>
+      <audio id="sfx-07-switch" src="shared/sfx/switch.wav" data-start="17.91" data-duration="0.14" data-volume="0.2" data-track-index="10"></audio>
+      <audio id="sfx-08-snap" src="shared/sfx/snap.wav" data-start="22.802" data-duration="0.16" data-volume="0.4" data-track-index="10"></audio>
+      <audio id="sfx-09-pop" src="shared/sfx/pop.wav" data-start="27.955" data-duration="0.17" data-volume="0.1" data-track-index="10"></audio>
+      <audio id="sfx-10-pop" src="shared/sfx/pop.wav" data-start="28.075" data-duration="0.17" data-volume="0.1" data-track-index="11"></audio>
+      <audio id="sfx-11-pop" src="shared/sfx/pop.wav" data-start="28.195" data-duration="0.17" data-volume="0.1" data-track-index="10"></audio>
+      <audio id="sfx-12-pop" src="shared/sfx/pop.wav" data-start="28.315" data-duration="0.17" data-volume="0.1" data-track-index="11"></audio>
+      <audio id="sfx-13-pop" src="shared/sfx/pop.wav" data-start="28.435" data-duration="0.17" data-volume="0.1" data-track-index="10"></audio>
+      <audio id="sfx-14-pop" src="shared/sfx/pop.wav" data-start="28.555" data-duration="0.17" data-volume="0.1" data-track-index="11"></audio>
+      <audio id="sfx-15-pop" src="shared/sfx/pop.wav" data-start="28.675" data-duration="0.17" data-volume="0.1" data-track-index="10"></audio>
+      <audio id="sfx-16-pop" src="shared/sfx/pop.wav" data-start="28.795" data-duration="0.17" data-volume="0.1" data-track-index="11"></audio>
+      <audio id="sfx-17-tick" src="shared/sfx/tick.wav" data-start="33.615" data-duration="0.09" data-volume="0.25" data-track-index="10"></audio>
+      <audio id="sfx-18-tick" src="shared/sfx/tick.wav" data-start="34.42" data-duration="0.09" data-volume="0.25" data-track-index="10"></audio>
+      <audio id="sfx-19-tick" src="shared/sfx/tick.wav" data-start="35.371" data-duration="0.09" data-volume="0.25" data-track-index="10"></audio>
+      <audio id="sfx-20-tick" src="shared/sfx/tick.wav" data-start="36.323" data-duration="0.09" data-volume="0.25" data-track-index="10"></audio>
+      <audio id="sfx-21-tick" src="shared/sfx/tick.wav" data-start="37.42" data-duration="0.09" data-volume="0.25" data-track-index="10"></audio>
+      <audio id="sfx-22-success" src="shared/sfx/success.wav" data-start="39.098" data-duration="0.75" data-volume="0.22" data-track-index="10"></audio>
+      <audio id="sfx-23-tick" src="shared/sfx/tick.wav" data-start="49.047" data-duration="0.09" data-volume="0.3" data-track-index="10"></audio>
+      <audio id="sfx-24-tick" src="shared/sfx/tick.wav" data-start="50.489" data-duration="0.09" data-volume="0.3" data-track-index="10"></audio>
+      <audio id="sfx-25-tick" src="shared/sfx/tick.wav" data-start="51.787" data-duration="0.09" data-volume="0.3" data-track-index="10"></audio>
+      <audio id="sfx-26-switch" src="shared/sfx/switch.wav" data-start="64.036" data-duration="0.14" data-volume="0.18" data-track-index="10"></audio>
+      <audio id="sfx-27-chime" src="shared/sfx/chime.wav" data-start="70.488" data-duration="0.95" data-volume="0.3" data-track-index="10"></audio>
+      <audio id="sfx-28-pop" src="shared/sfx/pop.wav" data-start="70.888" data-duration="0.17" data-volume="0.22" data-track-index="11"></audio>
+      <!-- AUDIO:END -->
+    </div>
+
+    <!-- TIMING:BEGIN (generated by build.mjs) -->
+    <script id="timing" type="application/json">{"total":75.804,"scenes":{"s1":{"start":0,"dur":4.5,"ev":{"a":0.3,"b":1.535}},"s2":{"start":4.5,"dur":21.073,"ev":{"p0":3.555,"p1":4.93,"p2":6.304,"p3":7.221,"cad":8.237,"ch0":11.2,"ch1":12.416,"ch2":13.41,"term":14.063,"seal":18.302}},"s3":{"start":25.573,"dur":18.969,"ev":{"c1":1.882,"c2":5.408,"r0":8.042,"r1":8.847,"r2":9.798,"r3":10.75,"r4":11.847,"c3":13.025}},"s4":{"start":44.542,"dur":9.711,"ev":{"q0":4.505,"q1":5.947,"q2":7.245}},"s5":{"start":54.253,"dur":7.384,"ev":{"you":1.378,"tune":3.71}},"s6":{"start":61.637,"dur":4.999,"ev":{"a":0.3,"b":2.399}},"s7":{"start":66.636,"dur":9.168,"ev":{"a":0.3,"b":2.404,"url":3.852}}}}</script>
+    <!-- TIMING:END -->
+    <script>
+      const T = K.init();
+      const { $, $$ } = K;
+
+      { // s1 hook
+        const S = K.scene("s1"), E = S.ev;
+        K.rise(E.a, "#s1 .a", { d: 0.7 });
+        K.serifIn(E.b, "#s1 .b");
+        K.out(S.dur - 0.5, "#s1 .inner", 0.45);
+      }
+
+      { // s2 onboarding
+        const S = K.scene("s2"), E = S.ev;
+        K.label(0.2, "#s2");
+        K.rise(0.3, "#s2 .headline");
+        K.rise(0.6, "#s2 .profile", { y: 50 });
+        const ticks = $$("#s2 .prow .tk");
+        K.hide(ticks);
+        ticks.forEach((t, i) => K.tick(E[`p${i}`], t));
+        K.rise(E.cad, "#s2 .cadence", { y: 30 });
+        ["#ch1", "#ch2", "#ch3"].forEach((c, i) => {
+          K.tl().fromTo(c, { backgroundColor: "rgba(0,0,0,0)", borderColor: "rgba(255,255,255,0.3)", color: "#ffffff" },
+            { backgroundColor: "#c8932f", borderColor: "#c8932f", color: "#081530", duration: 0.25, immediateRender: false }, E[`ch${i}`]);
+          if (i < 2) K.tl().to(c, { backgroundColor: "rgba(0,0,0,0)", borderColor: "rgba(255,255,255,0.3)", color: "#ffffff", duration: 0.25 }, E[`ch${i + 1}`]);
+        });
+        K.rise(E.term, "#s2 .term", { y: 40 });
+        K.hide("#s2 .seal");
+        K.stamp(E.seal, "#s2 .seal", -10);
+        K.out(S.dur - 0.5, "#s2 .inner", 0.45);
+      }
+
+      { // s3 I go to work
+        const S = K.scene("s3"), E = S.ev;
+        K.label(0.2, "#s3");
+        K.rise(0.3, "#s3 .headline");
+        K.rise(E.c1, "#c1", { y: 50 });
+        K.pop(E.c1 + 0.5, "#c1 .plat", { s: 0.12, from: 0.8, d: 0.4 });
+        K.rise(E.c2, "#c2", { y: 50 });
+        K.hide("#c2 .read");
+        $$("#c2 .read").forEach((r, i) => K.slideIn(E[`r${i}`], r, { x: -40, d: 0.45, ir: false }));
+        K.rise(E.c3, "#c3", { y: 50 });
+        K.pop(E.c3 + 0.5, "#c3 .verdict", { from: 0.85 });
+        K.tl().fromTo("#meter", { scaleX: 0 }, { scaleX: 0.86, duration: 1.4, ease: "power2.out" }, E.c3 + 0.8);
+        K.out(S.dur - 0.5, "#s3 .inner", 0.45);
+      }
+
+      { // s4 short list
+        const S = K.scene("s4"), E = S.ev;
+        K.label(0.2, "#s4");
+        K.rise(0.4, "#s4 .inbox", { y: 50 });
+        K.rise(0.9, ["#it1", "#it2", "#it3"], { y: 20, s: 0.25, d: 0.5 });
+        K.rise(0.6, "#s4 .s4side .big");
+        const pts = $$("#s4 .pt2");
+        pts.forEach((p, i) => K.rise(E[`q${i}`], p, { y: 16, d: 0.5 }));
+        K.tl().fromTo("#it1 .src", { color: "#1d63d8" }, { color: "#0b1b3a", duration: 0.3, yoyo: true, repeat: 1 }, E.q2 + 0.3);
+        K.rise(1.2, "#s4 .illus", { y: 6, d: 0.5 });
+        K.out(S.dur - 0.5, "#s4 .inner", 0.45);
+      }
+
+      { // s5 you decide
+        const S = K.scene("s5"), E = S.ev;
+        K.label(0.2, "#s5");
+        K.rise(0.3, "#s5 .headline");
+        K.rise(0.6, "#s5 .split", { y: 40 });
+        K.rise(0.9, "#s5 .half:first-child .li", { y: 14, s: 0.15, d: 0.4 });
+        K.rise(E.you, "#s5 .half + .half .li", { y: 14, s: 0.3, d: 0.45 });
+        K.rise(E.tune, "#s5 .tune", { y: 16, d: 0.5 });
+        K.tl().fromTo("#s5 .knob", { x: 0 }, { x: 900, duration: 2.2, ease: "power2.inOut" }, E.tune + 0.3);
+        K.out(S.dur - 0.5, "#s5 .inner", 0.45);
+      }
+
+      { // s6
+        const S = K.scene("s6"), E = S.ev;
+        K.rise(E.a, "#s6 .a", { d: 0.8 });
+        K.serifIn(E.b, "#s6 .b");
+        K.out(S.dur - 0.5, "#s6 .inner", 0.45);
+      }
+
+      { // s7 CTA
+        const S = K.scene("s7"), E = S.ev;
+        K.rise(E.a, "#s7 .a", { d: 0.7 });
+        K.rise(E.b, "#s7 .b", { y: 20 });
+        K.rise(E.url, "#s7 .cta-url", { y: 20 });
+        K.pop(E.url + 0.4, "#s7 .btn", { from: 0.7, b: 2 });
+        K.rise(E.url + 1.4, "#s7 .disc", { y: 8, d: 0.6 });
+      }
+
+      window.__timelines["main"] = K.done();
+    </script>
+  </body>
+</html>

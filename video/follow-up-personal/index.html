@@ -1,0 +1,163 @@
+<!doctype html>
+<html lang="en" data-composition-variables='[{"id":"trade","type":"string","label":"Trade (title case)","default":"Roofing"},{"id":"tradeLower","type":"string","label":"Trade (in a sentence)","default":"roofing"},{"id":"region","type":"string","label":"Province or state","default":"Ontario"}]'>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1920, height=1080" />
+    <title>Personalized follow-up</title>
+    <script src="shared/vendor/gsap.min.js"></script>
+    <script src="shared/kit.js"></script>
+    <link rel="stylesheet" href="shared/brand.css" />
+    <style>
+      html, body { width: 1920px; height: 1080px; }
+      .note { font: 700 22px "Inter", sans-serif; letter-spacing: 0.24em; text-transform: uppercase; color: var(--gold-4); margin-bottom: 30px; }
+      #s1 .a { font-size: 104px; max-width: 1640px; }
+      #s1 .b { font-size: 120px; margin-top: 12px; line-height: 1; }
+      .h { position: absolute; left: 140px; top: 150px; width: 1640px; font-size: 70px; }
+      .chips { position: absolute; left: 140px; top: 470px; width: 1640px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+      .chip { height: 130px; border-radius: 22px; background: #fff; color: var(--navy); display: flex; align-items: center; gap: 18px; padding: 0 34px; font: 700 34px "Inter", sans-serif; box-shadow: 0 20px 40px rgba(0, 0, 0, 0.35); }
+      .chip i { width: 16px; height: 16px; border-radius: 50%; background: var(--blue); flex: none; }
+      .nos { position: absolute; left: 140px; top: 360px; width: 1640px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; }
+      .no { position: relative; height: 420px; border-radius: 24px; background: #fff; color: var(--navy); padding: 34px; box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4); }
+      .no .sk { margin-top: 18px; }
+      .no .hl { position: absolute; left: 30px; right: 30px; top: 170px; font-size: 28px; }
+      .no .stamp { left: 50%; top: 300px; margin-left: -200px; width: 400px; height: 90px; font-size: 44px; padding: 0; }
+      .qcard { left: 360px; top: 340px; width: 1200px; padding: 50px 60px; }
+      .qcard .qt { font: 700 56px "Space Grotesk", sans-serif; letter-spacing: -0.02em; margin-top: 20px; line-height: 1.1; }
+      .qpt { display: flex; align-items: center; gap: 18px; margin-top: 26px; font: 700 32px "Inter", sans-serif; }
+      #s4 .illus { left: 360px; top: 900px; }
+      #s5 .a { font-size: 100px; }
+      #s5 .b { font-size: 60px; margin-top: 18px; max-width: 1500px; line-height: 1.15; }
+      #s5 .cta-url { margin-top: 44px; }
+      #s5 .btn { margin-top: 24px; }
+      #s5 .sig { margin-top: 40px; font: 700 26px "Space Grotesk", sans-serif; letter-spacing: 0.3em; color: rgba(255, 255, 255, 0.85); }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="main" data-start="0" data-duration="27.6" data-width="1920" data-height="1080">
+      <div id="bg" class="scene clip" data-start="0" data-duration="27.6" data-track-index="0">
+        <div class="ground"></div><div class="grid"></div><div class="blob b1"></div><div class="blob b2"></div><div class="vignette"></div>
+      </div>
+
+      <div id="s1" class="scene clip" data-start="0" data-duration="4.6" data-track-index="1">
+        <div class="inner center">
+          <div class="note">A note from Phil Dave</div>
+          <div class="display a"><span class="v-trade">Roofing</span> contractors in <span class="v-region">Ontario</span>,</div>
+          <div class="serif gold b">this one's for you.</div>
+        </div>
+      </div>
+
+      <div id="s2" class="scene clip" data-start="4.6" data-duration="5.4" data-track-index="1">
+        <div class="inner">
+          <div class="display h">Public <span class="v-tradeLower">roofing</span> work in <span class="v-region">Ontario</span> is posted across <span class="gold">many different portals.</span></div>
+          <div class="chips">
+            <div class="chip"><i></i>Federal</div><div class="chip"><i></i>Provincial and state</div><div class="chip"><i></i>Municipal</div>
+            <div class="chip"><i></i>Agencies</div><div class="chip"><i></i>Health and education</div><div class="chip"><i></i>Utilities</div>
+          </div>
+        </div>
+      </div>
+
+      <div id="s3" class="scene clip" data-start="10" data-duration="5.2" data-track-index="1">
+        <div class="inner">
+          <div class="display h">Most of it <span class="serif gold">isn't yours to win.</span></div>
+          <div class="nos">
+            <div class="no"><div class="sk" style="width: 80%"></div><div class="sk" style="width: 60%"></div><div class="hl">Outside your region</div><div class="stamp">NOT A MATCH</div></div>
+            <div class="no"><div class="sk" style="width: 85%"></div><div class="sk" style="width: 55%"></div><div class="hl">Site meeting already passed</div><div class="stamp">NOT A MATCH</div></div>
+            <div class="no"><div class="sk" style="width: 75%"></div><div class="sk" style="width: 65%"></div><div class="hl">Bonding beyond your limit</div><div class="stamp">NOT A MATCH</div></div>
+          </div>
+        </div>
+      </div>
+
+      <div id="s4" class="scene clip" data-start="15.2" data-duration="5.4" data-track-index="1">
+        <div class="inner">
+          <div class="display h">I find the ones that are, <span class="serif gold">and read them for you.</span></div>
+          <div class="card qcard">
+            <span class="pill">QUALIFIED</span>
+            <div class="qt"><span class="v-trade">Roofing</span> opportunity in <span class="v-region">Ontario</span></div>
+            <div class="qpt"><div class="box"><div class="tk"></div></div>Matched to your trade, capacity and region</div>
+            <div class="qpt"><div class="box"><div class="tk"></div></div>A plain-language summary</div>
+            <div class="qpt"><div class="box"><div class="tk"></div></div>A direct link to the source</div>
+          </div>
+          <div class="illus">Illustrative example</div>
+        </div>
+      </div>
+
+      <div id="s5" class="scene clip" data-start="20.6" data-duration="7" data-track-index="1">
+        <div class="inner center">
+          <div class="display a">Want to see one?</div>
+          <div class="b">I'll send you a real <span class="v-tradeLower">roofing</span> opportunity in <span class="v-region">Ontario</span>. <span class="gold">Free.</span></div>
+          <div class="cta-url">phildave.com/sample-opportunity</div>
+          <div class="btn">Request my sample</div>
+          <div class="sig">PHIL DAVE</div>
+        </div>
+        <div class="disc">I find and qualify opportunities. I do not write or submit proposals, and I do not guarantee contract awards.</div>
+      </div>
+
+      <!-- AUDIO:BEGIN (generated by build.mjs; do not edit by hand) -->
+      <audio id="sfx-01-pop" src="shared/sfx/pop.wav" data-start="6" data-duration="0.17" data-volume="0.14" data-track-index="10"></audio>
+      <audio id="sfx-02-pop" src="shared/sfx/pop.wav" data-start="6.18" data-duration="0.17" data-volume="0.14" data-track-index="10"></audio>
+      <audio id="sfx-03-pop" src="shared/sfx/pop.wav" data-start="6.36" data-duration="0.17" data-volume="0.14" data-track-index="10"></audio>
+      <audio id="sfx-04-pop" src="shared/sfx/pop.wav" data-start="6.54" data-duration="0.17" data-volume="0.14" data-track-index="10"></audio>
+      <audio id="sfx-05-pop" src="shared/sfx/pop.wav" data-start="6.72" data-duration="0.17" data-volume="0.14" data-track-index="10"></audio>
+      <audio id="sfx-06-pop" src="shared/sfx/pop.wav" data-start="6.9" data-duration="0.17" data-volume="0.14" data-track-index="10"></audio>
+      <audio id="sfx-07-snap" src="shared/sfx/snap.wav" data-start="11.6" data-duration="0.16" data-volume="0.35" data-track-index="10"></audio>
+      <audio id="sfx-08-snap" src="shared/sfx/snap.wav" data-start="12.5" data-duration="0.16" data-volume="0.35" data-track-index="10"></audio>
+      <audio id="sfx-09-snap" src="shared/sfx/snap.wav" data-start="13.4" data-duration="0.16" data-volume="0.35" data-track-index="10"></audio>
+      <audio id="sfx-10-success" src="shared/sfx/success.wav" data-start="16.6" data-duration="0.75" data-volume="0.25" data-track-index="10"></audio>
+      <audio id="sfx-11-tick" src="shared/sfx/tick.wav" data-start="17.2" data-duration="0.09" data-volume="0.25" data-track-index="11"></audio>
+      <audio id="sfx-12-tick" src="shared/sfx/tick.wav" data-start="17.8" data-duration="0.09" data-volume="0.25" data-track-index="10"></audio>
+      <audio id="sfx-13-tick" src="shared/sfx/tick.wav" data-start="18.4" data-duration="0.09" data-volume="0.25" data-track-index="10"></audio>
+      <audio id="sfx-14-chime" src="shared/sfx/chime.wav" data-start="23.2" data-duration="0.95" data-volume="0.28" data-track-index="10"></audio>
+      <audio id="sfx-15-pop" src="shared/sfx/pop.wav" data-start="23.6" data-duration="0.17" data-volume="0.2" data-track-index="11"></audio>
+      <!-- AUDIO:END -->
+    </div>
+
+    <!-- TIMING:BEGIN (generated by build.mjs) -->
+    <script id="timing" type="application/json">{"total":27.6,"scenes":{"s1":{"start":0,"dur":4.6,"ev":{"a":0.3,"b":1.5}},"s2":{"start":4.6,"dur":5.4,"ev":{"h":0.3,"chips":1.4}},"s3":{"start":10,"dur":5.2,"ev":{"h":0.3,"c0":1,"x0":1.6,"c1":1.9,"x1":2.5,"c2":2.8,"x2":3.4}},"s4":{"start":15.2,"dur":5.4,"ev":{"h":0.3,"card":1,"pts":2}},"s5":{"start":20.6,"dur":7,"ev":{"a":0.3,"b":1.2,"url":2.6}}}}</script>
+    <!-- TIMING:END -->
+    <script>
+      const V = window.__hyperframes.getVariables();
+      for (const k of ["trade", "tradeLower", "region"]) K.$$(`.v-${k}`).forEach((el) => (el.textContent = V[k]));
+
+      const T = K.init();
+      const { $$ } = K;
+
+      { const S = K.scene("s1"), E = S.ev;
+        K.rise(0, "#s1 .note", { y: 14, d: 0.5 });
+        K.rise(E.a, "#s1 .a", { d: 0.7 });
+        K.serifIn(E.b, "#s1 .b");
+        K.out(S.dur - 0.5, "#s1 .inner", 0.45); }
+
+      { const S = K.scene("s2"), E = S.ev;
+        K.rise(E.h, "#s2 .h");
+        K.pop(E.chips, "#s2 .chip", { s: 0.18, from: 0.7 });
+        K.out(S.dur - 0.5, "#s2 .inner", 0.45); }
+
+      { const S = K.scene("s3"), E = S.ev;
+        K.rise(E.h, "#s3 .h");
+        K.hide(["#s3 .no", "#s3 .stamp"]);
+        $$("#s3 .no").forEach((n, i) => {
+          K.rise(E[`c${i}`], n, { y: 40, d: 0.5, ir: false });
+          K.stamp(E[`x${i}`], n.querySelector(".stamp"), -8);
+        });
+        K.out(S.dur - 0.5, "#s3 .inner", 0.45); }
+
+      { const S = K.scene("s4"), E = S.ev;
+        K.rise(E.h, "#s4 .h");
+        K.rise(E.card, "#s4 .qcard", { y: 50 });
+        const ticks = $$("#s4 .qpt .tk");
+        K.hide(ticks);
+        ticks.forEach((tk, i) => K.tick(E.pts + i * 0.6, tk));
+        K.rise(E.card + 0.6, "#s4 .illus", { y: 6, d: 0.5 });
+        K.out(S.dur - 0.5, "#s4 .inner", 0.45); }
+
+      { const S = K.scene("s5"), E = S.ev;
+        K.rise(E.a, "#s5 .a", { d: 0.7 });
+        K.rise(E.b, "#s5 .b", { y: 24 });
+        K.rise(E.url, "#s5 .cta-url", { y: 20 });
+        K.pop(E.url + 0.4, "#s5 .btn", { from: 0.7, b: 2 });
+        K.rise(E.url + 1.0, ["#s5 .sig", "#s5 .disc"], { y: 8, d: 0.6, s: 0.3 }); }
+
+      window.__timelines["main"] = K.done();
+    </script>
+  </body>
+</html>

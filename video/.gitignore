@@ -1,0 +1,5 @@
+renders/
+snapshots/
+_renders/
+.hyperframes/
+__pycache__/

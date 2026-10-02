@@ -1,0 +1,52 @@
+{
+ "_note": "Sample narration lines; 'say' overrides pronunciation. Replace vo/<id>.wav with a recording and re-run node build.mjs.",
+ "voice": "am_michael",
+ "speed": 1.1,
+ "cues": [
+  {
+   "id": "01",
+   "text": "You said yes. Here's exactly what happens next."
+  },
+  {
+   "id": "02",
+   "text": "First, a short onboarding call. Your trades, your sweet-spot project size, your geography, and the work you want more of."
+  },
+  {
+   "id": "03",
+   "text": "We agree on your coverage, and your cadence. A running feed, a regular digest, or both."
+  },
+  {
+   "id": "04",
+   "text": "And we agree on your guaranteed number of qualified opportunities. It's written into your term."
+  },
+  {
+   "id": "05",
+   "text": "Then I go to work. I monitor every platform that serves your jurisdictions."
+  },
+  {
+   "id": "06",
+   "text": "I open the documents and read them. Scope, requirements, site meetings, bonding and insurance, and every addendum."
+  },
+  {
+   "id": "07",
+   "text": "And I qualify each one against your shop, with a clear read on why it fits."
+  },
+  {
+   "id": "08",
+   "text": "What reaches you is a short list. A plain-language summary you can scan in under a minute, and a direct link to the source."
+  },
+  {
+   "id": "09",
+   "text": "You decide. Your team prices and submits. And as we go, I tune what I send you."
+  },
+  {
+   "id": "10",
+   "text": "You keep the part that wins the job. I take the searching."
+  },
+  {
+   "id": "11",
+   "text": "Questions before you sign? Reply to my email, or book a call at phildave.com.",
+   "say": "Questions before you sign? Reply to my email, or book a call, at phil dave dot com."
+  }
+ ]
+}
