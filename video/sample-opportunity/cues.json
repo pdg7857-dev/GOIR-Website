@@ -1,0 +1,40 @@
+{
+ "_note": "Sample narration lines; 'say' overrides pronunciation. Replace vo/<id>.wav with a recording and re-run node build.mjs.",
+ "voice": "am_michael",
+ "speed": 1.1,
+ "cues": [
+  {
+   "id": "01",
+   "text": "Here's what one qualified opportunity looks like when it reaches you."
+  },
+  {
+   "id": "02",
+   "text": "It's live and current, pulled from whichever platform your buyers actually use."
+  },
+  {
+   "id": "03",
+   "text": "It's in your jurisdiction. Somewhere you can actually deliver."
+  },
+  {
+   "id": "04",
+   "text": "It's already read. The scope, the closing date, the key requirements, and the fine print that decides if you can bid."
+  },
+  {
+   "id": "05",
+   "text": "It's qualified, with my honest read on the fit for your shop."
+  },
+  {
+   "id": "06",
+   "text": "And it links straight to the source, so you act on the real posting."
+  },
+  {
+   "id": "07",
+   "text": "Want to see one in your own trade? Tell me what you do and where you bid, and I'll send you a real one. Free."
+  },
+  {
+   "id": "08",
+   "text": "Request yours at phildave.com.",
+   "say": "Request yours, at phil dave dot com."
+  }
+ ]
+}
