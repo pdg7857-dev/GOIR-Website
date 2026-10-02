@@ -3,3 +3,4 @@ snapshots/
 _renders/
 .hyperframes/
 __pycache__/
+renders.log
